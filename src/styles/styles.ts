@@ -1,0 +1,1 @@
+export const containerStyle = "container w-full h-full p-3 md:p-5 mx-auto flex flex-col"
