@@ -2,18 +2,28 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
-  --color-sec-20: #34d484;
-  --color-sec-10: #ade7ca;
-  --color-main-50: #318F97;
-  --color-main-40: #00E1FF;
-  --color-main-30: #43C5D1;
-  --color-main-20: #A4DCE4;
-  --color-main-10: #f0f8f9;
+  --color-green-20: #27da80;
+  --color-green-10: #97e7bf;
+  --color-main-70: #031a29;
+  --color-main-60: #083450;
+  --color-main-50: #095280;
+  --color-main-40: #00b7ff;
+  --color-main-30: #2b87c0;
+  --color-main-20: #71b7e2;
+  --color-main-10: #d3e7f3;
+  --color-main-opaque: #d6e8f3;
+  --color-gray-70: #18181b;
+  --color-gray-60: #27272a;
+  --color-gray-50: #3f3f46;
+  --color-gray-40: #71717b;
+  --color-gray-30: #9f9fa9;
+  --color-gray-20: #d4d4d8;
+  --color-gray-10: #f4f4f5;
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
@@ -49,13 +59,22 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-sec-20: var(--color-sec-20);
-  --color-sec-10: var(--color-sec-10);
+  --color-green-20: var(--color-green-20);
+  --color-green-10: var(--color-green-10);
+  --color-main-70: var(--color-main-70);
+  --color-main-60: var(--color-main-60);
   --color-main-50: var(--color-main-50);
   --color-main-40: var(--color-main-40);
   --color-main-30: var(--color-main-30);
   --color-main-20: var(--color-main-20);
   --color-main-10: var(--color-main-10);
+  --color-gray-60: var(--color-gray-60);
+  --color-gray-50: var(--color-gray-50);
+  --color-gray-40: var(--color-gray-40);
+  --color-gray-30: var(--color-gray-30);
+  --color-gray-20: var(--color-gray-20);
+  --color-gray-10: var(--color-gray-10);
+  --color-main-opaque: var(--color-main-opaque);
   --color-font-sans: var(--color-font-geist-sans);
   --color-font-mono: var(--color-font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -93,12 +112,8 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --color-main-10: #1e2723;
-  }
+html{
+  scroll-behavior: smooth;
 }
 
 body {
@@ -108,6 +123,18 @@ body {
 }
 
 .dark {
+  --color-main-opaque: #101a1f;
+  --color-main-70: #d3e7f3;
+  --color-main-60: #71b7e2;
+  --color-main-20: #083450;
+  --color-main-10: #031a29;
+  --color-gray-70: #f4f4f5;
+  --color-gray-60: #d4d4d8;
+  --color-gray-50: #9f9fa9;
+  --color-gray-40: #71717b;
+  --color-gray-30: #3f3f46;
+  --color-gray-20: #27272a;
+  --color-gray-10: #18181b;
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.21 0.006 285.885);
@@ -147,5 +174,55 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .container-custom {
+    @apply container w-full h-full px-3 md:px-5 py-10 md:py-20 mx-auto flex flex-col
+  }
+  .h1-custom {
+    @apply font-bold text-4xl mt-10
+  }
+  .h2-custom {
+    @apply max-w-2xl mx-auto mt-4 text-center text-gray-60 mb-14
+  }
+}
+
+.highlight_underline{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -6px;
+  height: 10px;
+  -webkit-border-radius: 9999px;
+  -moz-border-radius: 9999px;
+  border-radius: 9999px;
+  overflow: hidden;
+  background: var(--color-main-30);
+  z-index: 1;
+  opacity: 0.7;
+}
+.highlight_underline::before{
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: -webkit-linear-gradient(left,rgba(255,255,255,0)0%,#71b7e2,50%,rgba(255,255,255,0)100%);
+  background: -moz-linear-gradient(left,rgba(255,255,255,0)0%,#71b7e2,50%,rgba(255,255,255,0)100%);
+  background: -o-linear-gradient(left,rgba(255,255,255,0)0%,#71b7e2,50%,rgba(255,255,255,0)100%);
+  background: linear-gradient(90deg,rgba(255,255,255,0)0%,#71b7e2,50%,rgba(255,255,255,0)100%);
+  width: 35%;
+  -webkit-animation: underline-glide 2s linear infinite;
+  -moz-animation: underline-glide 2s linear infinite;
+  -o-animation: underline-glide 2s linear infinite;
+  animation: underline-glide 2s linear infinite;
+}
+
+@keyframes underline-glide {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(200%);
   }
 }
