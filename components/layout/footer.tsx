@@ -24,10 +24,10 @@ export const Footer = () => {
         <div className="flex flex-col gap-6">
           <h1 className="font-semibold">Termos</h1>
           <div className="flex flex-col gap-3">
-            <Link href={`#`}>
+            <Link href={`/terms`}>
               Termos de Serviço
             </Link>
-            <Link href={`#`}>
+            <Link href={`/terms`}>
               Política de privacidade
             </Link>
           </div>
