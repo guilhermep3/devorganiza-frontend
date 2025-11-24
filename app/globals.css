@@ -15,8 +15,7 @@
   --color-main-40: #00b7ff;
   --color-main-30: #2b87c0;
   --color-main-20: #71b7e2;
-  --color-main-10: #d3e7f3;
-  --color-main-opaque: #d6e8f3;
+  --color-main-10: #dfebf1;
   --color-gray-70: #18181b;
   --color-gray-60: #27272a;
   --color-gray-50: #3f3f46;
@@ -74,7 +73,6 @@
   --color-gray-30: var(--color-gray-30);
   --color-gray-20: var(--color-gray-20);
   --color-gray-10: var(--color-gray-10);
-  --color-main-opaque: var(--color-main-opaque);
   --color-font-sans: var(--color-font-geist-sans);
   --color-font-mono: var(--color-font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -123,7 +121,6 @@ body {
 }
 
 .dark {
-  --color-main-opaque: #101a1f;
   --color-main-70: #d3e7f3;
   --color-main-60: #71b7e2;
   --color-main-20: #083450;
