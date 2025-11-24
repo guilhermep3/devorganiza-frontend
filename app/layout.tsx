@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body
-        className={`antialiased`}
+        className={`antialiased bg-gray-10! dark:bg-background!`}
       >
         <ThemeProvider
           attribute="class"

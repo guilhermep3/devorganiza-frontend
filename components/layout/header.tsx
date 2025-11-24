@@ -5,7 +5,10 @@ import { navLinksData } from "@/src/data/navLinks";
 import Link from "next/link";
 import { Logo } from "../logo";
 
-export const Header = () => {
+type props = {
+  noNav?: boolean
+}
+export const Header = ({ noNav }: props) => {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -28,20 +31,23 @@ export const Header = () => {
       ${active ?
         'top-2 md:top-3 left-4 right-4 md:left-10 md:right-10 rounded-full w-80 sm:w-xl md:w-2xl lg:w-4xl' :
         'top-0 left-0 right-0 w-full'}
+        ${noNav && 'p-3'}
     `}>
       <div className="container mx-auto flex justify-between items-center px-4 md:px-6 py-3 md:py-0">
         <Logo />
-        <nav className="hidden md:flex">
-          <div className="flex items-center">
-            {navLinksData.map((i) => (
-              <Link key={i.id}
-                href={`#${i.href}`} className="text-lg hover:bg-secondary p-6"
-              >
-                {i.name}
-              </Link>
-            ))}
-          </div>
-        </nav>
+        {!noNav &&
+          <nav className="hidden md:flex">
+            <div className="flex items-center">
+              {navLinksData.map((i) => (
+                <Link key={i.id}
+                  href={`#${i.href}`} className="text-lg hover:bg-secondary p-6"
+                >
+                  {i.name}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        }
         <div>
           <ThemeToggle />
         </div>
