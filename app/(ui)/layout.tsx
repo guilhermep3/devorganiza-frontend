@@ -13,9 +13,9 @@ export default function Layout({ children }: props) {
     <AsideProvider>
       <div>
         <Header />
-        <div className="flex pt-20 min-h-screen">
+        <div className="flex min-h-screen">
           <AsideDashboard />
-          <main className="w-full max-w-6xl mx-auto px-3 pt-6 pb-16">
+          <main className="w-full max-w-6xl mx-auto px-3 pb-20 pt-28">
             {children}
           </main>
         </div>

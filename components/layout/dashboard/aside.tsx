@@ -11,32 +11,40 @@ export const AsideDashboard = () => {
   const asideCtx = useContext(AsideContext);
 
   return (
-    <aside className={`bg-card w-72 p-3 space-y-6 transition-all duration-300 h-full z-20
-      fixed md:static md:block ${asideCtx?.isOpen ? 'ml-0' : '-ml-[100%] md:ml-0'}
-    `}
-    >
-      <div className="flex justify-center items-center gap-2">
-        <Logo width={80} />
-        <p className="text-xl font-bold -mb-1 text-main-60">DevOrganiza</p>
-      </div>
-      <div className="flex flex-col gap-2">
-        {asideLinks.map((i) => {
-          const Icon = i.icon;
+    <>
+      <aside className={`bg-card w-72 p-3 space-y-6 transition-all duration-300 min-h-full z-30 pt-20
+      fixed md:static
+      ${asideCtx?.isOpen ? 'ml-0' : '-ml-[100%] md:ml-0'}
+      `}
+      >
+        <div className="flex justify-center items-center gap-2">
+          <Logo width={80} />
+          <p className="text-xl font-bold -mb-1 text-main-60">DevOrganiza</p>
+        </div>
+        <div className="flex flex-col gap-2">
+          {asideLinks.map((i) => {
+            const Icon = i.icon;
 
-          return (
-            <Link key={i.id} href={`/${i.href}`}
-              className={`flex items-center gap-2 p-2 font-semibold rounded-md
-                ${pathname.includes(i.href)
-                  ? 'text-main-60 border border-main-40 bg-main-30/15'
-                  : 'hover:text-main-60'}
-              `}
-            >
-              <Icon />
-              {i.name}
-            </Link>
-          )
-        })}
-      </div>
-    </aside>
+            return (
+              <Link key={i.id} href={`/${i.href}`}
+                className={`flex items-center gap-2 p-2 font-semibold rounded-md
+              ${pathname.includes(i.href)
+                    ? 'text-main-60 border border-main-40 bg-main-30/15'
+                    : 'hover:text-main-60'}
+                `}
+              >
+                <Icon />
+                {i.name}
+              </Link>
+            )
+          })}
+        </div>
+      </aside>
+      <div
+        className={`fixed z-20 bg-black/50 inset-0 transition-all duration-300
+          ${asideCtx?.isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        onClick={() => asideCtx?.setIsOpen(asideCtx.isOpen ? false : true)}
+      ></div>
+    </>
   )
 }
