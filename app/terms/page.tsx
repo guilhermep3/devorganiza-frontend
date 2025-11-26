@@ -8,7 +8,7 @@ export default function Page() {
     <div>
       <Header />
       <div className="text-center bg-main-10 pt-28 pb-20">
-        <h1 className="h1-custom">Termos de serviço</h1>
+        <h1 className="h1Custom">Termos de serviço</h1>
       </div>
       <div className="flex flex-col mx-auto gap-10 max-w-2xl my-20">
         {termsData.map((i, index) => (

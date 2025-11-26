@@ -15,23 +15,23 @@ export default function Home() {
       <div className="relative">
         <Header />
         <section id="hero" className="pt-24! h-screen bg-linear-to-b from-main-10 to-background">
-          <div className="container-custom justify-center items-center gap-7">
+          <div className="containerCustom justify-center items-center gap-7">
             <h1 data-aos="fade-up" className="text-center font-bold tracking-tight text-pretty text-5xl sm:text-6xl md:text-7xl leading-12 lg:leading-20 max-w-3xl z-10">
               <p className="inline-block text-main-30 relative">Organize <span className="highlight_underline"></span></p> seus <p className="inline-block text-main-30 relative">estudos <span className="highlight_underline"></span></p> na programação
             </h1>
-            <h2 data-aos="fade-down" className="h2-custom">O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.</h2>
+            <h2 data-aos="fade-down" className="h2Custom">O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.</h2>
             <Button data-aos="zoom-in" href="/signup" size={3}>Criar conta</Button>
           </div>
         </section>
-        <div className="container-custom py-0! rounded-lg overflow-hidden">
+        <div className="containerCustom py-0! rounded-lg overflow-hidden">
           <Image src={`/dashboard.jpg`} alt="dashboard"
             width={2400} height={2400}
             className="w-full"
           />
         </div>
-        <section id="about" className="container-custom justify-center items-center">
-          <h1 data-aos="fade-up" className="h1-custom">O que o DevOrganiza proporciona?</h1>
-          <h2 data-aos="fade-down" className="h2-custom">Veja os principais benefícios que nós oferecemos</h2>
+        <section id="about" className="containerCustom justify-center items-center">
+          <h1 data-aos="fade-up" className="h1Custom">O que o DevOrganiza proporciona?</h1>
+          <h2 data-aos="fade-down" className="h2Custom">Veja os principais benefícios que nós oferecemos</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {aboutData.map((i) => {
               const Icon = i.icon;
@@ -58,9 +58,9 @@ export default function Home() {
           </div>
         </section>
         <section id="services" className="bg-gray-10/50">
-          <div className="container-custom justify-center items-center">
-            <h1 data-aos="fade-up" className="h1-custom">Nossas ferramentas</h1>
-            <h2 data-aos="fade-down" className="h2-custom">Veja as ferramentas do nosso site</h2>
+          <div className="containerCustom justify-center items-center">
+            <h1 data-aos="fade-up" className="h1Custom">Nossas ferramentas</h1>
+            <h2 data-aos="fade-down" className="h2Custom">Veja as ferramentas do nosso site</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10 w-full max-w-4xl">
               {servicesData.map((i) => {
                 const Icon = i.icon;
@@ -81,15 +81,15 @@ export default function Home() {
             </div>
           </div>
         </section>
-        <section id="faq" className="container-custom flex flex-col justify-center items-center">
-          <h1 data-aos="fade-up" className="h1-custom text-center">Perguntas Frequentes</h1>
-          <h2 data-aos="fade-down" className="h2-custom text-center">As principais dúvidas sobre nós</h2>
+        <section id="faq" className="containerCustom flex flex-col justify-center items-center">
+          <h1 data-aos="fade-up" className="h1Custom text-center">Perguntas Frequentes</h1>
+          <h2 data-aos="fade-down" className="h2Custom text-center">As principais dúvidas sobre nós</h2>
           <Faq />
         </section>
         <section id="start" className="relative overflow-hidden">
-          <div className="container-custom justify-center items-center">
-            <h1 data-aos="fade-up" className="h1-custom text-center max-w-2xl">Faça da organização e consistência suas maiores qualidades</h1>
-            <h2 data-aos="fade-down" className="h2-custom text-foreground">Dê o primeiro passo para melhorar seus estudos na programação e progredir de maneira mais eficaz</h2>
+          <div className="containerCustom justify-center items-center">
+            <h1 data-aos="fade-up" className="h1Custom text-center max-w-2xl">Faça da organização e consistência suas maiores qualidades</h1>
+            <h2 data-aos="fade-down" className="h2Custom text-foreground">Dê o primeiro passo para melhorar seus estudos na programação e progredir de maneira mais eficaz</h2>
             <Button href="/signup">Criar conta</Button>
             <div className="absolute inset-x-0 h-[480px] -z-10 rounded-t-[100%] translate-y-10 scale-110 md:scale-100
           bg-radial from-main-20/75 via-main-10 to-background"

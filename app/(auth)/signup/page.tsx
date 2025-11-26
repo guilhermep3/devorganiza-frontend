@@ -20,7 +20,7 @@ export default function Page() {
         <div className="flex flex-col gap-0">
           <input
             type="text"
-            className="input-custom text-base"
+            className="inputCustom text-base"
             placeholder="Nome Completo"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -32,7 +32,7 @@ export default function Page() {
         <div className="flex flex-col gap-0">
           <input
             type="text"
-            className="input-custom text-base"
+            className="inputCustom text-base"
             placeholder="Nome de usuário"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -44,7 +44,7 @@ export default function Page() {
         <div className="flex flex-col gap-0">
           <input
             type="email"
-            className="input-custom text-base"
+            className="inputCustom text-base"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}

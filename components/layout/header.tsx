@@ -1,15 +1,21 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeToggle } from "../themeToggle";
 import { navLinksData } from "@/src/data/navLinks";
 import Link from "next/link";
 import { Logo } from "../logo";
+import { AsideContext } from "@/src/context/asideContext";
+import { Menu } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 type props = {
   noNav?: boolean
 }
 export const Header = ({ noNav }: props) => {
   const [active, setActive] = useState(false);
+  const asideCtx = useContext(AsideContext);
+  const haveMenu = ["dashboard", "studies", "quizzes", "profile"];
+  const pathname = usePathname();
 
   useEffect(() => {
     function handleScroll() {
@@ -34,7 +40,7 @@ export const Header = ({ noNav }: props) => {
         ${noNav && 'p-3'}
     `}>
       <div className="container mx-auto flex justify-between items-center px-4 md:px-6 py-3 md:py-0">
-        <Logo />
+        <Logo width={64} />
         {!noNav &&
           <nav className="hidden md:flex">
             <div className="flex items-center">
@@ -48,8 +54,14 @@ export const Header = ({ noNav }: props) => {
             </div>
           </nav>
         }
-        <div>
+        <div className="flex items-center gap-3">
           <ThemeToggle />
+          {haveMenu.some(i => pathname.includes(i)) &&
+            <div className="p-1 border border-gray-20 rounded-sm hover:bg-gray-10 cursor-pointer md:hidden"
+              onClick={() => asideCtx?.setIsOpen(asideCtx.isOpen ? false : true)}>
+              <Menu />
+            </div>
+          }
         </div>
       </div>
     </header>
