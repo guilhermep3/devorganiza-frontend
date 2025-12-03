@@ -66,15 +66,17 @@ export default function Home() {
                 const Icon = i.icon;
 
                 return (
-                  <div key={i.id} data-aos="zoom-in" className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md hover:inset-shadow-sm hover:bg-background hover:dark:bg-zinc-900">
-                    <div className="flex items-center gap-5">
-                      <span>{i.id}.</span>
-                      <div className="p-2 bg-main-10/60 rounded-sm">
-                        <Icon />
+                  <div key={i.id} data-aos="zoom-in">
+                    <div className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md hover:inset-shadow-sm hover:bg-white hover:dark:bg-gray-10">
+                      <div className="flex items-center gap-5">
+                        <span>{i.id}.</span>
+                        <div className="p-2 bg-main-10 rounded-sm">
+                          <Icon />
+                        </div>
                       </div>
+                      <p className="text-lg font-semibold">{i.title}</p>
+                      <p className="text-sm">{i.description}</p>
                     </div>
-                    <p className="text-lg font-semibold">{i.title}</p>
-                    <p className="text-sm">{i.description}</p>
                   </div>
                 )
               })}

@@ -9,10 +9,10 @@ type Props = {
   href?: string;
 };
 
-export const Button = ({  whiteBg,  size = 2,  className,  onClick,  children,  href 
+export const Button = ({ whiteBg, size = 2, className, onClick, children, href
 }: Props) => {
-  const commonClasses = `group relative text-black rounded-md transition-all overflow-hidden z-10 font-bold
-    w-fit cursor-pointer shadow-md shadow-main-50 hover:shadow-main-40/75
+  const commonClasses = `group relative z-10 text-black text-center font-bold rounded-md transition-all
+    overflow-hidden w-fit cursor-pointer shadow-md shadow-main-50 hover:shadow-main-40/75
     ${whiteBg ? 'bg-main-10 hover:bg-main-10' : 'bg-main-30 hover:bg-main-30'}
     ${size === 1 && "px-4 py-1 text-sm"}
     ${size === 2 && "px-6 py-2 text-base"}
@@ -22,9 +22,9 @@ export const Button = ({  whiteBg,  size = 2,  className,  onClick,  children,  
 
   if (href) {
     return (
-      <a 
-        href={href} 
-        className={commonClasses} 
+      <a
+        href={href}
+        className={commonClasses}
         onClick={onClick}
       >
         {children}

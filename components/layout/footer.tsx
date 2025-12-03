@@ -5,7 +5,7 @@ import Link from "next/link"
 export const Footer = () => {
 
   return (
-    <footer className="py-7 bg-main-10">
+    <footer className="py-7 bg-main-10 md:px-10">
       <div className="containerCustom flex-col md:flex-row justify-between items-start gap-7">
         <div className="flex flex-col justify-between gap-1 md:gap-6 text-sm md:text-base">
           <Logo width={64} />

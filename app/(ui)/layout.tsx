@@ -11,15 +11,15 @@ export default function Layout({ children }: props) {
 
   return (
     <AsideProvider>
-      <div>
-        <Header />
-        <div className="flex min-h-screen">
-          <AsideDashboard />
-          <main className="w-full max-w-6xl mx-auto px-3 pb-20 pt-28">
+      <Header />
+      <div className="flex min-h-screen">
+        <AsideDashboard />
+        <div className="flex-1 pl-0 lg:pl-80 xl:pl-64">
+          <main className="w-full max-w-6xl mx-auto px-3 pb-20 pt-28 min-h-96">
             {children}
           </main>
+          <Footer />
         </div>
-        <Footer />
       </div>
     </AsideProvider>
   )

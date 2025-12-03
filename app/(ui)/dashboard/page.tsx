@@ -9,7 +9,7 @@ import { QuizFasterAttemptsChart } from "@/components/layout/dashboard/chart/qui
 export default function Page() {
 
   return (
-    <div className="flex-1 flex flex-col gap-12">
+    <div className="layoutDiv">
       <TopInfos />
       <section className="flex flex-col">
         <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>

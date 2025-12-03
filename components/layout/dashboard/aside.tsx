@@ -12,9 +12,8 @@ export const AsideDashboard = () => {
 
   return (
     <>
-      <aside className={`bg-card w-72 p-3 space-y-6 transition-all duration-300 min-h-full z-30 pt-20
-      fixed md:static
-      ${asideCtx?.isOpen ? 'ml-0' : '-ml-[100%] md:ml-0'}
+      <aside className={`bg-card w-72 p-3 space-y-6 transition-all duration-300 min-h-full z-30 pt-24
+      fixed ${asideCtx?.isOpen ? 'ml-0' : '-ml-[100%] lg:ml-0'}
       `}
       >
         <div className="flex justify-center items-center gap-2">
@@ -26,9 +25,9 @@ export const AsideDashboard = () => {
             const Icon = i.icon;
 
             return (
-              <Link key={i.id} href={`/${i.href}`}
+              <Link key={i.id} href={`/${i.href}`} onClick={() => asideCtx?.setIsOpen(asideCtx.isOpen ? false : true)}
                 className={`flex items-center gap-2 p-2 font-semibold rounded-md
-              ${pathname.includes(i.href)
+                  ${pathname.includes(i.href)
                     ? 'text-main-60 border border-main-40 bg-main-30/15'
                     : 'hover:text-main-60'}
                 `}
@@ -41,7 +40,7 @@ export const AsideDashboard = () => {
         </div>
       </aside>
       <div
-        className={`fixed z-20 bg-black/50 inset-0 transition-all duration-300
+        className={`lg:hidden fixed z-20 bg-black/50 inset-0 transition-all duration-300
           ${asideCtx?.isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         onClick={() => asideCtx?.setIsOpen(asideCtx.isOpen ? false : true)}
       ></div>

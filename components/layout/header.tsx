@@ -57,7 +57,7 @@ export const Header = ({ noNav }: props) => {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           {haveMenu.some(i => pathname.includes(i)) &&
-            <div className="p-1 border border-gray-20 rounded-sm hover:bg-gray-10 cursor-pointer md:hidden"
+            <div className="p-1 border border-gray-20 rounded-sm hover:bg-gray-10 cursor-pointer lg:hidden"
               onClick={() => asideCtx?.setIsOpen(asideCtx.isOpen ? false : true)}>
               <Menu />
             </div>

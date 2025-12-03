@@ -7,7 +7,7 @@
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
-  --color-green-20: #27da80;
+  --color-green-20: #05af5a;
   --color-green-10: #97e7bf;
   --color-main-70: #031a29;
   --color-main-60: #083450;
@@ -196,6 +196,9 @@ body {
   .chartTitleCustom {
     @apply text-xl font-semibold
   }
+  .layoutDiv {
+    @apply flex-1 flex flex-col gap-12
+  }
 }
 
 .highlight_underline{
@@ -233,5 +236,36 @@ body {
   }
   100% {
     transform: translateX(200%);
+  }
+}
+
+.noStudyImage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 48px;
+  font-weight: bold;
+  --webkit-text-stroke: 2px red;
+  opacity: 0.5;
+}
+.noStudyImage::before {
+  content: "ESTUDO";
+  position: absolute;
+  color: var(--color-main-40);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: -1;
+  font-size: 50px;
+}
+@media screen and (max-width: 768px) {
+  .noStudyImage {
+    font-size: 24px;
+  }
+  .noStudyImage::before {
+    font-size: 26px;
   }
 }
