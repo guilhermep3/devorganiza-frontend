@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button"
 import { Mail, User2 } from "lucide-react"
 import Image from "next/image"
 
-export const ProfileCard = () => {
+type props = {
+  setIsEditing: (value: boolean) => void;
+}
+export const ProfileCard = ({ setIsEditing }: props) => {
 
   return (
     <div className="flex flex-col items-center gap-4 w-full lg:w-1/3 p-4 bg-card border border-gray-20 rounded-md">
@@ -24,7 +27,9 @@ export const ProfileCard = () => {
         </p>
       </div>
       <div className="flex gap-4 mt-4 w-full">
-        <Button className="flex-1 bg-main-30 text-white p-2 rounded-md hover:bg-main-50 transition">
+        <Button className="flex-1 bg-main-30 text-white p-2 rounded-md hover:bg-main-50 transition"
+          onClick={() => setIsEditing(true)}
+        >
           Editar
         </Button>
         <Button className="flex-1 bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition">

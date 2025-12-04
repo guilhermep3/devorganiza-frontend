@@ -7,9 +7,10 @@ type Props = {
   onClick?: (value?: any) => void;
   children: ReactNode;
   href?: string;
+  submit?: boolean;
 };
 
-export const Button = ({ whiteBg, size = 2, className, onClick, children, href
+export const Button = ({ whiteBg, size = 2, className, onClick, children, href, submit
 }: Props) => {
   const commonClasses = `group relative z-10 text-black text-center font-bold rounded-md transition-all
     overflow-hidden w-fit cursor-pointer shadow-md shadow-main-50 hover:shadow-main-40/75
@@ -46,6 +47,7 @@ export const Button = ({ whiteBg, size = 2, className, onClick, children, href
     <button
       className={commonClasses}
       onClick={onClick}
+      type={ submit ? 'submit' : 'button'}
     >
       {children}
       <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-linear-to-r from-transparent -z-10
