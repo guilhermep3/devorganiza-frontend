@@ -10,8 +10,8 @@ export interface Study {
   progress?: number;
   createdAt?: Date | string;
   updatedAt?: Date | string;
-  tasks?: any // Prisma.TaskCreateNestedManyWithoutStudyInput;
-  user: any // Prisma.UserCreateNestedOneWithoutStudiesInput;
+  tasks?: any
+  user: any
 }
 
 export function useStudies() {

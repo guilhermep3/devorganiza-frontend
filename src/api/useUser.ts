@@ -1,0 +1,49 @@
+import { useEffect, useState } from "react";
+
+export const useUser = () => {
+  const [data, setData] = useState(null);
+  const [errors, setErrors] = useState<any>({});
+  const [loading, setLoading] = useState(false);
+
+  async function fetchUser() {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    const AUTH_TOKEN = process.env.NEXT_PUBLIC_AUTH_TOKEN!;
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+
+    try {
+      setLoading(true);
+
+      const res = await fetch(`${API_URL}/users`, {
+        method: "GET",
+        headers: {
+          "content-type": "application-json",
+          "authorization": `Bearer ${AUTH_TOKEN}`
+        },
+        credentials: "include"
+      });
+      console.log("Fetch user response:", res);
+
+      if (!res.ok) {
+        const data = await res.json();
+        setErrors({ fetch: data.error || "Erro ao buscar dados do usuário" });
+        return;
+      }
+
+      const user = await res.json();
+      setData(user);
+    } catch (err) {
+      setErrors({ submit: "Erro ao conectar ao servidor" });
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  return {
+    data, fetchUser,
+    errors, loading
+  }
+}
