@@ -7,8 +7,7 @@ export const useUser = () => {
 
   async function fetchUser() {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
-    const AUTH_TOKEN = process.env.NEXT_PUBLIC_AUTH_TOKEN!;
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
     try {
       setLoading(true);
@@ -16,8 +15,8 @@ export const useUser = () => {
       const res = await fetch(`${API_URL}/users`, {
         method: "GET",
         headers: {
-          "content-type": "application-json",
-          "authorization": `Bearer ${AUTH_TOKEN}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TOKEN}`
         },
         credentials: "include"
       });

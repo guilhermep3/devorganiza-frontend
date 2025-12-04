@@ -7,17 +7,16 @@ export const useQuizAttempts = () => {
 
   async function fetchQuizAttempts() {
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
-    const AUTH_TOKEN = process.env.NEXT_PUBLIC_AUTH_TOKEN!;
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
     try {
       setLoading(true);
 
-      const res = await fetch(`${API_URL}/quizzes/attempts`, {
+      const res = await fetch(`${API_URL}/quizzes`, {
         method: "GET",
         headers: {
-          "content-type": "application-json",
-          "Authorization": `Bearer ${AUTH_TOKEN}`
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TOKEN}`
         },
         credentials: "include"
       });

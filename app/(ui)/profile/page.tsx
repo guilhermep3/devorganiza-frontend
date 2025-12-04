@@ -6,9 +6,11 @@ import { ProfileAttemptTable } from "@/components/layout/profile/profileAttemptT
 import { ProfileCard } from "@/components/layout/profile/profileCard";
 import { useState } from "react";
 import { EditProfileModal } from "@/components/layout/profile/editProfileModal";
+import { DeleteProfileModal } from "@/components/layout/profile/deleteProfileModal";
 
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { data, loading } = useUser();
   const { data: attemptsData } = useQuizAttempts();
   console.log("userData", data, loading);
@@ -20,7 +22,7 @@ export default function Page() {
         <h1 className="dashboardSectionTitle">Perfil do Usuário</h1>
         <h2 className="dashboardSectionSubtitle">Veja e gerencie seus dados pessoais</h2>
         <div className="flex flex-col lg:flex-row items-start gap-4">
-          <ProfileCard setIsEditing={setIsEditing} />
+          <ProfileCard setIsEditing={setIsEditing} setIsDeleting={setIsDeleting} />
           <div className="flex flex-col gap-4 w-full">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4 flex-1 w-full">
               <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md">
@@ -63,6 +65,7 @@ export default function Page() {
           profileImageUrl: "https://res.cloudinary.com/dvuxplf3j/image/upload/v1762865460/Users/ei4tafudigauwduwluws.jpg"
         }}
       />
+      <DeleteProfileModal isDeleting={isDeleting} setIsDeleting={setIsDeleting} />
     </div>
   );
 }

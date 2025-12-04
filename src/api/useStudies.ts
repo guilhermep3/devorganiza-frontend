@@ -20,8 +20,7 @@ export function useStudies() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const AUTH_TOKEN = process.env.NEXT_PUBLIC_AUTH_TOKEN!;
-  const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   async function fetchStudies() {
     setLoading(true);
@@ -30,7 +29,7 @@ export function useStudies() {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${AUTH_TOKEN}`
+          "Authorization": `Bearer ${TOKEN}`
         }
       });
 

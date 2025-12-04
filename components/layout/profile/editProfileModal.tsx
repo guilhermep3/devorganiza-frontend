@@ -4,7 +4,7 @@ import { PasswordInput } from "@/components/passwordInput";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label";
-import { useUpdateProfile } from "@/src/api/useUpdateProfile";
+import { useUpdateUser } from "@/src/api/useUpdateUser";
 import { EditProfileForm, editProfileSchema } from "@/src/schema/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Camera } from "lucide-react";
@@ -23,7 +23,7 @@ type Props = {
 };
 export const EditProfileModal = ({ isEditing, setIsEditing, defaultValues }: Props) => {
   const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImageUrl || "");
-  const { updateProfile, loading, success, error } = useUpdateProfile();
+  const { updateProfile, loading, success, error } = useUpdateUser();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({
     resolver: zodResolver(editProfileSchema),

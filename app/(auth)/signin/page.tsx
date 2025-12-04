@@ -41,7 +41,7 @@ export default function Page() {
           <p className={errorSubmitStyle}>{errors.submit}</p>
         )}
 
-        <Button className={`w-full ${loading ? 'pointer-events-none opacity-75' : ''}`}>
+        <Button submit className={`w-full ${loading ? 'pointer-events-none opacity-75' : ''}`}>
           {loading ? "Entrando..." : "Entrar"}
         </Button>
       </form>

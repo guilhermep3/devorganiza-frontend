@@ -4,8 +4,9 @@ import Image from "next/image"
 
 type props = {
   setIsEditing: (value: boolean) => void;
+  setIsDeleting: (value: boolean) => void;
 }
-export const ProfileCard = ({ setIsEditing }: props) => {
+export const ProfileCard = ({ setIsEditing, setIsDeleting }: props) => {
 
   return (
     <div className="flex flex-col items-center gap-4 w-full lg:w-1/3 p-4 bg-card border border-gray-20 rounded-md">
@@ -32,7 +33,9 @@ export const ProfileCard = ({ setIsEditing }: props) => {
         >
           Editar
         </Button>
-        <Button className="flex-1 bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition">
+        <Button className="flex-1 bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition"
+          onClick={() => setIsDeleting(true)}
+        >
           Excluir
         </Button>
       </div>

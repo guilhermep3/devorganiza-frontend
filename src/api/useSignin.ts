@@ -21,17 +21,20 @@ export const useSignin = () => {
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_URL}/singin`, {
+      const res = await fetch(`${API_URL}/auth/signin`, {
         method: "POST",
-        headers: { "content-type": "application-json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password })
       })
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const data = await res.json();
         setErrors({ submit: data.error || "Erro ao fazer login" });
         return;
       }
+
+      localStorage.setItem("token", data.token);
 
       window.location.href = "/dashboard";
     } catch (err) {
