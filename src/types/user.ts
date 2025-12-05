@@ -1,0 +1,17 @@
+export type User = {
+  id: number;
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+  profileImage?: string;
+  role: "user" | "admin";
+  createdAt: string;
+};
+
+export type UserResponse = {
+  user: User;
+  studiesCount: number;
+  tasksCount?: number;
+  studiesPercentage?: number;
+};

@@ -14,14 +14,14 @@ import { Controller, useForm } from "react-hook-form";
 type Props = {
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  defaultValues?: {
+  fetchUser: () => void;
+  defaultValues: {
     name: string;
     username: string;
-    password?: string;
     profileImageUrl?: string;
   }
 };
-export const EditProfileModal = ({ isEditing, setIsEditing, defaultValues }: Props) => {
+export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultValues }: Props) => {
   const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImageUrl || "");
   const { updateProfile, loading, success, error } = useUpdateUser();
 
@@ -30,23 +30,31 @@ export const EditProfileModal = ({ isEditing, setIsEditing, defaultValues }: Pro
     defaultValues: {
       name: defaultValues?.name || "",
       username: defaultValues?.username || "",
-      password: defaultValues?.password || ""
+      password: ""
     }
   })
 
   async function onSubmit(data: EditProfileForm) {
-    const imageFile = data.profileImage?.[0];
+    const imageFile = data.profileImage?.[0] || null;
 
-    const result = await updateProfile({
-      name: data.name,
-      username: data.username,
-      password: data.password,
-      profileImage: imageFile
-    });
+    const result = await updateProfile(
+      {
+        name: data.name,
+        username: data.username,
+        password: data.password,
+        profileImage: imageFile
+      },
+      {
+        name: defaultValues.name,
+        username: defaultValues.username,
+        profileImageUrl: defaultValues.profileImageUrl
+      }
+    );
+    console.log("result", result)
 
-    console.log("Dados enviados:", result);
     if (success) {
       setIsEditing(false);
+      fetchUser();
     }
   }
 
@@ -109,7 +117,7 @@ export const EditProfileModal = ({ isEditing, setIsEditing, defaultValues }: Pro
               name="password"
               render={({ field }) => (
                 <PasswordInput
-                  value={field.value}
+                  value={field.value || ""}
                   onChange={field.onChange}
                 />
               )}

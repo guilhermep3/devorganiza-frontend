@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { UserResponse } from "../types/user";
 
 export const useUser = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<UserResponse | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
@@ -20,7 +21,6 @@ export const useUser = () => {
         },
         credentials: "include"
       });
-      console.log("Fetch user response:", res);
 
       if (!res.ok) {
         const data = await res.json();
@@ -28,7 +28,7 @@ export const useUser = () => {
         return;
       }
 
-      const user = await res.json();
+      const user = await res.json() as UserResponse;
       setData(user);
     } catch (err) {
       setErrors({ submit: "Erro ao conectar ao servidor" });

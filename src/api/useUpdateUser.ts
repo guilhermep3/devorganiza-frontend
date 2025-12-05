@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { EditProfileForm } from "../schema/profile";
 
+type UserDefaultValues = {
+  name: string;
+  username: string;
+  profileImageUrl?: string;
+};
+
 export const useUpdateUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -9,59 +15,47 @@ export const useUpdateUser = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-  async function updateProfile(data: EditProfileForm) {
+  async function updateProfile(data: EditProfileForm, defaults: UserDefaultValues) {
     try {
       setLoading(true);
       setError(null);
       setSuccess(false);
 
-      const formData = new FormData();
-      formData.append("name", data.name);
-      formData.append("username", data.username);
+      const changed: Record<string, any> = {};
 
-      if (data.password) {
-        formData.append("password", data.password);
+      if (data.name !== defaults.name) {
+        changed.name = data.name;
+      }
+      if (data.username !== defaults.username) {
+        changed.username = data.username;
+      }
+      if (data.password && data.password.trim() !== "") {
+        changed.password = data.password;
+      }
+      if (data.profileImage) {
+        changed.profileImage = data.profileImage;
+      }
+      if (Object.keys(changed).length === 0) {
+        setSuccess(true);
+        return { message: "Nada foi alterado" };
       }
 
-      const profileRes = await fetch(`${API_URL}/users/`, {
+      const res = await fetch(`${API_URL}/users/`, {
         method: "PUT",
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TOKEN}`,
         },
-        body: formData
+        body: JSON.stringify(changed)
       });
 
-      if (!profileRes.ok) {
-        throw new Error("Falha ao atualizar dados do usuário");
+      if (!res.ok) {
+        throw new Error("Falha ao atualizar usuário");
       }
 
-      let imageResJson = null;
-
-      if (data.profileImage) {
-        const imgForm = new FormData();
-        imgForm.append("profileImage", data.profileImage);
-
-        const imageRes = await fetch(`${API_URL}/users/image`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${TOKEN}`
-          },
-          body: imgForm,
-        });
-
-        if (!imageRes.ok) {
-          throw new Error("Falha ao atualizar imagem de perfil");
-        }
-
-        imageResJson = await imageRes.json();
-      }
-
+      const json = await res.json();
       setSuccess(true);
-      return {
-        profile: await profileRes.json(),
-        image: imageResJson
-      };
+      return json;
 
     } catch (err: any) {
       setError(err.message);
@@ -73,7 +67,9 @@ export const useUpdateUser = () => {
   }
 
   return {
-    updateProfile, loading,
-    error, success
+    updateProfile,
+    loading,
+    error,
+    success
   };
 };
