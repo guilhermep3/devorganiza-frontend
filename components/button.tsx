@@ -12,7 +12,7 @@ type Props = {
 
 export const Button = ({ whiteBg, size = 2, className, onClick, children, href, submit
 }: Props) => {
-  const commonClasses = `group relative z-10 text-black text-center font-bold rounded-md transition-all
+  const commonClasses = `group relative z-10 text-white text-center font-bold rounded-md transition-all
     overflow-hidden w-fit cursor-pointer shadow-md shadow-main-50 hover:shadow-main-40/75
     ${whiteBg ? 'bg-main-10 hover:bg-main-10' : 'bg-main-30 hover:bg-main-30'}
     ${size === 1 && "px-4 py-1 text-sm"}

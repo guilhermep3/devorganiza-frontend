@@ -1,7 +1,7 @@
-export interface StudyTask {
-  studies: Study;
-  tasks: Tasks[] | null
-}
+export type StudyTask = {
+  study: Study;
+  tasks: Task[];
+};
 
 export interface Study {
   id: number;
@@ -16,7 +16,7 @@ export interface Study {
   userId: number;
 }
 
-export interface Tasks {
+export interface Task {
   id: number;
   title: string;
   link: string;

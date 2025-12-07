@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-export function useCreateStudy() {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
+export const useCreateTask = (studyId: number | null) => {
+  const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
-  const [description, setDescription] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<any>({});
@@ -17,29 +15,24 @@ export function useCreateStudy() {
     e.preventDefault();
 
     const newErrors: any = {};
-    if (!name) newErrors.name = "Digite o nome do estudo";
-    if (!type) newErrors.type = "Selecione o tipo do estudo";
+    if (!title) { newErrors.title = "Digite o título da tarefa" };
     setErrors(newErrors);
     if (Object.keys(newErrors).length > 0) return;
 
     const data: any = {};
 
-    if (name) {
-      data.name = name;
-    }
-    if (type) {
-      data.type = type;
+    if (title) {
+      data.title = title;
     }
     if (link) {
       data.link = link;
     }
-    if (description) {
-      data.description = description;
-    }
+    data.done = false;
+    console.log("createTaskData", data)
 
     setLoading(true);
     try {
-      const res = await fetch(`${API_URL}/studies`, {
+      const res = await fetch(`${API_URL}/tasks/${studyId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -50,6 +43,7 @@ export function useCreateStudy() {
 
       if (!res.ok) {
         const data = await res.json();
+        console.log("createTaskRes", data)
         setErrors({ submit: data.error || "Erro ao criar estudo" });
         return;
       }
@@ -63,8 +57,7 @@ export function useCreateStudy() {
   }
 
   return {
-    name, setName, type, setType,
-    link, setLink, description, setDescription,
-    success, loading, errors, handleSubmit
+    title, setTitle, link, setLink,
+    loading, errors, success, handleSubmit
   }
 }

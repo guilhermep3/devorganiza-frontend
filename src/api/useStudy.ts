@@ -1,0 +1,53 @@
+"use client";
+import { useEffect, useState } from "react";
+import { StudyTask } from "../types/study";
+
+export function useStudy(studyId: number) {
+  const [data, setData] = useState<StudyTask | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+  const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+
+  async function fetchStudy() {
+    if (!studyId) return;
+    console.log("studyId", studyId)
+    setLoading(true);
+    try {
+      const res = await fetch(`${API_URL}/studies/${studyId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TOKEN}`,
+        },
+      });
+      // console.log("studyRes", res)
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        setError(errorData.error || "Erro ao buscar o estudo");
+        return;
+      }
+
+      const study: StudyTask = await res.json();
+      // console.log("study", study)
+      setData(study);
+    } catch (err) {
+      setError("Erro ao conectar ao servidor");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    fetchStudy();
+  }, [studyId]);
+
+  return {
+    data,
+    error,
+    loading,
+    fetchStudy,
+  };
+}

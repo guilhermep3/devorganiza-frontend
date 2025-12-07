@@ -3,46 +3,56 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
-import { useCreateStudy } from "@/src/api/useCreateStudy";
+import { Study } from "@/src/types/study";
+import { useEffect } from "react";
+import { useEditStudy } from "@/src/api/useEditStudy";
 
 type Props = {
-  isCreating: boolean;
-  setIsCreating: (value: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  study: Study | null;
 };
 
-export const CreateStudyModal = ({ isCreating, setIsCreating }: Props) => {
+export const EditStudyModal = ({ isOpen, setIsOpen, study }: Props) => {
   const {
     name, setName, type, setType,
     link, setLink, description, setDescription,
     handleSubmit, loading, errors, success
-  } = useCreateStudy();
+  } = useEditStudy(study?.id ?? null);
+
+  useEffect(() => {
+    if (study) {
+      setName(study.name || "");
+      setType(study.type || "");
+      setLink(study.link || "");
+      setDescription(study.description || "");
+    }
+  }, [study]);
 
   return (
-    <Dialog open={isCreating} onOpenChange={setIsCreating}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Criar estudo</DialogTitle>
+          <DialogTitle>Editar estudo</DialogTitle>
           <DialogDescription>
-            Crie um novo estudo
+            Atualize as informações do seu estudo.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2 w-full">
           {success && <p className="text-green-500 text-sm">{success}</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
-            <input className="inputCustom w-full"
-              placeholder="Ex: Criar modal com React"
+            <input
+              className="inputCustom w-full"
               value={name}
-              onChange={(e: any) => setName(e.target.value)}
+              onChange={(e) => setName(e.target.value)}
             />
-            {errors.name && (
-              <p className="errorSubmit">{errors.name}</p>
-            )}
+            {errors.name && <p className="errorSubmit">{errors.name}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Tipo</label>
             <select
-              className="border rounded-md px-3 py-2 inputCustom w-full"
+              className="inputCustom w-full"
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
@@ -51,46 +61,34 @@ export const CreateStudyModal = ({ isCreating, setIsCreating }: Props) => {
               <option value="backend">Backend</option>
               <option value="ferramenta">Ferramenta</option>
             </select>
-            {errors.type && (
-              <p className="errorSubmit">{errors.type}</p>
-            )}
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <label className="text-sm font-medium">Link (opcional)</label>
-            <input className="inputCustom w-full"
-              placeholder="https://..."
+            <label className="text-sm font-medium">Link</label>
+            <input
+              className="inputCustom w-full"
               value={link}
-              onChange={(e: any) => setLink(e.target.value)}
+              onChange={(e) => setLink(e.target.value)}
             />
-            {errors.link && (
-              <p className="errorSubmit">{errors.link}</p>
-            )}
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <label className="text-sm font-medium">Descrição (opcional)</label>
-            <textarea className="inputCustom w-full h-24 resize-none"
-              placeholder="Detalhes da tarefa..."
+            <label className="text-sm font-medium">Descrição</label>
+            <textarea
+              className="inputCustom resize-none h-24 w-full"
               value={description}
-              onChange={(e: any) => setDescription(e.target.value)}
+              onChange={(e) => setDescription(e.target.value)}
             />
-            {errors.description && (
-              <p className="errorSubmit">{errors.description}</p>
-            )}
           </div>
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN
               variant="outline"
-              onClick={() => setIsCreating(false)}
+              onClick={() => setIsOpen(false)}
               className="bg-gray-20 hover:bg-gray-30"
             >
               Cancelar
             </ButtonCN>
-            <Button
-              onClick={handleSubmit}
-              submit
-            >
+            <Button submit>
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
-              Criar tarefa
+              Salvar
             </Button>
           </div>
         </form>

@@ -12,9 +12,6 @@ export default function Page() {
   const { data, loading, error } = useStudies();
   const [isCreating, setIsCreating] = useState(false);
 
-  console.log("Data from API:", data);
-  console.log("Type of data:", typeof data);
-
   return (
     <div className="layoutDiv">
       <section className="flex flex-col">
@@ -23,7 +20,7 @@ export default function Page() {
             <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>
             <h2 className="dashboardSectionSubtitle">Veja seus estudos e progresso</h2>
           </div>
-          <Button size={1} className="flex items-center gap-2 h-fit px-1! md:px-4!"
+          <Button size={1} className="flex items-center gap-2 h-fit px-1! md:px-4! text-white"
             onClick={() => setIsCreating(true)}
           >
             <Plus />
@@ -32,14 +29,14 @@ export default function Page() {
         </div>
         <div className="">
           {loading ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
               <LoadingStudy />
               <LoadingStudy />
             </div>
           ) : data ? (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-              {data.map((study: StudyTask, index) => (
-                <StudyCard key={index} data={study} />
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+              {data.map((i: StudyTask, index) => (
+                <StudyCard key={index} data={i} />
               ))}
             </div>
           ) : (

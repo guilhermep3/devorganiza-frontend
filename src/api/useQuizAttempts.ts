@@ -20,7 +20,6 @@ export const useQuizAttempts = () => {
         },
         credentials: "include"
       });
-      console.log("Fetch quiz attempts response:", res);
       if (!res.ok) {
         const data = await res.json();
         setErrors({ fetch: data.error || "Erro ao buscar dados das tentativas de quizzes" });

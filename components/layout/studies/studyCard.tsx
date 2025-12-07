@@ -1,16 +1,15 @@
 import { Button } from "@/components/button";
-import { Study, StudyTask } from "@/src/types/study";
+import { StudyTask } from "@/src/types/study";
 import { List, ListCheck, Target } from "lucide-react";
 
 type props = {
   data: StudyTask;
 }
 export const StudyCard = ({ data }: props) => {
-  console.log("data.studies", data.studies)
-  console.log("data.tasks", data.tasks)
+  console.log("data", data)
 
   const getTasksStats = () => {
-    if (!data.tasks || data.tasks.length === 0) {
+    if (!data.tasks || data.tasks.length === 0 || data.tasks === null) {
       return { total: 0, completed: 0, percentage: 0 };
     }
 
@@ -26,21 +25,21 @@ export const StudyCard = ({ data }: props) => {
     <div className="flex flex-col bg-card border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
       <div className="flex flex-col gap-3 border-t border-gray-30 p-2 md:p-3">
         <div className="mb-3">
-          <h3 className="font-semibold text-lg truncate">{data.studies.name}</h3>
-          <div className="flex items-center gap-2 mt-1">
+          <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
+          <div className="flex items-center gap-1 lg:gap-2 mt-1">
             <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
-              {data.studies.type || 'Sem tipo'}
+              {data.study.type || 'Sem tipo'}
             </span>
-            <span className={`text-xs px-2 py-1 rounded-sm border border-gray-20 ${data.studies.status === 'em_andamento'
+            <span className={`text-xs px-2 py-1 rounded-sm border border-gray-20 ${data.study.status === 'em_andamento'
               ? 'bg-yellow-200 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200'
               : 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
               }`}>
-              {data.studies.status?.replace('_', ' ') || 'Status'}
+              {data.study.status?.replace('_', ' ') || 'Status'}
             </span>
           </div>
-          {data.studies.description && (
+          {data.study.description && (
             <p className="text-sm text-gray-60 mt-2 line-clamp-2">
-              {data.studies.description}
+              {data.study.description}
             </p>
           )}
         </div>
@@ -81,7 +80,7 @@ export const StudyCard = ({ data }: props) => {
         </div>
         <Button
           className="w-full text-sm md:text-base"
-          href={`/studies/${data.studies.id}/tasks`}
+          href={`/studies/${data.study.id}/tasks`}
         >
           Ver Estudo
         </Button>
