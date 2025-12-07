@@ -8,7 +8,6 @@ type Props = {
   isDeleting: boolean;
   setIsDeleting: (value: boolean) => void;
 };
-
 export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
   const { deleteAccount, loading, error, success } = useDeleteUser();
 

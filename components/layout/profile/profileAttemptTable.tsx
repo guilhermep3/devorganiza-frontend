@@ -4,6 +4,7 @@ import Image from "next/image"
 
 export const ProfileAttemptTable = () => {
   const { data, loading } = useQuizAttempts();
+  console.log("data",data)
 
   return (
     <table className="w-full border-separate border-spacing-y-3">

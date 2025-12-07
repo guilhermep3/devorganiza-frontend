@@ -2,7 +2,6 @@
 import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignup } from "@/src/api/useSignup";
-import { errorSubmitStyle } from "@/src/styles";
 import Link from "next/link";
 
 export default function Page() {
@@ -26,7 +25,7 @@ export default function Page() {
             onChange={(e) => setName(e.target.value)}
           />
           {errors.name && (
-            <p className={errorSubmitStyle}>{errors.name}</p>
+            <p className="errorSubmit">{errors.name}</p>
           )}
         </div>
         <div className="flex flex-col gap-0">
@@ -38,7 +37,7 @@ export default function Page() {
             onChange={(e) => setUsername(e.target.value)}
           />
           {errors.username && (
-            <p className={errorSubmitStyle}>{errors.username}</p>
+            <p className="errorSubmit">{errors.username}</p>
           )}
         </div>
         <div className="flex flex-col gap-0">
@@ -50,13 +49,13 @@ export default function Page() {
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email && (
-            <p className={errorSubmitStyle}>{errors.email}</p>
+            <p className="errorSubmit">{errors.email}</p>
           )}
         </div>
         <div className="flex flex-col gap-0">
           <PasswordInput value={password} onChange={setPassword} />
           {errors.password && (
-            <p className={errorSubmitStyle}>{errors.password}</p>
+            <p className="errorSubmit">{errors.password}</p>
           )}
         </div>
         {errors.submit && (

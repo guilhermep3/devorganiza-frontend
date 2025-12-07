@@ -25,7 +25,6 @@ export function useSignup() {
     if (Object.keys(newErrors).length > 0) return;
 
     setLoading(true);
-
     try {
       const res = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",

@@ -1,46 +1,87 @@
 import { Button } from "@/components/button";
-import { Study } from "@/src/api/useStudies";
-import { List, ListCheck } from "lucide-react";
+import { Study, StudyTask } from "@/src/types/study";
+import { List, ListCheck, Target } from "lucide-react";
 
 type props = {
-  data?: Study;
+  data: StudyTask;
 }
 export const StudyCard = ({ data }: props) => {
+  console.log("data.studies", data.studies)
+  console.log("data.tasks", data.tasks)
+
+  const getTasksStats = () => {
+    if (!data.tasks || data.tasks.length === 0) {
+      return { total: 0, completed: 0, percentage: 0 };
+    }
+
+    const total = data.tasks.length;
+    const completed = data.tasks.filter((t) => t.done === true).length;
+    const percentage = total === 0 ? 0 : (Math.floor(completed / total));
+
+    return { total, completed, percentage }
+  }
+  const { total, completed, percentage } = getTasksStats();
 
   return (
-    <div className="flex flex-col border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
+    <div className="flex flex-col bg-card border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
       <div className="flex flex-col gap-3 border-t border-gray-30 p-2 md:p-3">
-        <div className="flex flex-col">
-          <p className="font-semibold text-base md:text-lg mb-1">{data?.name ?? "Nome do estudo"}</p>
-          <p className="text-sm text-gray-50">{data?.type ?? 'Área de estudo'}</p>
-          <p className="text-sm text-gray-50">{data?.description ?? 'Descrição de estudo'}</p>
+        <div className="mb-3">
+          <h3 className="font-semibold text-lg truncate">{data.studies.name}</h3>
+          <div className="flex items-center gap-2 mt-1">
+            <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
+              {data.studies.type || 'Sem tipo'}
+            </span>
+            <span className={`text-xs px-2 py-1 rounded-sm border border-gray-20 ${data.studies.status === 'em_andamento'
+              ? 'bg-yellow-200 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200'
+              : 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
+              }`}>
+              {data.studies.status?.replace('_', ' ') || 'Status'}
+            </span>
+          </div>
+          {data.studies.description && (
+            <p className="text-sm text-gray-60 mt-2 line-clamp-2">
+              {data.studies.description}
+            </p>
+          )}
         </div>
-        <div className="flex mt-5">
-          <div
-            className="flex-1 flex justify-center items-center gap-1 font-bold text-sm md:text-lg text-main-30"
-            title="Total de tarefas"
-          >
-            <List className="w-5 h-5 md:w-6 md:h-6" />
-            {data?.tasks ?? 20}
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-sm font-medium text-gray-60">Progresso</span>
+            <span className="text-sm font-bold">{percentage}%</span>
           </div>
-          <div
-            className="flex-1 flex justify-center items-center gap-1 font-bold text-sm md:text-lg text-green-20 border-x border-gray-20"
-            title="Tarefas finalizadas"
-          >
-            <ListCheck className="w-5 h-5 md:w-6 md:h-6" />
-            {data?.tasks.finished ?? 20}
+          <div className="w-full bg-gray-10 rounded-full h-3 border border-gray-20">
+            <div
+              className="bg-green-500 h-2 rounded-full transition-all duration-300"
+              style={{ width: `${percentage}%` }}
+            ></div>
           </div>
-          <div
-            className="flex-1 flex justify-center items-center gap-1 font-bold text-sm md:text-lg text-main-40"
-            title="Progresso"
-          >
-            <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-main-40 rounded-full"></div>
-            15
+        </div>
+        <div className="grid grid-cols-3 gap-2 text-center">
+          <div className="p-2 rounded bg-gray-20">
+            <div className="flex items-center justify-center gap-1 text-foreground">
+              <List className="w-4 h-4" />
+              <span className="font-bold">{total}</span>
+            </div>
+            <span className="text-xs text-gray-500">Total</span>
+          </div>
+          <div className="p-2 rounded bg-green-100 dark:bg-green-950">
+            <div className="flex items-center justify-center gap-1 text-green-20">
+              <ListCheck className="w-4 h-4" />
+              <span className="font-bold">{completed}</span>
+            </div>
+            <span className="text-xs text-gray-500">Concluídas</span>
+          </div>
+          <div className="p-2 rounded bg-main-10">
+            <div className="flex items-center justify-center gap-1 text-main-40">
+              <Target className="w-4 h-4" />
+              <span className="font-bold">{percentage}</span>
+            </div>
+            <span className="text-xs text-gray-500">%</span>
           </div>
         </div>
         <Button
           className="w-full text-sm md:text-base"
-          href={`/studies/1/tasks`}
+          href={`/studies/${data.studies.id}/tasks`}
         >
           Ver Estudo
         </Button>

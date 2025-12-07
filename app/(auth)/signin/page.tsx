@@ -2,7 +2,6 @@
 import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignin } from "@/src/api/useSignin";
-import { errorSubmitStyle } from "@/src/styles";
 import Link from "next/link";
 
 export default function Page() {
@@ -26,19 +25,19 @@ export default function Page() {
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email && (
-            <p className={errorSubmitStyle}>{errors.email}</p>
+            <p className="errorSubmit">{errors.email}</p>
           )}
         </div>
 
         <div className="flex flex-col gap-0">
           <PasswordInput value={password} onChange={setPassword} />
           {errors.password && (
-            <p className={errorSubmitStyle}>{errors.password}</p>
+            <p className="errorSubmit">{errors.password}</p>
           )}
         </div>
 
         {errors.submit && (
-          <p className={errorSubmitStyle}>{errors.submit}</p>
+          <p className="errorSubmit">{errors.submit}</p>
         )}
 
         <Button submit className={`w-full ${loading ? 'pointer-events-none opacity-75' : ''}`}>

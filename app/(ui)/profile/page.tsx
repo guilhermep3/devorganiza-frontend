@@ -1,7 +1,6 @@
 "use client";
 import { BookOpenCheck, ListChecks, GaugeCircle, CircleQuestionMark } from "lucide-react";
 import { useUser } from "@/src/api/useUser";
-import { useQuizAttempts } from "@/src/api/useQuizAttempts";
 import { ProfileAttemptTable } from "@/components/layout/profile/profileAttemptTable";
 import { ProfileCard } from "@/components/layout/profile/profileCard";
 import { useState } from "react";
@@ -13,9 +12,7 @@ export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { data, loading, fetchUser } = useUser();
-  const { data: attemptsData } = useQuizAttempts();
   console.log("userData", data, loading);
-  console.log("attemptData", attemptsData, loading);
 
   return (
     <div className="layoutDiv flex flex-col gap-10">
