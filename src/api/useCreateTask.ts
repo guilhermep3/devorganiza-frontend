@@ -28,7 +28,6 @@ export const useCreateTask = (studyId: number | null) => {
       data.link = link;
     }
     data.done = false;
-    console.log("createTaskData", data)
 
     setLoading(true);
     try {
@@ -43,7 +42,6 @@ export const useCreateTask = (studyId: number | null) => {
 
       if (!res.ok) {
         const data = await res.json();
-        console.log("createTaskRes", data)
         setErrors({ submit: data.error || "Erro ao criar estudo" });
         return;
       }

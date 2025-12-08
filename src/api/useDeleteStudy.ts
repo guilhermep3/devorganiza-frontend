@@ -20,7 +20,7 @@ export function useDeleteStudy(studyId: number | null) {
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          "Authorization": `Bearer ${TOKEN}`,
         },
       });
 

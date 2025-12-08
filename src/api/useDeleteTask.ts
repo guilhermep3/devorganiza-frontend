@@ -20,7 +20,7 @@ export function useDeleteTask(taskId: number | null) {
       const res = await fetch(`${API_URL}/tasks/${taskId}`, {
         method: "DELETE",
         headers: {
-          Authorization: `Bearer ${TOKEN}`,
+          "Authorization": `Bearer ${TOKEN}`,
         },
       });
 

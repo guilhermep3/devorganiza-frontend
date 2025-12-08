@@ -13,8 +13,7 @@ export function useEditStudy(studyId: number | null) {
   const [success, setSuccess] = useState<string | null>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+  const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   async function handleSubmit(e: any) {
     e.preventDefault();
@@ -22,21 +21,29 @@ export function useEditStudy(studyId: number | null) {
 
     setLoading(true);
     setErrors({});
-    setSuccess(null);
+
+    const updated: Record<string, any> = {};
+    if (name) {
+      updated.name = name;
+    }
+    if (type) {
+      updated.type = type;
+    }
+    if (link) {
+      updated.link = link;
+    }
+    if (description) {
+      updated.description = description;
+    }
 
     try {
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          "Authorization": `Bearer ${TOKEN}`,
         },
-        body: JSON.stringify({
-          name,
-          type,
-          link,
-          description,
-        }),
+        body: JSON.stringify(updated),
       });
 
       const data = await res.json();

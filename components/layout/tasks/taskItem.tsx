@@ -4,9 +4,7 @@ import { Pencil, Trash } from "lucide-react"
 export const TaskItem = ({ task }: { task: Task }) => {
 
   return (
-    <div
-      className="bg-card p-4 rounded-lg flex flex-col justify-between gap-3"
-    >
+    <div className="bg-card p-4 rounded-lg flex flex-col justify-between gap-3">
       <div>
         <h3 className="text-foreground font-semibold">{task.title}</h3>
         {task.link && (
@@ -20,12 +18,9 @@ export const TaskItem = ({ task }: { task: Task }) => {
         )}
       </div>
       <div className="flex justify-between items-center">
-        <span
-          className={`text-xs ${task.done ? "text-green-600" : "text-yellow-600"}`}
-        >
+        <span className={`text-xs ${task.done ? "text-green-600" : "text-yellow-600"}`}>
           {task.done ? "Concluída" : "Pendente"}
         </span>
-
         <div className="flex gap-2">
           <button
             onClick={() => console.log("Editar task", task.id)}

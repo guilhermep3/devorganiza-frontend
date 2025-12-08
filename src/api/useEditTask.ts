@@ -28,7 +28,7 @@ export function useEditTask(taskId: number | null) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${TOKEN}`,
+          "Authorization": `Bearer ${TOKEN}`,
         },
         body: JSON.stringify({
           title,

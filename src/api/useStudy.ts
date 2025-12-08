@@ -12,7 +12,6 @@ export function useStudy(studyId: number) {
 
   async function fetchStudy() {
     if (!studyId) return;
-    console.log("studyId", studyId)
     setLoading(true);
     try {
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
@@ -22,7 +21,6 @@ export function useStudy(studyId: number) {
           "Authorization": `Bearer ${TOKEN}`,
         },
       });
-      // console.log("studyRes", res)
 
       if (!res.ok) {
         const errorData = await res.json();
@@ -31,7 +29,6 @@ export function useStudy(studyId: number) {
       }
 
       const study: StudyTask = await res.json();
-      // console.log("study", study)
       setData(study);
     } catch (err) {
       setError("Erro ao conectar ao servidor");

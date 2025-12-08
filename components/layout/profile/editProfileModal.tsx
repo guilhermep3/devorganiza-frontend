@@ -50,7 +50,6 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
         profileImageUrl: defaultValues.profileImageUrl
       }
     );
-    console.log("result", result)
 
     if (success) {
       setIsEditing(false);

@@ -1,6 +1,6 @@
 import { Button } from "@/components/button";
 import { StudyTask } from "@/src/types/study";
-import { List, ListCheck, Target } from "lucide-react";
+import { BookmarkCheck, Hourglass, List, ListCheck, Target } from "lucide-react";
 
 type props = {
   data: StudyTask;
@@ -26,16 +26,20 @@ export const StudyCard = ({ data }: props) => {
       <div className="flex flex-col gap-3 border-t border-gray-30 p-2 md:p-3">
         <div className="mb-3">
           <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
-          <div className="flex items-center gap-1 lg:gap-2 mt-1">
+          <div className="flex items-center justify-between gap-1 lg:gap-2 mt-1">
             <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
               {data.study.type || 'Sem tipo'}
             </span>
-            <span className={`text-xs px-2 py-1 rounded-sm border border-gray-20 ${data.study.status === 'em_andamento'
+            <div className={`text-xs px-2 py-1 rounded-sm border border-gray-20 ${data.study.status === 'em_andamento'
               ? 'bg-yellow-200 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200'
               : 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
-              }`}>
-              {data.study.status?.replace('_', ' ') || 'Status'}
-            </span>
+              }`}
+            >
+              <p className="hidden lg:block">{data.study.status?.replace('_', ' ') || 'Status'}</p>
+              <div className="block lg:hidden">
+                {data.study.status === 'em_andamento' ? <Hourglass className="w-4 h-4" /> : <BookmarkCheck className="w-4 h-4" />}
+              </div>
+            </div>
           </div>
           {data.study.description && (
             <p className="text-sm text-gray-60 mt-2 line-clamp-2">
