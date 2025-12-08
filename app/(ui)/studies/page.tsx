@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/button";
 import { CreateStudyModal } from "@/components/layout/studies/createStudyModal";
-import { LoadingStudy } from "@/components/layout/studies/loadingStudy";
+import { StudySkeleton } from "@/components/layout/studies/studySkeleton";
 import { StudyCard } from "@/components/layout/studies/studyCard";
 import { useStudies } from "@/src/api/useStudies";
 import { StudyTask } from "@/src/types/study";
@@ -30,8 +30,8 @@ export default function Page() {
         <div className="">
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
-              <LoadingStudy />
-              <LoadingStudy />
+              <StudySkeleton />
+              <StudySkeleton />
             </div>
           ) : data ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">

@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
-import { Study } from "@/src/types/study";
 import { useCreateTask } from "@/src/api/useCreateTask";
 
 type Props = {
@@ -14,7 +13,7 @@ type Props = {
 export const CreateTaskModal = ({ isOpen, setIsOpen, studyId }: Props) => {
   const {
     title, setTitle, link, setLink,
-    handleSubmit, loading, errors, success
+    handleSubmit, loading, errors, setErrors, success
   } = useCreateTask(studyId);
 
   return (
@@ -48,7 +47,9 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId }: Props) => {
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN
               variant="outline"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                setIsOpen(false);
+              }}
               className="bg-gray-20 hover:bg-gray-30"
             >
               Cancelar

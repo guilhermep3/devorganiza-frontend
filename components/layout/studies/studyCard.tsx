@@ -22,17 +22,18 @@ export const StudyCard = ({ data }: props) => {
   const { total, completed, percentage } = getTasksStats();
 
   return (
-    <div className="flex flex-col bg-card border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
-      <div className="flex flex-col gap-3 border-t border-gray-30 p-2 md:p-3">
+    <div className="flex flex-col bg-card h-[340px] border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
+      <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
         <div className="mb-3">
           <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
           <div className="flex items-center justify-between gap-1 lg:gap-2 mt-1">
             <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
               {data.study.type || 'Sem tipo'}
             </span>
-            <div className={`text-xs px-2 py-1 rounded-sm border border-gray-20 ${data.study.status === 'em_andamento'
-              ? 'bg-yellow-200 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200'
-              : 'bg-green-200 text-green-800 dark:bg-green-800 dark:text-green-200'
+            <div className={`text-xs px-2 py-1 rounded-sm border border-gray-20
+              ${data.study.status === 'em_andamento'
+                ? 'bg-yellow-200 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-200'
+                : 'bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200'
               }`}
             >
               <p className="hidden lg:block">{data.study.status?.replace('_', ' ') || 'Status'}</p>
@@ -47,39 +48,41 @@ export const StudyCard = ({ data }: props) => {
             </p>
           )}
         </div>
-        <div className="mb-4">
-          <div className="flex justify-between items-center mb-1">
-            <span className="text-sm font-medium text-gray-60">Progresso</span>
-            <span className="text-sm font-bold">{percentage}%</span>
-          </div>
-          <div className="w-full bg-gray-10 rounded-full h-3 border border-gray-20">
-            <div
-              className="bg-green-500 h-2 rounded-full transition-all duration-300"
-              style={{ width: `${percentage}%` }}
-            ></div>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-2 text-center">
-          <div className="p-2 rounded bg-gray-20">
-            <div className="flex items-center justify-center gap-1 text-foreground">
-              <List className="w-4 h-4" />
-              <span className="font-bold">{total}</span>
+        <div className="mt-auto">
+          <div className="mb-2">
+            <div className="flex justify-between items-center mb-1">
+              <span className="text-sm font-medium text-gray-60">Progresso</span>
+              <span className="text-sm font-bold">{percentage}%</span>
             </div>
-            <span className="text-xs text-gray-500">Total</span>
-          </div>
-          <div className="p-2 rounded bg-green-100 dark:bg-green-950">
-            <div className="flex items-center justify-center gap-1 text-green-20">
-              <ListCheck className="w-4 h-4" />
-              <span className="font-bold">{completed}</span>
+            <div className="w-full bg-gray-20 rounded-full h-3 border border-gray-20">
+              <div
+                className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${percentage}%` }}
+              ></div>
             </div>
-            <span className="text-xs text-gray-500">Concluídas</span>
           </div>
-          <div className="p-2 rounded bg-main-10">
-            <div className="flex items-center justify-center gap-1 text-main-40">
-              <Target className="w-4 h-4" />
-              <span className="font-bold">{percentage}</span>
+          <div className="grid grid-cols-3 gap-2 text-center my-1">
+            <div className="p-2 rounded bg-gray-20">
+              <div className="flex items-center justify-center gap-1 text-foreground">
+                <List className="w-4 h-4" />
+                <span className="font-bold">{total}</span>
+              </div>
+              <span className="text-xs text-gray-500">Total</span>
             </div>
-            <span className="text-xs text-gray-500">%</span>
+            <div className="p-2 rounded bg-green-100 dark:bg-green-950">
+              <div className="flex items-center justify-center gap-1 text-green-20">
+                <ListCheck className="w-4 h-4" />
+                <span className="font-bold">{completed}</span>
+              </div>
+              <span className="text-xs text-gray-500">Concluídas</span>
+            </div>
+            <div className="p-2 rounded bg-main-10">
+              <div className="flex items-center justify-center gap-1 text-main-40">
+                <Target className="w-4 h-4" />
+                <span className="font-bold">{percentage}</span>
+              </div>
+              <span className="text-xs text-gray-500">%</span>
+            </div>
           </div>
         </div>
         <Button

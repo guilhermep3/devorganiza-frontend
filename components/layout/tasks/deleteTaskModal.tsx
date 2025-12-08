@@ -1,5 +1,4 @@
 "use client";
-
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -24,9 +23,7 @@ export const DeleteTaskModal = ({ isOpen, setIsOpen, task }: Props) => {
             Essa ação não poderá ser desfeita.
           </DialogDescription>
         </DialogHeader>
-
         {error && <p className="errorSubmit">{error}</p>}
-
         <div className="flex justify-center gap-3 pt-6">
           <ButtonCN
             variant="outline"
@@ -35,10 +32,10 @@ export const DeleteTaskModal = ({ isOpen, setIsOpen, task }: Props) => {
           >
             Cancelar
           </ButtonCN>
-
           <ButtonCN
             variant="destructive"
             onClick={handleDelete}
+            className="text-white"
           >
             {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
             Excluir

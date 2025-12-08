@@ -1,12 +1,21 @@
-import { Task } from "@/src/types/study"
-import { Pencil, Trash } from "lucide-react"
+"use client"
+import { Task } from "@/src/types/study";
+import { CheckCircle, Hourglass, Pencil, Trash } from "lucide-react";
 
-export const TaskItem = ({ task }: { task: Task }) => {
+type props = {
+  task: Task
+  setTaskId: (newV: number) => void;
+  setIsEditingTask: (newV: any) => void;
+  setIsDeletingTask: (newV: any) => void;
+}
+export const TaskItem = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask }: props) => {
 
   return (
-    <div className="bg-card p-4 rounded-lg flex flex-col justify-between gap-3">
+    <div className={`bg-card p-4 rounded-lg flex flex-col justify-between gap-3 border
+      ${task.done ? "border-green-20" : "border-yellow-500"}`}
+    >
       <div>
-        <h3 className="text-foreground font-semibold">{task.title}</h3>
+        <h3 className="text-foreground font-semibold mb-1">{task.title}</h3>
         {task.link && (
           <a
             href={task.link}
@@ -17,19 +26,30 @@ export const TaskItem = ({ task }: { task: Task }) => {
           </a>
         )}
       </div>
-      <div className="flex justify-between items-center">
-        <span className={`text-xs ${task.done ? "text-green-600" : "text-yellow-600"}`}>
-          {task.done ? "Concluída" : "Pendente"}
-        </span>
-        <div className="flex gap-2">
+      <div className="flex justify-between items-center mt-2">
+        <div className="flex items-center gap-2">
+          {task.done
+            ? <CheckCircle className=" text-green-900 dark:text-green-200" />
+            : <Hourglass className="text-yellow-900 dark:text-yellow-200" />
+          }
+          <div className={`flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
+          ${task.done
+              ? 'bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200'
+              : 'bg-yellow-200 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-200'
+            }`}
+          >
+            <p>{task.done ? "Concluída" : "Pendente"}</p>
+          </div>
+        </div>
+        <div className="flex gap-4">
           <button
-            onClick={() => console.log("Editar task", task.id)}
-            className="text-gray-50 hover:text-gray-60 transition cursor-pointer"
+            onClick={() => { setIsEditingTask(true), setTaskId(task.id) }}
+            className="text-gray-60 hover:text-foreground transition cursor-pointer"
           >
             <Pencil size={16} />
           </button>
           <button
-            onClick={() => console.log("Excluir task", task.id)}
+            onClick={() => { setIsDeletingTask(true), setTaskId(task.id) }}
             className="text-red-500 hover:text-red-600 transition cursor-pointer"
           >
             <Trash size={16} />

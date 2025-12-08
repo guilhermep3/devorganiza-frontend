@@ -9,11 +9,10 @@ type Props = {
   href?: string;
   submit?: boolean;
 };
-
 export const Button = ({ whiteBg, size = 2, className, onClick, children, href, submit
 }: Props) => {
-  const commonClasses = `group relative z-10 text-white text-center font-bold rounded-md transition-all
-    overflow-hidden w-fit cursor-pointer shadow-md shadow-main-50 hover:shadow-main-40/75
+  const commonClasses = `group relative z-10 flex justify-center items-center text-white text-center font-bold rounded-md transition-all
+    overflow-hidden w-fit cursor-pointer hover:shadow-md shadow-main-50 hover:shadow-main-40/50
     ${whiteBg ? 'bg-main-10 hover:bg-main-10' : 'bg-main-30 hover:bg-main-30'}
     ${size === 1 && "px-4 py-1 text-sm"}
     ${size === 2 && "px-6 py-2 text-base"}
@@ -47,7 +46,7 @@ export const Button = ({ whiteBg, size = 2, className, onClick, children, href, 
     <button
       className={commonClasses}
       onClick={onClick}
-      type={ submit ? 'submit' : 'button'}
+      type={submit ? 'submit' : 'button'}
     >
       {children}
       <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-linear-to-r from-transparent -z-10

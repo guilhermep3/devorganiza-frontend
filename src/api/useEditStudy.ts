@@ -1,5 +1,4 @@
 "use client";
-
 import { useState } from "react";
 
 export function useEditStudy(studyId: number | null) {
@@ -21,6 +20,7 @@ export function useEditStudy(studyId: number | null) {
 
     setLoading(true);
     setErrors({});
+    setSuccess(null);
 
     const updated: Record<string, any> = {};
     if (name) {
@@ -54,6 +54,9 @@ export function useEditStudy(studyId: number | null) {
       }
 
       setSuccess("Estudo atualizado com sucesso!");
+      setTimeout(() => {
+        setSuccess(null)
+      }, 3100);
     } catch {
       setErrors({ general: "Erro ao conectar com o servidor" });
     } finally {

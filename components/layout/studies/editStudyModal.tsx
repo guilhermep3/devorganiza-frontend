@@ -11,9 +11,9 @@ type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   study: Study | null;
+  fetchStudy: () => void;
 };
-
-export const EditStudyModal = ({ isOpen, setIsOpen, study }: Props) => {
+export const EditStudyModal = ({ isOpen, setIsOpen, study, fetchStudy }: Props) => {
   const {
     name, setName, type, setType,
     link, setLink, description, setDescription,
@@ -29,6 +29,13 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study }: Props) => {
     }
   }, [study]);
 
+  function handleEdit() {
+    setTimeout(() => {
+      setIsOpen(false);
+      fetchStudy();
+    }, 3000);
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
@@ -39,7 +46,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2 w-full">
-          {success && <p className="text-green-500 text-sm">{success}</p>}
+          {success && <p className="text-green-500 text-sm text-center">{success}</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
             <input
@@ -86,7 +93,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study }: Props) => {
             >
               Cancelar
             </ButtonCN>
-            <Button submit>
+            <Button submit onClick={handleEdit}>
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
               Salvar
             </Button>

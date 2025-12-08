@@ -56,6 +56,6 @@ export const useCreateTask = (studyId: number | null) => {
 
   return {
     title, setTitle, link, setLink,
-    loading, errors, success, handleSubmit
+    loading, errors, setErrors, success, handleSubmit
   }
 }

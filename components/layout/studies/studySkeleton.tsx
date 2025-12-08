@@ -1,4 +1,5 @@
-export const LoadingStudy = () => {
+export const StudySkeleton = () => {
+  
   return (
     <div className="flex flex-col border border-gray-30 rounded-md overflow-hidden animate-pulse">
       <div className="w-full h-28 md:h-40 bg-gray-20"></div>

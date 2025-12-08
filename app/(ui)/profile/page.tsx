@@ -6,7 +6,7 @@ import { ProfileCard } from "@/components/layout/profile/profileCard";
 import { useState } from "react";
 import { EditProfileModal } from "@/components/layout/profile/editProfileModal";
 import { DeleteProfileModal } from "@/components/layout/profile/deleteProfileModal";
-import { ProfileCardSkeleton } from "@/components/layout/profile/skeletons/profileCardSkeleton";
+import { ProfileCardSkeleton } from "@/components/layout/profile/profileCardSkeleton";
 
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);

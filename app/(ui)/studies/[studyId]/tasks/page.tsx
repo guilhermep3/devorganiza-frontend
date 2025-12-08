@@ -5,21 +5,33 @@ import { Pencil, Trash, Plus } from "lucide-react";
 import { Button } from "@/components/button";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { useStudy } from "@/src/api/useStudy";
-import { LoadingStudy } from "@/components/layout/studies/loadingStudy";
 import { Task } from "@/src/types/study";
 import { EditStudyModal } from "@/components/layout/studies/editStudyModal";
-import { DeleteStudyModal } from "@/components/layout/studies/deleteStudyModal";
 import { TaskItem } from "@/components/layout/tasks/taskItem";
 import { CreateTaskModal } from "@/components/layout/tasks/createTaskModal";
+import { useDeleteStudy } from "@/src/api/useDeleteStudy";
+import { DeleteModal } from "@/components/layout/dashboard/deleteModal";
+import { useDeleteTask } from "@/src/api/useDeleteTask";
+import { EditTaskModal } from "@/components/layout/tasks/editTaskModal";
+import { TaskItemSkeleton } from "@/components/layout/tasks/taskItemSkeleton";
 
 export default function Page() {
   const params = useParams();
   const studyId = Number(Array.isArray(params.studyId)
     ? params.studyId[0] : params.studyId);
-  const { data, loading } = useStudy(studyId!);
+  const { data, loading, fetchStudy } = useStudy(studyId!);
+  const [taskId, setTaskId] = useState<number | null>(null);
   const [isEditingStudy, setIsEditingStudy] = useState(false);
   const [isDeletingStudy, setIsDeletingStudy] = useState(false);
   const [isCreatingTask, setIsCreatingTask] = useState(false);
+  const [isEditingTask, setIsEditingTask] = useState(false);
+  const [isDeletingTask, setIsDeletingTask] = useState(false);
+  const {
+    handleDelete: deleteStudy, loading: loadingDeleteStudy, error: errorDeleteStudy
+  } = useDeleteStudy(studyId ?? null);
+  const {
+    handleDelete: deleteTask, loading: loadingDeleteTask, error: errorDeleteTask
+  } = useDeleteTask(taskId);
 
   return (
     <div className="layoutDiv">
@@ -35,7 +47,6 @@ export default function Page() {
             <ButtonCN size={"sm"} onClick={() => setIsEditingStudy(true)} className="bg-main-30 hover:bg-main-30 hover:brightness-95">
               <Pencil size={18} />
             </ButtonCN>
-
             <ButtonCN size={"sm"} onClick={() => setIsDeletingStudy(true)} variant="destructive">
               <Trash size={18} />
             </ButtonCN>
@@ -49,14 +60,17 @@ export default function Page() {
         </div>
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
-            <LoadingStudy />
-            <LoadingStudy />
-            <LoadingStudy />
+            {Array.from({ length: 3 }).map((_, index) => (
+              <TaskItemSkeleton key={index} />
+            ))}
           </div>
         ) : data?.tasks?.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
             {data.tasks.map((task: Task) => (
-              <TaskItem key={task.id} task={task} />
+              <TaskItem key={task.id} task={task}
+                setTaskId={() => setTaskId(task.id)}
+                setIsEditingTask={setIsEditingTask} setIsDeletingTask={setIsDeletingTask}
+              />
             ))}
           </div>
         ) : (
@@ -64,10 +78,20 @@ export default function Page() {
         )}
       </section>
       <EditStudyModal isOpen={isEditingStudy} setIsOpen={setIsEditingStudy}
-        study={data?.study ?? null}
+        study={data?.study ?? null} fetchStudy={fetchStudy}
       />
-      <DeleteStudyModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
-        study={data?.study ?? null}
+      <DeleteModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
+        id={studyId} handleAction={deleteStudy}
+        title="Excluir estudo" description="Essa ação não poderá ser desfeita."
+        loading={loadingDeleteStudy} error={errorDeleteStudy}
+      />
+      <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
+        task={data?.tasks.find((i) => i.id === taskId)} fetchStudy={fetchStudy}
+      />
+      <DeleteModal isOpen={isDeletingTask} setIsOpen={setIsDeletingTask}
+        id={studyId} handleAction={deleteTask}
+        title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
+        loading={loadingDeleteTask} error={errorDeleteTask}
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
         studyId={studyId}
