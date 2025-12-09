@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { CreateStudyModal } from "@/components/layout/studies/createStudyModal";
 import { StudySkeleton } from "@/components/layout/studies/studySkeleton";
 import { StudyCard } from "@/components/layout/studies/studyCard";
-import { useStudies } from "@/src/api/useStudies";
+import { useStudies } from "@/src/api/study/useStudies";
 import { StudyTask } from "@/src/types/study";
 import { Plus } from "lucide-react";
 import { useState } from "react";
@@ -17,7 +17,7 @@ export default function Page() {
       <section className="flex flex-col">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>
+            <h1 className="dashboardSectionTitle">Estudos</h1>
             <h2 className="dashboardSectionSubtitle">Veja seus estudos e progresso</h2>
           </div>
           <Button size={1} className="flex items-center gap-2 h-fit px-1! md:px-4! text-white"
@@ -27,7 +27,7 @@ export default function Page() {
             <p className="hidden lg:block">Criar</p>
           </Button>
         </div>
-        <div className="">
+        <div>
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
               {Array.from({ length: 3 }).map((_, index) => (

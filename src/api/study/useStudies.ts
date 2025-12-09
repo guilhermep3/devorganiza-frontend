@@ -1,6 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
-import { Study, StudyTask } from "../types/study";
+import { Study, StudyTask } from "../../types/study";
 
 export function useStudies() {
   const [data, setData] = useState<StudyTask[] | null>(null);

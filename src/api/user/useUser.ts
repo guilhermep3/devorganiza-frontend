@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserResponse } from "../types/user";
+import { UserResponse } from "../../types/user";
 
 export const useUser = () => {
   const [data, setData] = useState<UserResponse | null>(null);

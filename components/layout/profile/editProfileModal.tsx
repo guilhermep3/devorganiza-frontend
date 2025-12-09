@@ -4,7 +4,7 @@ import { PasswordInput } from "@/components/passwordInput";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label";
-import { useUpdateUser } from "@/src/api/useUpdateUser";
+import { useEditUser } from "@/src/api/user/useEditUser";
 import { EditProfileForm, editProfileSchema } from "@/src/schema/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Camera } from "lucide-react";
@@ -23,7 +23,7 @@ type Props = {
 };
 export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultValues }: Props) => {
   const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImageUrl || "");
-  const { updateProfile, loading, success, error } = useUpdateUser();
+  const { updateProfile, loading, success, error } = useEditUser();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({
     resolver: zodResolver(editProfileSchema),
@@ -67,8 +67,8 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
     <Dialog open={isEditing} onOpenChange={setIsEditing}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Edite seu perfil</DialogTitle>
-          <DialogDescription>* Indica item obrigatório</DialogDescription>
+          <DialogTitle>Editar perfil</DialogTitle>
+          <DialogDescription>Edite as informações do seu perfil</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 max-w-96 mx-auto">
           <div className="flex flex-col gap-2 w-full">
@@ -94,7 +94,7 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <Label>Nome <span className="text-gray-40">*</span></Label>
+            <Label>Nome</Label>
             <input className="inputCustom text-base"
               placeholder="Seu nome"
               {...register("name")}
@@ -102,7 +102,7 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <Label>Nome de usuário <span className="text-gray-40">*</span></Label>
+            <Label>Nome de usuário</Label>
             <input className="inputCustom text-base"
               placeholder="Seu nome de usuário"
               {...register("username")}
@@ -110,7 +110,7 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
             {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
-            <Label>Senha <span className="text-gray-40">*</span></Label>
+            <Label>Senha</Label>
             <Controller
               control={control}
               name="password"

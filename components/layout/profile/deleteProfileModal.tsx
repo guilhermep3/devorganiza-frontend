@@ -1,7 +1,7 @@
 "use client";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button as ButtonCN } from "@/components/ui/button";
-import { useDeleteUser } from "@/src/api/useDeleteUser";
+import { useDeleteUser } from "@/src/api/user/useDeleteUser";
 import { Loader2 } from "lucide-react";
 
 type Props = {

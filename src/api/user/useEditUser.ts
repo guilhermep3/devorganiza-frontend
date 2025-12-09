@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { EditProfileForm } from "../schema/profile";
+import { EditProfileForm } from "../../schema/profile";
 
 type UserDefaultValues = {
   name: string;
@@ -7,7 +7,7 @@ type UserDefaultValues = {
   profileImageUrl?: string;
 };
 
-export const useUpdateUser = () => {
+export const useEditUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);

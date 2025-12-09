@@ -1,6 +1,6 @@
 "use client";
 import { BookOpenCheck, ListChecks, GaugeCircle, CircleQuestionMark } from "lucide-react";
-import { useUser } from "@/src/api/useUser";
+import { useUser } from "@/src/api/user/useUser";
 import { ProfileAttemptTable } from "@/components/layout/profile/profileAttemptTable";
 import { ProfileCard } from "@/components/layout/profile/profileCard";
 import { useState } from "react";
@@ -16,7 +16,7 @@ export default function Page() {
   return (
     <div className="layoutDiv flex flex-col gap-10">
       <section className="flex flex-col">
-        <h1 className="dashboardSectionTitle">Perfil do Usuário</h1>
+        <h1 className="dashboardSectionTitle">Perfil</h1>
         <h2 className="dashboardSectionSubtitle">Veja e gerencie seus dados pessoais</h2>
         <div className="flex flex-col lg:flex-row items-start gap-4">
           {loading || !data?.user ? (

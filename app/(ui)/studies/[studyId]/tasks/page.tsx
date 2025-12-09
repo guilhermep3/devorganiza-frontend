@@ -4,14 +4,14 @@ import { useState } from "react";
 import { Pencil, Trash, Plus, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/button";
 import { Button as ButtonCN } from "@/components/ui/button";
-import { useStudy } from "@/src/api/useStudy";
+import { useStudy } from "@/src/api/study/useStudy";
 import { Task } from "@/src/types/study";
 import { EditStudyModal } from "@/components/layout/studies/editStudyModal";
 import { TaskCard } from "@/components/layout/tasks/taskCard";
 import { CreateTaskModal } from "@/components/layout/tasks/createTaskModal";
-import { useDeleteStudy } from "@/src/api/useDeleteStudy";
+import { useDeleteStudy } from "@/src/api/study/useDeleteStudy";
 import { DeleteModal } from "@/components/layout/dashboard/deleteModal";
-import { useDeleteTask } from "@/src/api/useDeleteTask";
+import { useDeleteTask } from "@/src/api/task/useDeleteTask";
 import { EditTaskModal } from "@/components/layout/tasks/editTaskModal";
 import { TaskCardSkeleton } from "@/components/layout/tasks/taskCardSkeleton";
 

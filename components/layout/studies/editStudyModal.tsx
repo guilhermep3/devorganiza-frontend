@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { Study } from "@/src/types/study";
 import { useEffect } from "react";
-import { useEditStudy } from "@/src/api/useEditStudy";
+import { useEditStudy } from "@/src/api/study/useEditStudy";
 
 type Props = {
   isOpen: boolean;

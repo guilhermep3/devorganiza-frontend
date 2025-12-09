@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
-import { useCreateStudy } from "@/src/api/useCreateStudy";
+import { useCreateStudy } from "@/src/api/study/useCreateStudy";
 
 type Props = {
   isCreating: boolean;

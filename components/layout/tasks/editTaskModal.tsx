@@ -4,7 +4,7 @@ import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { Task } from "@/src/types/study";
-import { useEditTask } from "@/src/api/useEditTask";
+import { useEditTask } from "@/src/api/task/useEditTask";
 import { useEffect } from "react";
 
 type Props = {

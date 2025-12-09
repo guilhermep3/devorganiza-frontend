@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Task } from "@/src/types/study";
-import { useDeleteTask } from "@/src/api/useDeleteTask";
+import { useDeleteTask } from "@/src/api/task/useDeleteTask";
 
 type Props = {
   isOpen: boolean;
