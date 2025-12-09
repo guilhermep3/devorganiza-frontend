@@ -1,6 +1,6 @@
 import { Button } from "@/components/button";
 import { StudyTask } from "@/src/types/study";
-import { BookmarkCheck, Hourglass, List, ListCheck, Target } from "lucide-react";
+import { BookmarkCheck, CheckCircle, Hourglass, List, ListCheck, Target } from "lucide-react";
 
 type props = {
   data: StudyTask;
@@ -20,7 +20,9 @@ export const StudyCard = ({ data }: props) => {
   const { total, completed, percentage } = getTasksStats();
 
   return (
-    <div className="flex flex-col bg-card h-[300px] sm:h-80 lg:h-[340px] border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
+    <div className={`flex flex-col bg-card h-[300px] sm:h-80 lg:h-[340px] border rounded-md overflow-hidden transition
+      ${data.study.status === 'finalizado' ? "border-green-20" : "border-yellow-500"}
+    `}>
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
         <div className="mb-3">
           <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
@@ -28,15 +30,17 @@ export const StudyCard = ({ data }: props) => {
             <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
               {data.study.type || 'Sem tipo'}
             </span>
-            <div className={`text-xs px-2 py-1 rounded-sm border border-gray-20
-              ${data.study.status === 'em_andamento'
-                ? 'bg-yellow-200 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-200'
-                : 'bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200'
-              }`}
-            >
-              <p className="hidden lg:block">{data.study.status?.replace('_', ' ') || 'Status'}</p>
-              <div className="block lg:hidden">
-                {data.study.status === 'em_andamento' ? <Hourglass className="w-4 h-4" /> : <BookmarkCheck className="w-4 h-4" />}
+            <div className="flex items-center gap-2">
+              {data.study.status === 'finalizado'
+                ? <CheckCircle className="text-green-20" />
+                : <Hourglass className="text-yellow-500" />
+              }
+              <div className={`flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
+              ${data.study.status === 'finalizado'
+                  ? 'finishedCustom' : 'pendentCustom'
+                }`}
+              >
+                <p>{data.study.status === 'finalizado' ? "Concluída" : "Pendente"}</p>
               </div>
             </div>
           </div>

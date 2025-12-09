@@ -1,4 +1,4 @@
-export const TaskItemSkeleton = () => {
+export const TaskCardSkeleton = () => {
 
   return (
     <div className="bg-card p-4 rounded-lg flex flex-col justify-between gap-3 animate-pulse">

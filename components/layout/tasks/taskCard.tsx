@@ -8,7 +8,7 @@ type props = {
   setIsEditingTask: (newV: any) => void;
   setIsDeletingTask: (newV: any) => void;
 }
-export const TaskItem = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask }: props) => {
+export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask }: props) => {
 
   return (
     <div className={`bg-card p-4 rounded-lg flex flex-col justify-between gap-3 border
@@ -34,8 +34,7 @@ export const TaskItem = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
           }
           <div className={`flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
           ${task.done
-              ? 'bg-green-200 text-green-900 dark:bg-green-900 dark:text-green-200'
-              : 'bg-yellow-200 text-yellow-900 dark:bg-yellow-900 dark:text-yellow-200'
+              ? 'finishedCustom' : 'pendentCustom'
             }`}
           >
             <p>{task.done ? "Concluída" : "Pendente"}</p>

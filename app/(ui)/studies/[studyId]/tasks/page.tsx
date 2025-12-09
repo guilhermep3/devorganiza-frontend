@@ -7,13 +7,13 @@ import { Button as ButtonCN } from "@/components/ui/button";
 import { useStudy } from "@/src/api/useStudy";
 import { Task } from "@/src/types/study";
 import { EditStudyModal } from "@/components/layout/studies/editStudyModal";
-import { TaskItem } from "@/components/layout/tasks/taskItem";
+import { TaskCard } from "@/components/layout/tasks/taskCard";
 import { CreateTaskModal } from "@/components/layout/tasks/createTaskModal";
 import { useDeleteStudy } from "@/src/api/useDeleteStudy";
 import { DeleteModal } from "@/components/layout/dashboard/deleteModal";
 import { useDeleteTask } from "@/src/api/useDeleteTask";
 import { EditTaskModal } from "@/components/layout/tasks/editTaskModal";
-import { TaskItemSkeleton } from "@/components/layout/tasks/taskItemSkeleton";
+import { TaskCardSkeleton } from "@/components/layout/tasks/taskCardSkeleton";
 
 export default function Page() {
   const { push } = useRouter();
@@ -65,13 +65,13 @@ export default function Page() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
             {Array.from({ length: 3 }).map((_, index) => (
-              <TaskItemSkeleton key={index} />
+              <TaskCardSkeleton key={index} />
             ))}
           </div>
         ) : data?.tasks?.length ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
             {data.tasks.map((task: Task) => (
-              <TaskItem key={task.id} task={task}
+              <TaskCard key={task.id} task={task}
                 setTaskId={() => setTaskId(task.id)}
                 setIsEditingTask={setIsEditingTask} setIsDeletingTask={setIsDeletingTask}
               />
