@@ -23,8 +23,8 @@ export default function Home() {
             <Button data-aos="zoom-in" href="/signup" size={3}>Criar conta</Button>
           </div>
         </section>
-        <div className="containerCustom py-0! rounded-lg overflow-hidden">
-          <Image src={`/dashboard.jpg`} alt="dashboard"
+        <div className="containerCustom py-0! rounded-lg overflow-hidden shadow-md shadow-main-20">
+          <Image src={`/dashboard.png`} alt="dashboard"
             width={2400} height={2400}
             className="w-full"
           />
@@ -37,21 +37,21 @@ export default function Home() {
               const Icon = i.icon;
 
               return (
-                <div key={i.id} data-aos="zoom-in"
-                  className={`flex flex-col gap-4 p-6 rounded-lg text-black transition
-                shadow-lg shadow-gray-20 hover:shadow-gray-30 hover:-translate-y-1
-                ${i.id === 1 && 'bg-main-30'}
-                ${i.id === 2 && 'bg-green-20'}
-                ${i.id === 3 && 'bg-main-40'}
-              `}
-                >
-                  <div className="flex justify-between">
-                    <p className="text-xl font-bold">
-                      <span className="mr-2">{i.id}.</span> {i.title}
-                    </p>
-                    <Icon />
+                <div key={i.id} data-aos="zoom-in">
+                  <div className={`flex flex-col gap-4 p-6 rounded-lg text-black transition
+                    shadow-lg shadow-gray-20 hover:shadow-gray-30 hover:-translate-y-1
+                    ${i.id === 1 && 'bg-main-30'}
+                    ${i.id === 2 && 'bg-green-20'}
+                    ${i.id === 3 && 'bg-main-40'}
+                  `}>
+                    <div className="flex justify-between">
+                      <p className="text-xl font-bold">
+                        <span className="mr-2">{i.id}.</span> {i.title}
+                      </p>
+                      <Icon />
+                    </div>
+                    <p>{i.description}</p>
                   </div>
-                  <p>{i.description}</p>
                 </div>
               )
             })}

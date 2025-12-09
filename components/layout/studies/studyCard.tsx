@@ -14,9 +14,6 @@ export const StudyCard = ({ data }: props) => {
     const total = data.tasks.length;
     const completed = data.tasks.filter((t) => t.done === true).length;
     const percentage = total === 0 ? 0 : (Math.floor((completed / total) * 100));
-    console.log("total", total);
-    console.log("completed", completed);
-    console.log("percentage", percentage);
 
     return { total, completed, percentage }
   }
@@ -62,32 +59,25 @@ export const StudyCard = ({ data }: props) => {
               ></div>
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-2 text-center my-1">
-            <div className="p-2 rounded bg-gray-20">
+          <div className="grid grid-cols-2 gap-1 md:gap-2 text-center">
+            <div className="p-1 md:p-2 rounded bg-gray-20">
               <div className="flex items-center justify-center gap-1 text-foreground">
                 <List className="w-4 h-4" />
                 <span className="font-bold">{total}</span>
               </div>
               <span className="text-xs text-gray-50">Total</span>
             </div>
-            <div className="p-2 rounded bg-green-100 dark:bg-green-950">
+            <div className="p-1 md:p-2 rounded bg-green-100 dark:bg-green-950">
               <div className="flex items-center justify-center gap-1 text-green-20">
                 <ListCheck className="w-4 h-4" />
                 <span className="font-bold">{completed}</span>
               </div>
               <span className="text-xs text-gray-50">Concluídas</span>
             </div>
-            <div className="p-2 rounded bg-main-10">
-              <div className="flex items-center justify-center gap-1 text-main-40">
-                <Target className="w-4 h-4" />
-                <span className="font-bold">{percentage}</span>
-              </div>
-              <span className="text-xs text-gray-50">%</span>
-            </div>
           </div>
         </div>
-        <Button size={1}
-          className="w-full text-sm md:text-base"
+        <Button
+          className="w-full text-sm md:text-base py-1.5!"
           href={`/studies/${data.study.id}/tasks`}
         >
           Ver Estudo

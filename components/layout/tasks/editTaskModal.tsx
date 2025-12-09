@@ -16,7 +16,7 @@ type Props = {
 export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) => {
   const {
     title, setTitle, link, setLink, done, setDone,
-    handleSubmit, loading, errors, success
+    resetState, handleSubmit, loading, errors, success
   } = useEditTask(task?.id ?? null);
 
   useEffect(() => {
@@ -27,12 +27,16 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
     }
   }, [task]);
 
-  function handleEdit() {
-    setTimeout(() => {
-      setIsOpen(false);
-      fetchStudy();
-    }, 3000);
-  }
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        fetchStudy();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [success])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -72,14 +76,14 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
             <label htmlFor="finished" className="text-sm">Concluída</label>
           </div>
           <div className="flex justify-center gap-3 pt-4">
-            <ButtonCN
+            <ButtonCN type="button"
               variant="outline"
-              onClick={() => setIsOpen(false)}
+              onClick={() => { setIsOpen(false), resetState() }}
               className="bg-gray-20 hover:bg-gray-30"
             >
               Cancelar
             </ButtonCN>
-            <Button submit onClick={handleEdit}>
+            <Button submit>
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
               Salvar
             </Button>

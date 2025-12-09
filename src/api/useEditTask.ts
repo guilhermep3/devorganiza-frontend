@@ -12,6 +12,11 @@ export function useEditTask(taskId: number | null) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+  function resetState() {
+    setSuccess(null);
+    setErrors({});
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
     if (!taskId) return;
@@ -51,9 +56,6 @@ export function useEditTask(taskId: number | null) {
       }
 
       setSuccess("Tarefa atualizada com sucesso!");
-      setTimeout(() => {
-        setSuccess(null)
-      }, 3100);
     } catch {
       setErrors({ general: "Erro ao conectar com o servidor" });
     } finally {
@@ -63,6 +65,6 @@ export function useEditTask(taskId: number | null) {
 
   return {
     title, setTitle, link, setLink, done, setDone,
-    handleSubmit, loading, errors, success,
+    resetState, handleSubmit, loading, errors, success,
   };
 }

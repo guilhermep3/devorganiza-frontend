@@ -28,7 +28,7 @@ export const DeleteModal = ({ isOpen, setIsOpen, title, description, id, handleA
         </DialogHeader>
         {error && <p className="errorSubmit">{error}</p>}
         <div className="flex justify-center gap-3 pt-6">
-          <ButtonCN
+          <ButtonCN type="button"
             variant="outline"
             onClick={() => setIsOpen(false)}
             className="bg-gray-20 hover:bg-gray-30"

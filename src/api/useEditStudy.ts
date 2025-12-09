@@ -14,6 +14,11 @@ export function useEditStudy(studyId: number | null) {
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
+  function resetState(){
+    setSuccess(null);
+    setErrors({})
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
     if (!studyId) return;
@@ -67,6 +72,6 @@ export function useEditStudy(studyId: number | null) {
   return {
     name, setName, type, setType,
     link, setLink, description, setDescription,
-    handleSubmit, loading, errors, success,
+    resetState, handleSubmit, loading, errors, success,
   };
 }
