@@ -44,7 +44,7 @@ export default function Page() {
               <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => push('/studies')}>
                 <ArrowLeft className="cursor-pointer w-5 h-5" />
               </div>
-              studies/{studyId}/tasks
+              studies/{studyId}
             </h2>
           </div>
           <div className="flex gap-2">

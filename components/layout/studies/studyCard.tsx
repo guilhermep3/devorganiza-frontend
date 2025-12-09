@@ -82,7 +82,7 @@ export const StudyCard = ({ data }: props) => {
         </div>
         <Button
           className="w-full text-sm md:text-base py-1.5!"
-          href={`/studies/${data.study.id}/tasks`}
+          href={`/studies/${data.study.id}`}
         >
           Ver Estudo
         </Button>
