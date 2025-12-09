@@ -30,8 +30,9 @@ export default function Page() {
         <div className="">
           {loading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
-              <StudySkeleton />
-              <StudySkeleton />
+              {Array.from({ length: 3 }).map((_, index) => (
+                <StudySkeleton key={index} />
+              ))}
             </div>
           ) : data ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">

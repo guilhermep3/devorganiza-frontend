@@ -9,8 +9,8 @@ export const Footer = () => {
       <div className="containerCustom flex-col md:flex-row justify-between items-start gap-7">
         <div className="flex flex-col justify-between gap-1 md:gap-6 text-sm md:text-base">
           <Logo width={64} />
-          <p>&copy; DevOrganiza</p>
-          <p>&copy; Desenvolvido por <Link href={'https://github.com/guilhermep3'}
+          <p className="text-sm">&copy; DevOrganiza</p>
+          <p className="text-sm">&copy; Desenvolvido por <Link href={'https://github.com/guilhermep3'}
             target="_blank"
             className="font-semibold text-main-60 hover:underline"
           >

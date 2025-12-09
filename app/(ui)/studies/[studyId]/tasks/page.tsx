@@ -1,7 +1,7 @@
 "use client";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Pencil, Trash, Plus } from "lucide-react";
+import { Pencil, Trash, Plus, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/button";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { useStudy } from "@/src/api/useStudy";
@@ -16,6 +16,7 @@ import { EditTaskModal } from "@/components/layout/tasks/editTaskModal";
 import { TaskItemSkeleton } from "@/components/layout/tasks/taskItemSkeleton";
 
 export default function Page() {
+  const { push } = useRouter();
   const params = useParams();
   const studyId = Number(Array.isArray(params.studyId)
     ? params.studyId[0] : params.studyId);
@@ -39,7 +40,10 @@ export default function Page() {
         <div className="flex justify-between items-center">
           <div>
             <h1 className="dashboardSectionTitle text-start">{data?.study?.name ?? "Estudo"}</h1>
-            <h2 className="dashboardSectionSubtitle">
+            <h2 className="dashboardSectionSubtitle flex items-center gap-2 mt-2">
+              <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => push('/studies')}>
+                <ArrowLeft className="cursor-pointer w-5 h-5" />
+              </div>
               studies/{studyId}/tasks
             </h2>
           </div>

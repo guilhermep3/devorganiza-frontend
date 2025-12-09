@@ -6,23 +6,24 @@ type props = {
   data: StudyTask;
 }
 export const StudyCard = ({ data }: props) => {
-  console.log("data", data)
 
   const getTasksStats = () => {
     if (!data.tasks || data.tasks.length === 0 || data.tasks === null) {
       return { total: 0, completed: 0, percentage: 0 };
     }
-
     const total = data.tasks.length;
     const completed = data.tasks.filter((t) => t.done === true).length;
-    const percentage = total === 0 ? 0 : (Math.floor(completed / total));
+    const percentage = total === 0 ? 0 : (Math.floor((completed / total) * 100));
+    console.log("total", total);
+    console.log("completed", completed);
+    console.log("percentage", percentage);
 
     return { total, completed, percentage }
   }
   const { total, completed, percentage } = getTasksStats();
 
   return (
-    <div className="flex flex-col bg-card h-[340px] border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
+    <div className="flex flex-col bg-card h-[300px] sm:h-80 lg:h-[340px] border border-gray-30 hover:border-main-30 rounded-md overflow-hidden transition">
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
         <div className="mb-3">
           <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
@@ -43,7 +44,7 @@ export const StudyCard = ({ data }: props) => {
             </div>
           </div>
           {data.study.description && (
-            <p className="text-sm text-gray-60 mt-2 line-clamp-2">
+            <p className="text-xs lg:text-sm text-gray-60 mt-2 line-clamp-2">
               {data.study.description}
             </p>
           )}
@@ -67,25 +68,25 @@ export const StudyCard = ({ data }: props) => {
                 <List className="w-4 h-4" />
                 <span className="font-bold">{total}</span>
               </div>
-              <span className="text-xs text-gray-500">Total</span>
+              <span className="text-xs text-gray-50">Total</span>
             </div>
             <div className="p-2 rounded bg-green-100 dark:bg-green-950">
               <div className="flex items-center justify-center gap-1 text-green-20">
                 <ListCheck className="w-4 h-4" />
                 <span className="font-bold">{completed}</span>
               </div>
-              <span className="text-xs text-gray-500">Concluídas</span>
+              <span className="text-xs text-gray-50">Concluídas</span>
             </div>
             <div className="p-2 rounded bg-main-10">
               <div className="flex items-center justify-center gap-1 text-main-40">
                 <Target className="w-4 h-4" />
                 <span className="font-bold">{percentage}</span>
               </div>
-              <span className="text-xs text-gray-500">%</span>
+              <span className="text-xs text-gray-50">%</span>
             </div>
           </div>
         </div>
-        <Button
+        <Button size={1}
           className="w-full text-sm md:text-base"
           href={`/studies/${data.study.id}/tasks`}
         >

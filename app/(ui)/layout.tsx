@@ -11,10 +11,10 @@ export default function Layout({ children }: props) {
 
   return (
     <AsideProvider>
-      <Header />
+      <Header noNav noAnimate />
       <div className="flex min-h-screen">
         <AsideDashboard />
-        <div className="flex-1 pl-0 lg:pl-80 xl:pl-64">
+        <div className="flex-1 pl-0 lg:pl-72">
           <main className="w-full max-w-6xl mx-auto px-3 pb-20 pt-28 min-h-[560px]">
             {children}
           </main>
