@@ -8,13 +8,14 @@ export function useCreateStudy() {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<any>({});
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState<string | null>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setSuccess(null)
 
     const newErrors: any = {};
     if (!name) newErrors.name = "Digite o nome do estudo";

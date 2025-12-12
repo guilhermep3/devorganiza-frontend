@@ -43,7 +43,7 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
               variant="destructive"
               onClick={handleDelete}
               disabled={loading}
-              className="bg-red-600 hover:bg-red-700 text-white"
+              className={`bg-red-600 hover:bg-red-700 text-white ${loading && 'pointer-events-none'}`}
             >
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
               Excluir conta

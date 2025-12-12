@@ -1,3 +1,4 @@
+// EditProfileModal.tsx (corrigido)
 "use client"
 import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
@@ -7,23 +8,23 @@ import { Label } from "@/components/ui/label";
 import { useEditUser } from "@/src/api/user/useEditUser";
 import { EditProfileForm, editProfileSchema } from "@/src/schema/profile";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Camera } from "lucide-react";
-import { useState } from "react";
+import { Camera, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 type Props = {
   isEditing: boolean;
-  setIsEditing: (value: boolean) => void;
+  setIsOpen: (value: boolean) => void;
   fetchUser: () => void;
   defaultValues: {
     name: string;
     username: string;
-    profileImageUrl?: string;
+    profileImage?: string;
   }
 };
-export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultValues }: Props) => {
-  const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImageUrl || "");
-  const { updateProfile, loading, success, error } = useEditUser();
+export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValues }: Props) => {
+  const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImage || "/no-profile.webp");
+  const { updateProfile, loading, success, setSuccess } = useEditUser();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({
     resolver: zodResolver(editProfileSchema),
@@ -35,27 +36,38 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
   })
 
   async function onSubmit(data: EditProfileForm) {
-    const imageFile = data.profileImage?.[0] || null;
+    const imageFile = data.profileImage?.[0] ?? null;
+    console.log("data", data)
+    console.log("imageFile", imageFile)
 
-    const result = await updateProfile(
-      {
-        name: data.name,
-        username: data.username,
-        password: data.password,
-        profileImage: imageFile
-      },
+    const textData = {
+      name: data.name,
+      username: data.username,
+      password: data.password
+    };
+
+    await updateProfile(
+      textData,
       {
         name: defaultValues.name,
         username: defaultValues.username,
-        profileImageUrl: defaultValues.profileImageUrl
-      }
+        profileImage: defaultValues.profileImage
+      },
+      imageFile
     );
-
-    if (success) {
-      setIsEditing(false);
-      fetchUser();
-    }
   }
+
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        fetchUser();
+        setSuccess(null)
+      }, 3000);
+
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   function handleImagePreview(file?: File) {
     if (!file) return;
@@ -64,38 +76,45 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
   }
 
   return (
-    <Dialog open={isEditing} onOpenChange={setIsEditing}>
+    <Dialog open={isEditing} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Editar perfil</DialogTitle>
           <DialogDescription>Edite as informações do seu perfil</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 max-w-96 mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 w-full max-w-80 mx-auto">
+          {success && <p className="successMsg">{success}</p>}
           <div className="flex flex-col gap-2 w-full">
             <Label>Foto de perfil</Label>
-            <input type="file" id="imageInput"
-              accept="image/"
-              {...register("profileImage")}
-              onChange={(e) => handleImagePreview(e.target.files?.[0])}
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
               className="hidden"
+              {...register("profileImage", {
+                onChange: (e: any) => {
+                  const file = e.target.files?.[0];
+                  handleImagePreview(file);
+                }
+              })}
             />
-            {previewUrl && (
-              <label htmlFor="imageInput"
-                className="group relative w-24 h-24 rounded-full overflow-hidden mt-2 mx-auto border cursor-pointer"
-                title="Atualizar foto"
-              >
-                <img
-                  src={previewUrl}
-                  alt="Preview"
-                  className="w-full h-full object-cover z-10 brightness-90 group-hover:brightness-75 transition"
-                />
-                <Camera className="absolute z-30 left-1/2 top-1/2 -translate-1/2 stroke-3 w-7 h-7 text-black" />
-              </label>
-            )}
+            <label htmlFor="imageInput"
+              className="group relative w-24 h-24 rounded-full overflow-hidden mt-2 mx-auto border cursor-pointer"
+              title="Atualizar foto"
+            >
+              <img
+                src={previewUrl}
+                alt="Preview"
+                className="w-full h-full object-cover z-10 brightness-90 group-hover:brightness-75 transition"
+              />
+              <Camera className="absolute z-30 left-1/2 top-1/2 -translate-1/2 stroke-3 w-7 h-7 text-black" />
+            </label>
           </div>
+
+          {/* campos de texto */}
           <div className="flex flex-col gap-2 w-full">
             <Label>Nome</Label>
-            <input className="inputCustom text-base"
+            <input className="inputCustom w-full text-base"
               placeholder="Seu nome"
               {...register("name")}
             />
@@ -103,7 +122,7 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Label>Nome de usuário</Label>
-            <input className="inputCustom text-base"
+            <input className="inputCustom w-full text-base"
               placeholder="Seu nome de usuário"
               {...register("username")}
             />
@@ -128,11 +147,12 @@ export const EditProfileModal = ({ isEditing, setIsEditing, fetchUser, defaultVa
           <div className="flex items-center gap-3 pt-4">
             <ButtonCN type="button"
               variant="outline" className="bg-red-600 hover:bg-red-700 text-white!"
-              onClick={() => setIsEditing(false)}
+              onClick={() => setIsOpen(false)}
             >
               Cancelar
             </ButtonCN>
-            <Button submit className="bg-main-30 hover:bg-main-20 text-white">
+            <Button submit className={`bg-main-30 hover:bg-main-20 text-white ${loading && 'pointer-events-none'}`}>
+              {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
               Salvar
             </Button>
           </div>

@@ -48,7 +48,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2 w-full">
-          {success && <p className="text-green-500 text-sm text-center">{success}</p>}
+          {success && <p className="successMsg">{success}</p>}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Título</label>
             <input
@@ -83,7 +83,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
             >
               Cancelar
             </ButtonCN>
-            <Button submit>
+            <Button submit className={`${loading && 'pointer-events-none'}`}>
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
               Salvar
             </Button>

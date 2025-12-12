@@ -78,7 +78,7 @@ export default function Page() {
             ))}
           </div>
         ) : (
-          <p className="text-gray-400">Nenhuma tarefa cadastrada</p>
+          <p className="text-gray-40">Nenhuma tarefa cadastrada</p>
         )}
       </section>
       <EditStudyModal isOpen={isEditingStudy} setIsOpen={setIsEditingStudy}

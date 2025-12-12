@@ -3,7 +3,7 @@ import { useState } from "react";
 export const useDeleteUser = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
@@ -12,7 +12,7 @@ export const useDeleteUser = () => {
     try {
       setLoading(true);
       setError(null);
-      setSuccess(false);
+      setSuccess(null);
 
       const res = await fetch(`${API_URL}/users/delete`, {
         method: "DELETE",
@@ -26,7 +26,7 @@ export const useDeleteUser = () => {
         throw new Error("Não foi possível excluir a conta");
       }
 
-      setSuccess(true);
+      setSuccess("Usuário deletado com sucesso!");
       return true;
     } catch (err: any) {
       setError(err.message);
@@ -38,9 +38,6 @@ export const useDeleteUser = () => {
   }
 
   return {
-    deleteAccount,
-    loading,
-    error,
-    success
+    deleteAccount, loading, error, success
   };
 };

@@ -35,7 +35,7 @@ export const DeleteTaskModal = ({ isOpen, setIsOpen, task }: Props) => {
           <ButtonCN
             variant="destructive"
             onClick={handleDelete}
-            className="text-white"
+            className={`text-white ${loading && 'pointer-events-none'}`}
           >
             {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
             Excluir

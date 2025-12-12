@@ -39,7 +39,7 @@ export function useStudy(studyId: number) {
 
   useEffect(() => {
     fetchStudy();
-  }, [studyId]);
+  }, []);
 
   return {
     data,

@@ -39,7 +39,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
-          {success && <p className="text-green-500 text-sm text-center">{success}</p>}
+          {success && <p className="successMsg">{success}</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
             <input className="inputCustom w-full"
@@ -97,8 +97,8 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
             >
               Cancelar
             </ButtonCN>
-            <Button
-              submit
+            <Button submit
+              className={`${loading && 'pointer-events-none'}`}
             >
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
               Criar tarefa

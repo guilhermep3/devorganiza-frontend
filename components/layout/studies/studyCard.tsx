@@ -35,7 +35,7 @@ export const StudyCard = ({ data }: props) => {
                 ? <CheckCircle className="text-green-20" />
                 : <Hourglass className="text-yellow-500" />
               }
-              <div className={`flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
+              <div className={`hidden md:flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
               ${data.study.status === 'finalizado'
                   ? 'finishedCustom' : 'pendentCustom'
                 }`}

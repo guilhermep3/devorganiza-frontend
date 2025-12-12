@@ -61,11 +61,11 @@ export default function Page() {
         </div>
       </section>
       {data && data.user &&
-        <EditProfileModal isEditing={isEditing} setIsEditing={setIsEditing} fetchUser={fetchUser}
+        <EditProfileModal isEditing={isEditing} setIsOpen={setIsEditing} fetchUser={fetchUser}
           defaultValues={{
             name: data.user.name,
             username: data.user.username,
-            profileImageUrl: data.user.profileImage
+            profileImage: data.user.profileImage
           }}
         />
       }

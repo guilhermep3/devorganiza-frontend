@@ -35,7 +35,7 @@ export const DeleteModal = ({ isOpen, setIsOpen, title, description, id, handleA
           >
             Cancelar
           </ButtonCN>
-          <ButtonCN className="bg-red-600 hover:bg-red-700 text-white"
+          <ButtonCN className={`bg-red-600 hover:bg-red-700 text-white ${loading && 'pointer-events-none'}`}
             onClick={handleAction}
           >
             {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}

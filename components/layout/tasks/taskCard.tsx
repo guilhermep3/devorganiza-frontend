@@ -32,7 +32,7 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
             ? <CheckCircle className=" text-green-900 dark:text-green-200" />
             : <Hourglass className="text-yellow-900 dark:text-yellow-200" />
           }
-          <div className={`flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
+          <div className={`hidden md:flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
           ${task.done
               ? 'finishedCustom' : 'pendentCustom'
             }`}

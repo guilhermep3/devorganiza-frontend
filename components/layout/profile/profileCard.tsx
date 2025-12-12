@@ -14,7 +14,7 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting }: props) => {
     <div className="flex flex-col items-center gap-4 w-full lg:w-1/3 p-4 bg-card border border-gray-20 rounded-md">
       <div className="w-32 h-32 rounded-full overflow-hidden">
         <img
-          src={`${data.profileImage}`}
+          src={`${data.profileImage || '/no-profile.webp'}`}
           alt="Foto de perfil"
           className="object-cover w-full h-full"
         />

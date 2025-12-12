@@ -9,7 +9,6 @@ export const useQuizzes = () => {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-  console.log("TOKEN",TOKEN)
 
   async function fetchQuizzes() {
     setLoading(true);
