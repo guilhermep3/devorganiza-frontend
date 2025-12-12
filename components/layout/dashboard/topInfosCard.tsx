@@ -4,13 +4,13 @@ import { ReactNode } from "react";
 type props = {
   title: string;
   Icon: LucideProps;
-  data: string | number;
+  data: string | ReactNode;
 }
 export const TopInfosCard = ({ title, Icon, data }: props) => {
 
   return (
-    <div className="flex flex-col gap-3 bg-card p-4 rounded-md border border-gray-20 hover:border-main-20 transition">
-      <div className="flex items-center gap-3 text-sm lg:text-base">
+    <div className="flex flex-col gap-3 bg-card p-3 md:p-4 rounded-md border border-gray-20 hover:border-main-20 transition">
+      <div className="flex items-center gap-2 md:gap-3 text-sm lg:text-base">
         {Icon as ReactNode}
         {title}
       </div>
