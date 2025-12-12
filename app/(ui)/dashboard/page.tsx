@@ -1,6 +1,6 @@
 "use client"
 import { TasksCompletedByStudyChart } from "@/components/layout/dashboard/chart/tasksCompletedByStudy";
-import { StudyCreatedFinishedChart } from "@/components/layout/dashboard/chart/studyCreatedFinished";
+import { WeeklyProductivity } from "@/components/layout/dashboard/chart/weeklyProductivity";
 import { TasksFinishedMonthChart } from "@/components/layout/dashboard/chart/tasksFinishedMonth";
 import { TopInfos } from "@/components/layout/dashboard/topInfos";
 import { TasksBySector } from "@/components/layout/dashboard/chart/tasksBySector";
@@ -37,7 +37,7 @@ export default function Page() {
         <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho e evolução</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <StudyCreatedFinishedChart data={tasksByDayWeek} />
+          <WeeklyProductivity data={tasksByDayWeek} />
           <TasksFinishedMonthChart />
           <TasksCompletedByStudyChart />
           <TasksBySector />

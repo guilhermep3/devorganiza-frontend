@@ -54,7 +54,7 @@ const chartConfig = {
 type props = {
   data: Record<number, Task[]>;
 }
-export function StudyCreatedFinishedChart({ data }: props) {
+export function WeeklyProductivity({ data }: props) {
   const chartData = Object.entries(data).map(([week, task]) => {
     const totalTasks = task.length;
     const totalFinishedTasks = task.filter(t => t.done).length;
