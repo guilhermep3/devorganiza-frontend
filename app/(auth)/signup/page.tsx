@@ -61,7 +61,7 @@ export default function Page() {
         {errors.submit && (
           <p className="text-sm text-red-600 text-center">{errors.submit}</p>
         )}
-        <Button className={`w-full ${loading ? 'pointer-events-none opacity-75' : ''}`}>
+        <Button submit className={`w-full ${loading ? 'pointer-events-none opacity-75' : ''}`}>
           {loading ? "Criando..." : "Criar Conta"}
         </Button>
       </form>

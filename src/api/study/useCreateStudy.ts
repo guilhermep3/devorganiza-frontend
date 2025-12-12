@@ -8,7 +8,7 @@ export function useCreateStudy() {
 
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<any>({});
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess] = useState("");
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
@@ -54,7 +54,7 @@ export function useCreateStudy() {
         return;
       }
 
-      setSuccess(true);
+      setSuccess("Estudo criado com sucesso!");
     } catch (err) {
       setErrors("Erro ao conectar ao servidor");
     } finally {

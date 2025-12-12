@@ -4,21 +4,33 @@ import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useCreateStudy } from "@/src/api/study/useCreateStudy";
+import { useEffect } from "react";
 
 type Props = {
-  isCreating: boolean;
-  setIsCreating: (value: boolean) => void;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  fetchStudies: () => void;
 };
-
-export const CreateStudyModal = ({ isCreating, setIsCreating }: Props) => {
+export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => {
   const {
     name, setName, type, setType,
     link, setLink, description, setDescription,
     handleSubmit, loading, errors, success
   } = useCreateStudy();
 
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        fetchStudies();
+      }, 3000);
+
+      return () => clearTimeout(timer)
+    }
+  }, [success])
+
   return (
-    <Dialog open={isCreating} onOpenChange={setIsCreating}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Criar estudo</DialogTitle>
@@ -27,7 +39,7 @@ export const CreateStudyModal = ({ isCreating, setIsCreating }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
-          {success && <p className="text-green-500 text-sm">{success}</p>}
+          {success && <p className="text-green-500 text-sm text-center">{success}</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
             <input className="inputCustom w-full"
@@ -80,13 +92,12 @@ export const CreateStudyModal = ({ isCreating, setIsCreating }: Props) => {
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN
               variant="outline"
-              onClick={() => setIsCreating(false)}
+              onClick={() => setIsOpen(false)}
               className="bg-gray-20 hover:bg-gray-30"
             >
               Cancelar
             </ButtonCN>
             <Button
-              onClick={handleSubmit}
               submit
             >
               {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}

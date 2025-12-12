@@ -4,17 +4,30 @@ import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useCreateTask } from "@/src/api/task/useCreateTask";
+import { useEffect } from "react";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   studyId: number;
+  fetchStudy: () => void;
 };
-export const CreateTaskModal = ({ isOpen, setIsOpen, studyId }: Props) => {
+export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, fetchStudy }: Props) => {
   const {
     title, setTitle, link, setLink,
     handleSubmit, loading, errors, setErrors, success
   } = useCreateTask(studyId);
+
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        fetchStudy();
+      }, 3000);
+
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

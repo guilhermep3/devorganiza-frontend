@@ -2,10 +2,11 @@
 import { QuizCard } from "@/components/layout/dashboard/quizzes/quizCard";
 import { useQuizzesLocked } from "@/src/api/quiz/useQuizzesLocked";
 import { useQuizzes } from "@/src/api/quiz/useQuizzes";
+import { QuizCardSkeleton } from "@/components/layout/dashboard/quizzes/quizCardSkeleton";
 
 export default function Page() {
-  const { data, loading, error, fetchQuizzes } = useQuizzes();
-  const { data: lockData, loading: lockLoading, error: lockError, fetchLockedQuizzes } = useQuizzesLocked();
+  const { data, loading } = useQuizzes();
+  const { data: lockData, loading: lockLoading } = useQuizzesLocked();
 
   return (
     <div className="layoutDiv">
@@ -16,12 +17,12 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           {loading || !data ? (
-            <div></div>
+            <QuizCardSkeleton />
           ) : data.map((quiz) => (
             <QuizCard key={quiz.id} quiz={quiz} />
           ))}
           {lockLoading || !lockData ? (
-            <div></div>
+            <QuizCardSkeleton />
           ) : lockData.map((quiz) => (
             <QuizCard key={quiz.id} quiz={quiz} locked />
           ))}

@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function Page() {
-  const { data, loading, error } = useStudies();
+  const { data, loading, error, fetchStudies } = useStudies();
   const [isCreating, setIsCreating] = useState(false);
 
   return (
@@ -45,7 +45,7 @@ export default function Page() {
           )}
         </div>
       </section>
-      <CreateStudyModal isCreating={isCreating} setIsCreating={setIsCreating} />
+      <CreateStudyModal isOpen={isCreating} setIsOpen={setIsCreating} fetchStudies={fetchStudies} />
     </div>
   )
 }

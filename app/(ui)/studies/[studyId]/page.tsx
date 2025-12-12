@@ -98,7 +98,7 @@ export default function Page() {
         loading={loadingDeleteTask} error={errorDeleteTask}
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
-        studyId={studyId}
+        studyId={studyId} fetchStudy={fetchStudy}
       />
     </div>
   );
