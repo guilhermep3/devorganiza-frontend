@@ -9,7 +9,7 @@ import { useEffect } from "react";
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  studyId: number;
+  studyId: string;
   fetchStudy: () => void;
 };
 export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, fetchStudy }: Props) => {
@@ -39,7 +39,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, fetchStudy }: Prop
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
-          {success && <p className="text-green-500 text-sm">{success}</p>}
+          {success && <p className="successMsg">{success}</p>}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Título</label>
             <input

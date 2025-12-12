@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export function useEditStudy(studyId: number | null) {
+export function useEditStudy(studyId: string | null) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [link, setLink] = useState("");

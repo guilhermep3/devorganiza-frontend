@@ -18,10 +18,9 @@ import { TaskCardSkeleton } from "@/components/layout/tasks/taskCardSkeleton";
 export default function Page() {
   const { push } = useRouter();
   const params = useParams();
-  const studyId = Number(Array.isArray(params.studyId)
-    ? params.studyId[0] : params.studyId);
+  const studyId = Array.isArray(params.studyId) ? params.studyId[0] : params.studyId;
   const { data, loading, fetchStudy } = useStudy(studyId!);
-  const [taskId, setTaskId] = useState<number | null>(null);
+  const [taskId, setTaskId] = useState<string | null>(null);
   const [isEditingStudy, setIsEditingStudy] = useState(false);
   const [isDeletingStudy, setIsDeletingStudy] = useState(false);
   const [isCreatingTask, setIsCreatingTask] = useState(false);
@@ -44,7 +43,7 @@ export default function Page() {
               <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => push('/studies')}>
                 <ArrowLeft className="cursor-pointer w-5 h-5" />
               </div>
-              studies/{studyId}
+              studies/{data?.study.name}
             </h2>
           </div>
           <div className="flex gap-2">
@@ -85,7 +84,7 @@ export default function Page() {
         study={data?.study ?? null} fetchStudy={fetchStudy}
       />
       <DeleteModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
-        id={studyId} handleAction={deleteStudy}
+        id={studyId!} handleAction={deleteStudy}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
         loading={loadingDeleteStudy} error={errorDeleteStudy}
       />
@@ -93,12 +92,12 @@ export default function Page() {
         task={data?.tasks.find((i) => i.id === taskId)} fetchStudy={fetchStudy}
       />
       <DeleteModal isOpen={isDeletingTask} setIsOpen={setIsDeletingTask}
-        id={studyId} handleAction={deleteTask}
+        id={studyId!} handleAction={deleteTask}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
         loading={loadingDeleteTask} error={errorDeleteTask}
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
-        studyId={studyId} fetchStudy={fetchStudy}
+        studyId={studyId!} fetchStudy={fetchStudy}
       />
     </div>
   );

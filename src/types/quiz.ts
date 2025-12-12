@@ -1,5 +1,5 @@
 export interface Quiz {
-  id: number;
+  id: string;
   title: string;
   description: string;
   imageUrl?: string | null;

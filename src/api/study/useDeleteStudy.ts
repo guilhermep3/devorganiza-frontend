@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export function useDeleteStudy(studyId: number | null) {
+export function useDeleteStudy(studyId: string | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -16,7 +16,7 @@ type Props = {
 export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) => {
   const {
     title, setTitle, link, setLink, done, setDone,
-    resetState, handleSubmit, loading, errors, success
+    resetState, handleSubmit, loading, errors, success, setSuccess
   } = useEditTask(task?.id ?? null);
 
   useEffect(() => {
@@ -32,6 +32,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
       const timer = setTimeout(() => {
         setIsOpen(false);
         fetchStudy();
+        setSuccess(null)
       }, 3000);
 
       return () => clearTimeout(timer);

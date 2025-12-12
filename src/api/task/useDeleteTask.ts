@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export function useDeleteTask(taskId: number | null) {
+export function useDeleteTask(taskId: string | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

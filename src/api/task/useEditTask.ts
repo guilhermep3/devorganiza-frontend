@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export function useEditTask(taskId: number | null) {
+export function useEditTask(taskId: string | null) {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [done, setDone] = useState(false);
@@ -25,9 +25,7 @@ export function useEditTask(taskId: number | null) {
     setErrors({});
     setSuccess(null);
 
-    const updated: Record<string, any> = {
-      title, link, done,
-    };
+    const updated: Record<string, any> = {};
 
     if (title) {
       updated.title = title;
@@ -65,6 +63,6 @@ export function useEditTask(taskId: number | null) {
 
   return {
     title, setTitle, link, setLink, done, setDone,
-    resetState, handleSubmit, loading, errors, success,
+    resetState, handleSubmit, loading, errors, success, setSuccess
   };
 }

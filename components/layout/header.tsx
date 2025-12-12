@@ -43,7 +43,7 @@ export const Header = ({ noNav, noAnimate }: props) => {
       }
         ${noNav && 'p-3'}
     `}>
-      <div className="container mx-auto flex justify-between items-center px-4 md:px-6 py-3 md:py-0">
+      <div className="container mx-auto flex justify-between items-center px-2 md:px-6 py-1 md:py-0">
         <Logo width={64} />
         {!noNav &&
           <nav className="hidden md:flex">

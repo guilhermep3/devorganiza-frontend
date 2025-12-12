@@ -9,7 +9,7 @@ type Props = {
   setIsOpen: (value: boolean) => void;
   title: string;
   description: string;
-  id: number | null;
+  id: string | null;
   handleAction: () => void;
   loading?: boolean;
   error?: any;

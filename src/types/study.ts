@@ -4,7 +4,7 @@ export type StudyTask = {
 };
 
 export interface Study {
-  id: number;
+  id: string;
   name: string;
   type?: string | null;
   link?: string | null;
@@ -17,7 +17,7 @@ export interface Study {
 }
 
 export interface Task {
-  id: number;
+  id: string;
   title: string;
   link: string;
   done: boolean;

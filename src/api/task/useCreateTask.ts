@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useCreateTask = (studyId: number | null) => {
+export const useCreateTask = (studyId: string | null) => {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
 

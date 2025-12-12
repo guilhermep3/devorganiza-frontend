@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { StudyTask } from "../../types/study";
 
-export function useStudy(studyId: number) {
+export function useStudy(studyId: string) {
   const [data, setData] = useState<StudyTask | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);

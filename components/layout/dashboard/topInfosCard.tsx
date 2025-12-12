@@ -4,7 +4,7 @@ import { ReactNode } from "react";
 type props = {
   title: string;
   Icon: LucideProps;
-  data: string;
+  data: string | number;
 }
 export const TopInfosCard = ({ title, Icon, data }: props) => {
 
