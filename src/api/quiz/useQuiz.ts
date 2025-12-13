@@ -1,20 +1,20 @@
 "use client"
-import { Quiz } from "@/src/types/quiz";
+import { FullQuiz } from "@/src/types/quiz";
 import { useEffect, useState } from "react"
 
-export const useQuizzes = () => {
-  const [data, setData] = useState<Quiz[] | null>(null);
+export const useQuiz = (quizId: string) => {
+  const [data, setData] = useState<FullQuiz | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
-  async function fetchQuizzes() {
+  async function fetchQuiz() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`${API_URL}/quizzes`, {
+      const res = await fetch(`${API_URL}/quizzes/${quizId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -24,11 +24,11 @@ export const useQuizzes = () => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        setError(errorData.error || "Erro ao buscar quizzes");
+        setError(errorData.error || "Erro ao buscar quiz");
         return;
       }
 
-      const dataRes: Quiz[] = await res.json();
+      const dataRes: FullQuiz = await res.json();
       setData(dataRes);
     } catch (err) {
       setError("Erro ao conectar ao servidor");
@@ -38,10 +38,10 @@ export const useQuizzes = () => {
   }
 
   useEffect(() => {
-    fetchQuizzes();
+    fetchQuiz();
   }, [])
 
   return {
-    data, error, loading, fetchQuizzes
+    data, error, loading, fetchQuiz
   }
 }

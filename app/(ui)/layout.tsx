@@ -1,4 +1,4 @@
-import { AsideDashboard } from "@/components/layout/dashboard/aside";
+import { AsideDashboard } from "@/components/layout/aside";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { AsideProvider } from "@/src/context/asideContext";

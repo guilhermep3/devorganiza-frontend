@@ -1,5 +1,5 @@
 "use client"
-import { useQuizAttempts } from "@/src/api/useQuizAttempts"
+import { useQuizAttempts } from "@/src/api/quiz/useQuizAttempts"
 import Image from "next/image"
 
 export const ProfileAttemptTable = () => {
