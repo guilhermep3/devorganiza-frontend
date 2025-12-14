@@ -100,7 +100,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
             <Button submit
               className={`${loading && 'pointer-events-none'}`}
             >
-              {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
+              {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
               Criar tarefa
             </Button>
           </div>

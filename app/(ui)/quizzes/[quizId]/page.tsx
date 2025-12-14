@@ -2,22 +2,33 @@
 import { Button } from "@/components/button";
 import { Logo } from "@/components/logo";
 import { useQuiz } from "@/src/api/quiz/useQuiz"
-import { ArrowLeft } from "lucide-react";
+import { useQuizStore } from "@/src/store/quiz-store";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation"
+import { useEffect } from "react";
 
 export default function Page() {
-  const { push } = useRouter();
+  const router = useRouter();
   const { quizId } = useParams();
-  const { data, loading, error } = useQuiz(quizId as string);
+  const { data, loading } = useQuiz(quizId as string);
+  const { insertQuiz, quiz } = useQuizStore();
+
+  useEffect(() => {
+    if (data && !loading) {
+      insertQuiz(data);
+    }
+  }, [data])
 
   return (
     <div className="layoutDiv">
       {loading || !data ? (
-        <div>carregando</div>
+        <div className="w-full h-full flex justify-center items-center"><Loader2 className="w-14 h-14 animate-spin" /></div>
       ) : (
         <section className="relative flex flex-col justify-center items-center gap-6">
-          <div className="absolute left-0 top-0 p-0.5 border border-gray-30 rounded-full" onClick={() => push('/quizzes')}>
+          <div className="absolute left-0 top-0 p-0.5 border border-gray-30 rounded-full"
+            onClick={() => router.push('/quizzes')}
+          >
             <ArrowLeft className="cursor-pointer w-5 h-5" />
           </div>
           <div className="flex justify-center items-center gap-2">
@@ -37,7 +48,7 @@ export default function Page() {
             </div>
           </div>
           <p className="text-center">{data.description}</p>
-          <Button>Iniciar Quiz</Button>
+          <Button href={`/quizzes/${data.id}/attempt`}>Iniciar Quiz</Button>
         </section>
       )}
     </div>

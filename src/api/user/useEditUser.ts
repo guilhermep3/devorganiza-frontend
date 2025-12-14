@@ -20,9 +20,6 @@ export const useEditUser = () => {
       setLoading(true);
       setError(null);
       setSuccess(null);
-      console.log("teste 1")
-      console.log("data.profileImage", data.profileImage)
-      console.log("defaults.profileImage", defaults.profileImage)
 
       const changed: Record<string, any> = {};
 
@@ -39,8 +36,6 @@ export const useEditUser = () => {
         setSuccess(null);
         return setError("Nada foi alterado");
       }
-
-      console.log("teste 2")
 
       if (imageFile) {
         const formData = new FormData();
@@ -59,7 +54,6 @@ export const useEditUser = () => {
           throw new Error("Falha ao enviar imagem: " + errText);
         }
         const jsonImage = await resImage.json();
-        console.log("resImage json", jsonImage)
       }
 
       if (Object.keys(changed).length > 0) {
@@ -78,7 +72,6 @@ export const useEditUser = () => {
         }
 
         const json = await res.json();
-        console.log("resjson", json)
       }
 
       setSuccess("Usuário atualizado com sucesso!");
@@ -88,7 +81,6 @@ export const useEditUser = () => {
       return null;
     } finally {
       setLoading(false);
-      console.log(error)
     }
   }
 

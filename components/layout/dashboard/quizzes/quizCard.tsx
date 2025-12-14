@@ -3,6 +3,7 @@ import { Quiz } from "@/src/types/quiz"
 import Image from "next/image"
 
 export const QuizCard = ({ quiz, locked }: { quiz: Quiz, locked?: boolean }) => {
+  
   return (
     <div
       className={`flex flex-col gap-3 justify-center items-center p-2 md:p-3 bg-card rounded-md

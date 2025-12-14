@@ -16,7 +16,7 @@ import { EditTaskModal } from "@/components/layout/tasks/editTaskModal";
 import { TaskCardSkeleton } from "@/components/layout/tasks/taskCardSkeleton";
 
 export default function Page() {
-  const { push } = useRouter();
+  const router = useRouter();
   const params = useParams();
   const studyId = Array.isArray(params.studyId) ? params.studyId[0] : params.studyId;
   const { data, loading, fetchStudy } = useStudy(studyId!);
@@ -40,7 +40,7 @@ export default function Page() {
           <div>
             <h1 className="dashboardSectionTitle text-start">{data?.study?.name ?? "Estudo"}</h1>
             <h2 className="dashboardSectionSubtitle flex items-center gap-2 mt-2">
-              <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => push('/studies')}>
+              <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => router.push('/studies')}>
                 <ArrowLeft className="cursor-pointer w-5 h-5" />
               </div>
               studies/{data?.study.name}

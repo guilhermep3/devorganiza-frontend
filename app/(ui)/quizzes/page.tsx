@@ -17,12 +17,16 @@ export default function Page() {
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           {loading || !data ? (
-            <QuizCardSkeleton />
+            Array.from({ length: 4 }).map((_, i) => (
+              <QuizCardSkeleton />
+            ))
           ) : data.map((quiz) => (
             <QuizCard key={quiz.id} quiz={quiz} />
           ))}
           {lockLoading || !lockData ? (
-            <QuizCardSkeleton />
+            Array.from({ length: 4 }).map((_, i) => (
+              <QuizCardSkeleton />
+            ))
           ) : lockData.map((quiz) => (
             <QuizCard key={quiz.id} quiz={quiz} locked />
           ))}

@@ -34,7 +34,6 @@ export function useEditTask(taskId: string | null) {
       updated.link = link;
     }
     updated.done = done;
-    console.log("updated", updated)
 
     try {
       const res = await fetch(`${API_URL}/tasks/${taskId}`, {
@@ -45,7 +44,6 @@ export function useEditTask(taskId: string | null) {
         },
         body: JSON.stringify(updated),
       });
-      console.log("res", res)
       const data = await res.json();
 
       if (!res.ok) {

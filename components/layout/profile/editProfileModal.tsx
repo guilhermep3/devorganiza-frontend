@@ -37,8 +37,6 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
 
   async function onSubmit(data: EditProfileForm) {
     const imageFile = data.profileImage?.[0] ?? null;
-    console.log("data", data)
-    console.log("imageFile", imageFile)
 
     const textData = {
       name: data.name,
@@ -152,7 +150,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
               Cancelar
             </ButtonCN>
             <Button submit className={`bg-main-30 hover:bg-main-20 text-white ${loading && 'pointer-events-none'}`}>
-              {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
+              {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
               Salvar
             </Button>
           </div>

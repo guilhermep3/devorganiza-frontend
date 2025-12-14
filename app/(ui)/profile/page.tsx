@@ -1,5 +1,5 @@
 "use client";
-import { BookOpenCheck, ListChecks, GaugeCircle, CircleQuestionMark } from "lucide-react";
+import { BookOpenCheck, ListChecks, GaugeCircle, CircleQuestionMark, Loader2 } from "lucide-react";
 import { useUser } from "@/src/api/user/useUser";
 import { ProfileAttemptTable } from "@/components/layout/profile/profileAttemptTable";
 import { ProfileCard } from "@/components/layout/profile/profileCard";
@@ -33,21 +33,21 @@ export default function Page() {
                   <BookOpenCheck className="text-main-30" />
                   Total de estudos
                 </div>
-                <div className="font-bold text-xl lg:text-3xl">{data?.studiesCount ?? "0"}</div>
+                <div className="font-bold text-xl lg:text-3xl">{data?.studiesCount ?? <Loader2 className="w-5 h-5 animate-spin" />}</div>
               </div>
               <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md">
                 <div className="flex items-center gap-2 text-sm xl:text-base">
                   <ListChecks className="text-main-30" />
                   Total de tarefas
                 </div>
-                <div className="font-bold text-xl lg:text-3xl">{data?.tasksCount ?? "0"}</div>
+                <div className="font-bold text-xl lg:text-3xl">{data?.tasksCount ?? <Loader2 className="w-5 h-5 animate-spin" />}</div>
               </div>
               <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md col-span-2 lg:col-span-1">
                 <div className="flex items-center gap-2 text-sm xl:text-base">
                   <GaugeCircle className="text-main-30" />
                   Conclusão geral
                 </div>
-                <div className="font-bold text-xl lg:text-3xl">{data?.studiesPercentage ?? "0%"}</div>
+                <div className="font-bold text-xl lg:text-3xl">{data?.studiesPercentage ?? <Loader2 className="w-5 h-5 animate-spin" />}</div>
               </div>
             </div>
             <div className="flex flex-col gap-8 bg-card p-4 rounded-md border border-gray-20">
