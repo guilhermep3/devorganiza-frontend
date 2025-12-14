@@ -1,6 +1,6 @@
 import { Button } from "@/components/button";
 import { StudyTask } from "@/src/types/study";
-import { BookmarkCheck, CheckCircle, Hourglass, List, ListCheck, Target } from "lucide-react";
+import { CheckCircle, Hourglass, List, ListCheck } from "lucide-react";
 
 type props = {
   data: StudyTask;

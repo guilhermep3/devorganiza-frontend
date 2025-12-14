@@ -1,4 +1,3 @@
-// EditProfileModal.tsx (corrigido)
 "use client"
 import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
@@ -108,8 +107,6 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
               <Camera className="absolute z-30 left-1/2 top-1/2 -translate-1/2 stroke-3 w-7 h-7 text-black" />
             </label>
           </div>
-
-          {/* campos de texto */}
           <div className="flex flex-col gap-2 w-full">
             <Label>Nome</Label>
             <input className="inputCustom w-full text-base"

@@ -26,7 +26,6 @@ export default function Page() {
 
     return acc;
   }, {});
-  console.log("tasksByDayWeek", tasksByDayWeek)
 
   return (
     <div className="layoutDiv">

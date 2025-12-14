@@ -1,7 +1,8 @@
+import { AttemptReturn } from "@/src/types/quiz";
 import { useEffect, useState } from "react";
 
 export const useQuizAttempts = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<AttemptReturn[] | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +19,6 @@ export const useQuizAttempts = () => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
         },
-        credentials: "include"
       });
       if (!res.ok) {
         const data = await res.json();

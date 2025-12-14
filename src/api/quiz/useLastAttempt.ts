@@ -28,7 +28,6 @@ export const useLastAttempt = (quizId: string) => {
         return;
       }
       const data: AttemptReturn = await res.json();
-      console.log("res.json", data)
       setData(data);
     } catch (err) {
       setError("Erro de conexão com o servidor");

@@ -1,9 +1,30 @@
 "use client"
 import { useQuizAttempts } from "@/src/api/quiz/useQuizAttempts"
 import Image from "next/image"
+import { AttemptSkeleton } from "./attemptSkeleton";
+import { useEffect, useState } from "react";
 
 export const ProfileAttemptTable = () => {
   const { data, loading } = useQuizAttempts();
+  const [sortedAttempts, setSortedAttempts] = useState<any>([]);
+  console.log(data);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    return `${minutes}m ${remainingSeconds}s`;
+  };
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setSortedAttempts([...data].sort(
+        (a, b) =>
+          new Date(b.startedAt).getTime() -
+          new Date(a.startedAt).getTime()
+      ))
+    }
+  }, [loading])
 
   return (
     <table className="w-full border-separate border-spacing-y-3">
@@ -15,54 +36,31 @@ export const ProfileAttemptTable = () => {
         </tr>
       </thead>
       <tbody>
-        <tr className="rounded-lg shadow-sm">
-          <td className="rounded-l-lg pb-3">
-            <div className="flex gap-3 items-center">
-              <Image src={`/auth.jpg`} alt="foto quiz"
-                width={32} height={32} className="w-8 h-8 rounded-sm object-cover"
-              />
-              HTML
-            </div>
-          </td>
-          <td className="text-lg font-semibold text-main-40">30/30</td>
-          <td className="rounded-r-lg">24 min.</td>
-        </tr>
-        <tr className="rounded-lg shadow-sm">
-          <td className="rounded-l-lg pb-3">
-            <div className="flex gap-3 items-center">
-              <Image src={`/auth.jpg`} alt="foto quiz"
-                width={32} height={32} className="w-8 h-8 rounded-sm object-cover"
-              />
-              HTML
-            </div>
-          </td>
-          <td className="text-lg font-semibold text-lime-600">27/30</td>
-          <td className="rounded-r-lg">25 min.</td>
-        </tr>
-        <tr className="rounded-lg shadow-sm">
-          <td className="rounded-l-lg pb-3">
-            <div className="flex gap-3 items-center">
-              <Image src={`/auth.jpg`} alt="foto quiz"
-                width={32} height={32} className="w-8 h-8 rounded-sm object-cover"
-              />
-              CSS
-            </div>
-          </td>
-          <td className="text-lg font-semibold text-green-600">24/30</td>
-          <td className="rounded-r-lg">27 min.</td>
-        </tr>
-        <tr className="rounded-lg shadow-sm">
-          <td className="rounded-l-lg pb-3">
-            <div className="flex gap-3 items-center">
-              <Image src={`/auth.jpg`} alt="foto quiz"
-                width={32} height={32} className="w-8 h-8 rounded-sm object-cover"
-              />
-              CSS
-            </div>
-          </td>
-          <td className="text-lg font-semibold text-emerald-600">22/30</td>
-          <td className="rounded-r-lg">31 min.</td>
-        </tr>
+        {!loading ? (
+          sortedAttempts.slice(0, 5).map((attempt: any) => (
+            <tr key={attempt.id} className="rounded-lg shadow-sm">
+              <td className="rounded-l-lg pb-3">
+                <div className="flex gap-3 items-center">
+                  <Image src="/auth.jpg" alt="foto quiz"
+                    width={32} height={32}
+                    className="w-8 h-8 rounded-sm object-cover"
+                  />
+                  Quiz {attempt.quizTitle}
+                </div>
+              </td>
+              <td className="text-lg font-semibold text-main-40">
+                {attempt.score}/30
+              </td>
+              <td className="rounded-r-lg">
+                {formatTime(attempt.durationSec)}
+              </td>
+            </tr>
+          ))
+        ) : (
+          Array.from({ length: 5 }).map((_, index) => (
+            <AttemptSkeleton key={index} />
+          ))
+        )}
       </tbody>
     </table>
   )

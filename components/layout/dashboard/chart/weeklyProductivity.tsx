@@ -20,16 +20,6 @@ import { Task } from "@/src/types/study"
 
 export const description = "A multiple bar chart"
 
-// const chartData = [
-//   { semana: "Segunda", criado: 186, finalizado: 80 },
-//   { semana: "Terça", criado: 305, finalizado: 200 },
-//   { semana: "Quarta", criado: 237, finalizado: 120 },
-//   { semana: "Quinta", criado: 73, finalizado: 190 },
-//   { semana: "Sexta", criado: 209, finalizado: 130 },
-//   { semana: "Sábado", criado: 214, finalizado: 140 },
-//   { semana: "Domingo", criado: 214, finalizado: 140 },
-// ]
-
 const weekDays = [
   'Segunda-Feira',
   'Terça-Feira',
