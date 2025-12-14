@@ -1,26 +1,24 @@
-import { AttemptAnswer, AttemptReturn } from "@/src/types/quiz";
 import { useState } from "react";
 
-export const useFinishAttempt = () => {
-  const [data, setData] = useState<AttemptReturn | null>(null);
+export const useDeleteAttempt = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [success, setSuccess] = useState<string | null>(null);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
-  async function createAttempt(quizId: string, answer: AttemptAnswer[]) {
+  async function deleteAttempt(quizId: string) {
     try {
       setLoading(true);
       setError(null);
 
-      const res = await fetch(`${API_URL}/quizzes/${quizId}/attempts/finish`, {
-        method: "PUT",
+      const res = await fetch(`${API_URL}/quizzes/${quizId}/attempts/delete`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
         },
-        body: JSON.stringify(answer)
       })
 
       if (!res.ok) {
@@ -28,9 +26,8 @@ export const useFinishAttempt = () => {
         setError(errorData.error || "Erro ao finalizar tentativa de quiz");
         return;
       }
-      const data: AttemptReturn = await res.json();
-      setData(data);
-      return data;
+      const data = await res.json();
+      setSuccess(data.message);
     } catch (err) {
       setError("Erro de conexão com o servidor");
       return null;
@@ -40,6 +37,6 @@ export const useFinishAttempt = () => {
   }
 
   return {
-    createAttempt, loading, error, data
+    deleteAttempt, loading, error, success
   }
 }

@@ -13,7 +13,7 @@ export const useQuizStore = create<QuizStore>()(
     (set) => ({
       quiz: null,
       insertQuiz: (quiz: FullQuiz) => set({ quiz }),
-      clearQuiz: () => set({ quiz: null})
+      clearQuiz: () => set({ quiz: null })
     }),
     { name: "Quiz-storage" }
   )

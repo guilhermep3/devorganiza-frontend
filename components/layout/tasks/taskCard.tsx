@@ -4,11 +4,17 @@ import { CheckCircle, Hourglass, Pencil, Trash } from "lucide-react";
 
 type props = {
   task: Task
-  setTaskId: (newV: number) => void;
+  setTaskId: (newV: string) => void;
   setIsEditingTask: (newV: any) => void;
   setIsDeletingTask: (newV: any) => void;
 }
 export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask }: props) => {
+  const data = new Date(task.createdAt);
+
+  const dateFormated = data.toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: 'short'
+  })
 
   return (
     <div className={`bg-card p-4 rounded-lg flex flex-col justify-between gap-3 border
@@ -39,6 +45,7 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
           >
             <p>{task.done ? "Concluída" : "Pendente"}</p>
           </div>
+          <p className="text-xs md:text-sm">{dateFormated}</p>
         </div>
         <div className="flex gap-4">
           <button

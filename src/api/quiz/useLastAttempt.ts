@@ -1,7 +1,7 @@
-import { AttemptAnswer, AttemptReturn } from "@/src/types/quiz";
-import { useState } from "react";
+import { AttemptReturn } from "@/src/types/quiz";
+import { useEffect, useState } from "react";
 
-export const useFinishAttempt = () => {
+export const useLastAttempt = (quizId: string) => {
   const [data, setData] = useState<AttemptReturn | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
@@ -9,28 +9,27 @@ export const useFinishAttempt = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
 
-  async function createAttempt(quizId: string, answer: AttemptAnswer[]) {
+  async function fetchLastAttempt() {
     try {
       setLoading(true);
       setError(null);
 
-      const res = await fetch(`${API_URL}/quizzes/${quizId}/attempts/finish`, {
-        method: "PUT",
+      const res = await fetch(`${API_URL}/quizzes/${quizId}/attempts/last`, {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
         },
-        body: JSON.stringify(answer)
       })
 
       if (!res.ok) {
         const errorData = await res.json();
-        setError(errorData.error || "Erro ao finalizar tentativa de quiz");
+        setError(errorData.error || "Erro ao pegar última tentativa de quiz");
         return;
       }
       const data: AttemptReturn = await res.json();
+      console.log("res.json", data)
       setData(data);
-      return data;
     } catch (err) {
       setError("Erro de conexão com o servidor");
       return null;
@@ -39,7 +38,12 @@ export const useFinishAttempt = () => {
     }
   }
 
+  useEffect(() => {
+    if (!quizId) return;
+    fetchLastAttempt();
+  }, [quizId]);
+
   return {
-    createAttempt, loading, error, data
+    data, loading, error
   }
 }

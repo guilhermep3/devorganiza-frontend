@@ -12,7 +12,7 @@ export const useQuizAttempts = () => {
     try {
       setLoading(true);
 
-      const res = await fetch(`${API_URL}/quizzes`, {
+      const res = await fetch(`${API_URL}/quizzes/attempts`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

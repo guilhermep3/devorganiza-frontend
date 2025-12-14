@@ -35,14 +35,16 @@ export default function Page() {
             <Logo width={80} />
             <p className="text-xl font-bold -mb-1 text-main-60">DevOrganiza</p>
           </div>
-          <Image src={`${data.imageUrl}`} alt={data.title}
-            width={400} height={400}
-            className="h-60 object-contain"
-          />
+          {data?.imageUrl &&
+            <Image src={`${data.imageUrl}`} alt={data.title}
+              width={400} height={400}
+              className="h-60 object-contain"
+            />
+          }
           <div className="flex flex-col items-center gap-2 text-xs md:text-sm">
             <h1 className="text-2xl md:text-3xl font-extrabold">Quizz {data.title}</h1>
             <div className="flex items-center justify-between gap-5 text-gray-50">
-              <p>15 - 30 min </p>
+              <p>5 - 30 min </p>
               <span>|</span>
               <p>{data.questions.length} perguntas</p>
             </div>

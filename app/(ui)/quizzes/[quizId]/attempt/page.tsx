@@ -1,5 +1,6 @@
 "use client"
 import { Button as ButtonCN } from "@/components/ui/button";
+import { useDeleteAttempt } from "@/src/api/quiz/useDeleteAttempt";
 import { useFinishAttempt } from "@/src/api/quiz/useFinishAttempt";
 import { useStartAttempt } from "@/src/api/quiz/useStartAttempt";
 import { useQuizStore } from "@/src/store/quiz-store"
@@ -19,6 +20,7 @@ export default function Page() {
   const [answers, setAnswers] = useState<AttemptAnswer[]>([]);
   const { createAttempt } = useFinishAttempt();
   const { startAttempt } = useStartAttempt();
+  const { deleteAttempt } = useDeleteAttempt();
 
   useEffect(() => {
     setCurrentQuestion(quiz?.questions![questionIndex]!);
@@ -47,15 +49,22 @@ export default function Page() {
     router.push(`/quizzes/${quiz?.id}/finish`);
   }
 
+  function handleDeleteAttempt() {
+    deleteAttempt(quiz?.id!);
+    router.push('/quizzes')
+  }
+
   return (
     <div className="layoutDiv">
       <div className="flex items-center gap-5 text-sm">
         <p>Questão {questionIndex + 1} de 30</p>
         <span>|</span>
         <div className="flex items-center gap-2">
-          <Image src={`${quiz?.imageUrl}`} alt={quiz?.title!}
-            width={20} height={20}
-          />
+          {quiz?.imageUrl &&
+            <Image src={`${quiz?.imageUrl}`} alt={quiz?.title!}
+              width={20} height={20}
+            />
+          }
           <p>{quiz?.title ?? 'Título'}</p>
         </div>
       </div>
@@ -76,7 +85,9 @@ export default function Page() {
           ))}
         </div>
         <div className="flex justify-center items-center gap-2">
-          <ButtonCN className="bg-gray-20 hover:bg-gray-30 text-foreground" size={"lg"}>
+          <ButtonCN className="bg-gray-20 hover:bg-gray-30 text-foreground" size={"lg"}
+            onClick={handleDeleteAttempt}
+          >
             Desistir
           </ButtonCN>
           <ButtonCN className="bg-main-30 hover:bg-main-50 text-white" size={"lg"}

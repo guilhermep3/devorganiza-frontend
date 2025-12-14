@@ -1,24 +1,3 @@
-export interface FullQuiz {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl?: string | null;
-  createdAt: Date | string;
-  updatedAt: Date | string;
-  questions: {
-    id: string;
-    question: string;
-    quizId: string;
-    createdAt: Date;
-    updatedAt: Date;
-    alternatives: {
-      id: string;
-      text: string;
-      createdAt: Date;
-    }[];
-  }[];
-}
-
 export interface Quiz {
   id: string;
   title: string;
@@ -28,48 +7,48 @@ export interface Quiz {
   updatedAt: Date | string;
 }
 
-export interface Questions {
-  id: string;
-  question: string;
-  quizId: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-export interface Alternatives {
+export interface Alternative {
   id: string;
   text: string;
-  createdAt: Date;
+  createdAt: Date | string;
 }
 
-export interface QuestionAlternatives {
+export interface Question {
   id: string;
   question: string;
   quizId: string;
-  createdAt: Date;
-  updatedAt: Date;
-  alternatives: {
-    id: string;
-    text: string;
-    createdAt: Date;
-  }[];
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+
+export interface QuestionAlternatives extends Question {
+  alternatives: Alternative[];
+}
+
+export interface FullQuiz extends Quiz {
+  questions: QuestionAlternatives[];
 }
 
 export interface AttemptAnswer {
-  questionId: string, answerId: string
+  questionId: string;
+  answerId: string;
+}
+
+export interface Attempt {
+  id: string;
+  userId: string;
+  quizId: string;
+  startedAt: string;
+  finishedAt: string | null;
+  score: number;
+  durationSec: number;
 }
 
 export interface AttemptReturn {
-  attempt: {
-    id: string;
-    userId: string;
-    quizId: string;
-    startedAt: string;
-    finishedAt: string | null;
-    score: number;
-    durationSec: number;
-  };
-  duration: number;
+  userId: string;
+  quizId: string;
+  startedAt: string;
+  finishedAt: string;
+  durationSec: number;
   score: number;
-  message: string;
 }
