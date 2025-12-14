@@ -18,14 +18,14 @@ export default function Page() {
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           {loading || !data ? (
             Array.from({ length: 4 }).map((_, i) => (
-              <QuizCardSkeleton />
+              <QuizCardSkeleton key={i} />
             ))
           ) : data.map((quiz) => (
             <QuizCard key={quiz.id} quiz={quiz} />
           ))}
           {lockLoading || !lockData ? (
             Array.from({ length: 4 }).map((_, i) => (
-              <QuizCardSkeleton />
+              <QuizCardSkeleton key={i} />
             ))
           ) : lockData.map((quiz) => (
             <QuizCard key={quiz.id} quiz={quiz} locked />

@@ -1,5 +1,6 @@
 "use client"
 import { Button } from "@/components/button";
+import { LoadingPage } from "@/components/layout/loadingPage";
 import { Logo } from "@/components/logo";
 import { useQuiz } from "@/src/api/quiz/useQuiz"
 import { useQuizStore } from "@/src/store/quiz-store";
@@ -23,7 +24,7 @@ export default function Page() {
   return (
     <div className="layoutDiv">
       {loading || !data ? (
-        <div className="w-full h-full flex justify-center items-center"><Loader2 className="w-14 h-14 animate-spin" /></div>
+        <LoadingPage />
       ) : (
         <section className="relative flex flex-col justify-center items-center gap-6">
           <div className="absolute left-0 top-0 p-0.5 border border-gray-30 rounded-full"
