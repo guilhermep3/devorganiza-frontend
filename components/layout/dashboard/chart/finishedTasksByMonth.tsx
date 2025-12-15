@@ -1,0 +1,122 @@
+"use client"
+import { TrendingDown, TrendingUp } from "lucide-react"
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts"
+
+import {
+  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
+} from "@/components/ui/card"
+import {
+  ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
+} from "@/components/ui/chart"
+import { Task } from "@/src/types/study"
+import { calculateDifference, formatPercentage } from "@/src/utils/calc"
+
+const months = [
+  "Janeiro",
+  "Fevereiro",
+  "Março",
+  "Abril",
+  "Maio",
+  "Junho",
+  "Julho",
+  "Agosto",
+  "Setembro",
+  "Outubro",
+  "Novembro",
+  "Dezembro",
+]
+
+const chartConfig = {
+  tarefa: {
+    label: "tarefa",
+    color: "var(--color-main-30)",
+  },
+} satisfies ChartConfig
+
+export function FinishedTasksByMonthChart({ data }: { data: Record<number, Task[]> }) {
+  const chartData = months.map((month, index) => {
+    const tasksByMonth = data[index] ?? [];
+
+    return {
+      mes: month,
+      tarefa: tasksByMonth.filter(t => t.done).length
+    }
+  })
+
+  const todayIndex = new Date().getMonth();
+  const yesterdayIndex = todayIndex === 0 ? 11 : todayIndex - 1;
+
+  const todayData = data[todayIndex] ?? [];
+  const yesterdayData = data[yesterdayIndex] ?? [];
+
+  const todayFinished = todayData.filter(t => t.done).length;
+  const yesterdayFinished = yesterdayData.filter(t => t.done).length;
+
+  const finishedDifference = calculateDifference(todayFinished, yesterdayFinished);
+
+  const year = new Date().getFullYear()
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="chartTitleCustom">Tarefas finalizadas por mês</CardTitle>
+        <CardDescription>
+          Média por mês
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <ChartContainer config={chartConfig}>
+          <AreaChart
+            accessibilityLayer
+            data={chartData}
+            margin={{
+              left: 12,
+              right: 12,
+            }}
+          >
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="mes"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="line" />}
+            />
+            <Area
+              dataKey="tarefa"
+              type="natural"
+              fill="var(--color-main-30)"
+              fillOpacity={0.4}
+              stroke="var(--color-main-60)"
+            />
+          </AreaChart>
+        </ChartContainer>
+      </CardContent>
+      <CardFooter>
+        <div className="flex w-full items-start gap-2 text-sm">
+          <div className="grid gap-2">
+            <div className="chartFooter">
+              {finishedDifference >= 0 ? (
+                <TrendingUp className="h-4 w-4 text-green-20" />
+              ) : (
+                <TrendingDown className="h-4 w-4 text-red-500" />
+              )}
+              {finishedDifference >= 0 ? "Aumento" : "Diminuição"} de{" "}
+              <span className="font-bold">
+                {formatPercentage(finishedDifference)}%
+              </span>{" "}
+              de tarefas finalizadas no último mês
+            </div>
+            <div className="chartFooter text-gray-50">
+              Janeiro - Dezembro {year}
+            </div>
+          </div>
+        </div>
+      </CardFooter>
+    </Card>
+  )
+}

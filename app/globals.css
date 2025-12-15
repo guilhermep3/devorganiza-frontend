@@ -211,6 +211,9 @@ body {
   .successMsg {
     @apply text-green-500 text-sm text-center
   }
+  .chartFooter {
+    @apply flex items-start gap-2 text-xs md:text-sm font-medium
+  }
 }
 
 .highlight_underline{

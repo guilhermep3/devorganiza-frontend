@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 export const ProfileAttemptTable = () => {
   const { data, loading } = useQuizAttempts();
   const [sortedAttempts, setSortedAttempts] = useState<any>([]);
-  console.log(data);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);

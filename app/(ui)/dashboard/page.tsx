@@ -1,7 +1,7 @@
 "use client"
-import { TasksCompletedByStudyChart } from "@/components/layout/dashboard/chart/tasksCompletedByStudy";
 import { WeeklyProductivity } from "@/components/layout/dashboard/chart/weeklyProductivity";
-import { TasksFinishedMonthChart } from "@/components/layout/dashboard/chart/tasksFinishedMonth";
+import { FinishedTasksByMonthChart } from "@/components/layout/dashboard/chart/finishedTasksByMonth";
+import { TasksCompletedByStudyChart } from "@/components/layout/dashboard/chart/tasksCompletedByStudy";
 import { TopInfos } from "@/components/layout/dashboard/topInfos";
 import { TasksBySector } from "@/components/layout/dashboard/chart/tasksBySector";
 import { QuizAverageScoreChart } from "@/components/layout/dashboard/chart/quizAverageScore";
@@ -12,10 +12,11 @@ import { useQuizzesLocked } from "@/src/api/quiz/useQuizzesLocked";
 import { Task } from "@/src/types/study";
 
 export default function Page() {
-  const { data: studiesData, loading, error } = useStudies();
+  const { data: studiesData } = useStudies();
   const { data: quizzesData } = useQuizzes();
   const { data: quizzesLockData } = useQuizzesLocked();
   const allTasks = studiesData?.flatMap(i => i.tasks) ?? [];
+  console.log("allTasks", allTasks)
 
   const tasksByDayWeek = allTasks.reduce((acc: Record<number, Task[]>, task) => {
     const date = new Date(task.createdAt);
@@ -26,6 +27,18 @@ export default function Page() {
 
     return acc;
   }, {});
+  console.log("tasksByDayWeek", tasksByDayWeek)
+
+  const finishedTasksByMonth = allTasks.reduce((acc: Record<number, Task[]>, task) => {
+    const date = new Date(task.createdAt);
+    const month = date.getMonth();
+
+    acc[month] = acc[month] || [];
+    acc[month].push(task)
+
+    return acc;
+  }, {})
+  console.log("finishedTasksByMonth", finishedTasksByMonth)
 
   return (
     <div className="layoutDiv">
@@ -37,7 +50,7 @@ export default function Page() {
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho e evolução</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <WeeklyProductivity data={tasksByDayWeek} />
-          <TasksFinishedMonthChart />
+          <FinishedTasksByMonthChart data={finishedTasksByMonth} />
           <TasksCompletedByStudyChart />
           <TasksBySector />
         </div>

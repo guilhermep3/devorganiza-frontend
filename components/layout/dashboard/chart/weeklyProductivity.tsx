@@ -1,33 +1,24 @@
 "use client"
-import { TrendingUp } from "lucide-react"
+import { TrendingUp, TrendingDown } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from "@/components/ui/card"
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
+  ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
 import { Task } from "@/src/types/study"
-
-export const description = "A multiple bar chart"
+import { calculateDifference, formatPercentage } from "@/src/utils/calc"
 
 const weekDays = [
-  'Segunda-Feira',
-  'Terça-Feira',
-  'Quarta-Feira',
-  'Quinta-Feira',
-  'Sexta-Feira',
-  'Sábado',
-  'Domingo',
+  "Domingo",
+  "Segunda-Feira",
+  "Terça-Feira",
+  "Quarta-Feira",
+  "Quinta-Feira",
+  "Sexta-Feira",
+  "Sábado",
 ]
 
 const chartConfig = {
@@ -41,26 +32,40 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-type props = {
-  data: Record<number, Task[]>;
-}
-export function WeeklyProductivity({ data }: props) {
-  const chartData = Object.entries(data).map(([week, task]) => {
-    const totalTasks = task.length;
-    const totalFinishedTasks = task.filter(t => t.done).length;
+export function WeeklyProductivity({ data }: { data: Record<number, Task[]> }) {
+  const chartData = weekDays.map((day, index) => {
+    const tasksOfDay = data[index] ?? [];
 
     return {
-      semana: weekDays[Number(week)],
-      criado: totalTasks,
-      finalizado: totalFinishedTasks
+      semana: day,
+      criado: tasksOfDay.length,
+      finalizado: tasksOfDay.filter(t => t.done).length,
     }
   })
+
+  const todayIndex = new Date().getDay();
+  const yesterdayIndex = todayIndex === 0 ? 6 : todayIndex - 1;
+
+  const todayData = chartData[todayIndex];
+  const yesterdayData = chartData[yesterdayIndex];
+
+  const createdDifference = calculateDifference(
+    todayData.criado,
+    yesterdayData.criado
+  )
+
+  const finishedDifference = calculateDifference(
+    todayData.finalizado,
+    yesterdayData.finalizado
+  )
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="chartTitleCustom">Tarefas criadas e finalizadas</CardTitle>
-        <CardDescription>Ordenado Por semana</CardDescription>
+        <CardTitle className="chartTitleCustom">
+          Tarefas criadas e finalizadas
+        </CardTitle>
+        <CardDescription>Ordenado por semana</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -83,11 +88,29 @@ export function WeeklyProductivity({ data }: props) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          Aumento de 5,2% <TrendingUp className="h-4 w-4" /> de tarefas finalizadas nessa semana
+        <div className="chartFooter font-medium">
+          {createdDifference >= 0 ? (
+            <TrendingUp className="h-4 w-4 text-green-20" />
+          ) : (
+            <TrendingDown className="h-4 w-4 text-red-500" />
+          )}
+          {createdDifference >= 0 ? "Aumento" : "Diminuição"} de{" "}
+          <span className="font-bold">
+            {formatPercentage(createdDifference)}%
+          </span>{" "}
+          de tarefas criadas de hoje pra ontem
         </div>
-        <div className="text-muted-foreground leading-none">
-          Terça-feira foi o dia que mais teve tarefas finalizadas
+        <div className="chartFooter text-gray-50">
+          {finishedDifference >= 0 ? (
+            <TrendingUp className="h-4 w-4 text-green-20" />
+          ) : (
+            <TrendingDown className="h-4 w-4 text-red-500" />
+          )}
+          {finishedDifference >= 0 ? "Aumento" : "Diminuição"} de{" "}
+          <span className="font-bold">
+            {formatPercentage(finishedDifference)}%
+          </span>{" "}
+          de tarefas finalizadas de hoje pra ontem
         </div>
       </CardFooter>
     </Card>
