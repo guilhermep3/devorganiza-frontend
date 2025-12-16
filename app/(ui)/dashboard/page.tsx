@@ -10,43 +10,21 @@ import { useQuizzes } from "@/src/api/quiz/useQuizzes";
 import { useQuizzesLocked } from "@/src/api/quiz/useQuizzesLocked";
 import { Task } from "@/src/types/study";
 import { useQuizAttempts } from "@/src/api/quiz/useQuizAttempts";
+import { useFasterAttempts } from "@/src/api/chart/useFasterAttempts";
+import { useWeeklyProductivity } from "@/src/api/chart/useWeeklyProductivity";
+import { useTasksByType } from "@/src/api/chart/useTasksByType";
+import { useFinishedTasksByMonth } from "@/src/api/chart/useFinishedTasks";
 
 export default function Page() {
+  const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
+  const { data: weeklyProductivityData, loading: weeklyProductivityLoading } = useWeeklyProductivity();
+  const { data: tasksByTypeData, loading: tasksByTypeLoading } = useTasksByType();
+  const { data: finishedTasksData, loading: finishedTasksLoading } = useFinishedTasksByMonth()
+
   const { data: studiesData } = useStudies();
   const { data: quizzesData } = useQuizzes();
   const { data: quizzesLockData } = useQuizzesLocked();
   const { data: attemptsData } = useQuizAttempts();
-  const allTasks = studiesData?.flatMap(i => i.tasks) ?? [];
-  console.log("attemptsData", attemptsData)
-
-  const tasksByDayWeek = allTasks.reduce((acc: Record<number, Task[]>, task) => {
-    const date = new Date(task.createdAt);
-    const dayWeek = date.getDay();
-
-    acc[dayWeek] = acc[dayWeek] || [];
-    acc[dayWeek].push(task);
-
-    return acc;
-  }, {});
-
-  const finishedTasksByMonth = allTasks.reduce((acc: Record<number, Task[]>, task) => {
-    const date = new Date(task.createdAt);
-    const month = date.getMonth();
-
-    acc[month] = acc[month] || [];
-    acc[month].push(task)
-
-    return acc;
-  }, {});
-
-  const studiesByType = studiesData?.reduce((acc: Record<string, any>, item) => {
-    const type = item.study.type as string;
-    const tasksCount = item.tasks.length;
-
-    acc[type] = (acc[type] || 0) + tasksCount;
-
-    return acc;
-  }, {})
 
   const attemptsByQuiz = attemptsData?.reduce((acc, attempt) => {
     const quizTitle = attempt.quizTitle
@@ -75,9 +53,15 @@ export default function Page() {
         <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho e evolução</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <WeeklyProductivity data={tasksByDayWeek} />
-          <TasksByType data={studiesByType} />
-          <FinishedTasksByMonthChart data={finishedTasksByMonth} />
+          {!weeklyProductivityLoading && weeklyProductivityData &&
+            <WeeklyProductivity data={weeklyProductivityData} />
+          }
+          {!tasksByTypeLoading && tasksByTypeData &&
+            <TasksByType data={tasksByTypeData} />
+          }
+          {!finishedTasksLoading && finishedTasksData &&
+            <FinishedTasksByMonthChart data={finishedTasksData} />
+          }
         </div>
       </section>
       <section className="flex flex-col">
@@ -85,7 +69,9 @@ export default function Page() {
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho em tentativas dos quizzes</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <QuizAverageScoreChart data={attemptsByQuiz} />
-          <QuizFasterAttemptsChart />
+          {!fasterAttemptsLoading && fasterAttemptsData &&
+            <QuizFasterAttemptsChart data={fasterAttemptsData} />
+          }
         </div>
       </section>
     </div>

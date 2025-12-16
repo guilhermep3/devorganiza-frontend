@@ -48,8 +48,6 @@ export function QuizAverageScoreChart({ data }: { data: any }) {
     quiz,
     score: data?.[quiz]?.averageScore ?? 0,
   }))
-  console.log("data", data)
-  console.log("chartData", chartData)
 
   const sortedData = [...chartData].sort(
     (a, b) => b.score - a.score

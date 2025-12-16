@@ -3,30 +3,17 @@ import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from "@/components/ui/card"
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
+  ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
+import { FasterAttempts } from "@/src/types/chart"
 
-export const description = "A bar chart with a label"
-
-const chartData = [
-  { quiz: "HTML", duração: 10 },
-  { quiz: "CSS", duração: 11 },
-  { quiz: "Javascript", duração: 14 },
-  { quiz: "Node.js", duração: 17 },
-  { quiz: "Python", duração: 20 },
-  { quiz: "Git", duração: 21 },
-]
+// const chartData = [
+//   { quiz: "HTML", duração: 10 },
+//   { quiz: "CSS", duração: 11 },
+// ]
 
 const chartConfig = {
   duração: {
@@ -35,7 +22,23 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function QuizFasterAttemptsChart() {
+export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
+  const chartData = data.map((i) => {
+    const seconds = Number(i.duracao);
+    return {
+      ...i,
+      duracao: Number(seconds / 60)
+    }
+  })
+
+  function formatMinuteToMMSS(value: number) {
+    const totalSeconds = Math.round(value * 60)
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = Math.floor(totalSeconds % 60);
+
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -63,12 +66,13 @@ export function QuizFasterAttemptsChart() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="duração" fill="var(--color-main-30)" radius={8}>
+            <Bar dataKey="duracao" fill="var(--color-main-30)" radius={8}>
               <LabelList
                 position="top"
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
+                formatter={(value: number) => formatMinuteToMMSS(value)}
               />
             </Bar>
           </BarChart>

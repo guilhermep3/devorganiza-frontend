@@ -9,6 +9,7 @@ import {
   ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
 import { formatPercentage } from "@/src/utils/calc"
+import type { TasksByType } from "@/src/types/chart"
 
 const chartConfig = {
   tarefas: {
@@ -20,7 +21,7 @@ const chartConfig = {
 const setorTypes = ["frontend", "backend", "ferramenta"] as const;
 type SetorType = typeof setorTypes[number];
 
-export function TasksByType({ data }: { data: any }) {
+export function TasksByType({ data }: { data: TasksByType[] }) {
 
   const formatSetor = (type: SetorType) => {
     const map: Record<SetorType, string> = {
@@ -32,10 +33,14 @@ export function TasksByType({ data }: { data: any }) {
     return map[type];
   };
 
-  const chartData = setorTypes.map((type) => ({
-    setor: formatSetor(type),
-    tarefas: data?.[type] ?? 0,
-  }));
+  const chartData = setorTypes.map((type) => {
+    const item = data.find(i => i.type === type);
+
+    return {
+      setor: formatSetor(type),
+      tarefas: item?.tasks ?? 0
+    }
+  })
 
   const totalTasks = chartData.reduce((acc, item) => {
     return acc + item.tarefas
@@ -52,7 +57,6 @@ export function TasksByType({ data }: { data: any }) {
     totalTasks > 0 ? (second.tarefas / totalTasks) * 100 : 0
 
   const difference = firstPercentage - secondPercentage
-
 
   return (
     <Card>

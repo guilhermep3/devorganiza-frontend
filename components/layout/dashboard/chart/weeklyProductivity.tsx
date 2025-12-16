@@ -8,8 +8,8 @@ import {
 import {
   ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Task } from "@/src/types/study"
 import { calculateDifference, formatPercentage } from "@/src/utils/calc"
+import type { WeeklyProductivity } from "@/src/types/chart"
 
 const weekDays = [
   "Domingo",
@@ -32,14 +32,14 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function WeeklyProductivity({ data }: { data: Record<number, Task[]> }) {
+export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
   const chartData = weekDays.map((day, index) => {
     const tasksOfDay = data[index] ?? [];
 
     return {
       semana: day,
-      criado: tasksOfDay.length,
-      finalizado: tasksOfDay.filter(t => t.done).length,
+      criado: tasksOfDay.criado ?? 0,
+      finalizado: tasksOfDay.finalizado ?? 0,
     }
   })
 

@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/chart"
 import { Task } from "@/src/types/study"
 import { calculateDifference, formatPercentage } from "@/src/utils/calc"
+import type { FinishedTasksByMonth } from "@/src/types/chart"
 
 const months = [
   "Janeiro",
@@ -33,31 +34,38 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function FinishedTasksByMonthChart({ data }: { data: Record<number, Task[]> }) {
+export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth[] }) {
   const chartData = months.map((month, index) => {
-    const tasksByMonth = data[index] ?? [];
-
+    const monthNumber = index + 1;
+    const tasksByMonth = data.find(i =>
+      Number(i.month) === monthNumber
+    )
+    
     return {
       mes: month,
-      tarefa: tasksByMonth.filter(t => t.done).length
+      tarefa: tasksByMonth?.tarefa ?? 0
     }
   })
 
-  const todayIndex = new Date().getMonth();
-  const yesterdayIndex = todayIndex === 0 ? 11 : todayIndex - 1;
+  const currentMonthIndex = new Date().getMonth();
+  const previousMonthIndex =
+    currentMonthIndex === 0 ? 11 : currentMonthIndex - 1;
 
-  const todayData = data[todayIndex] ?? [];
-  const yesterdayData = data[yesterdayIndex] ?? [];
+  const currentMonthData = chartData[currentMonthIndex];
+  const previousMonthData = chartData[previousMonthIndex];
 
-  const todayFinished = todayData.filter(t => t.done).length;
-  const yesterdayFinished = yesterdayData.filter(t => t.done).length;
+  const currentFinished = Number(currentMonthData?.tarefa ?? 0);
+  const previousFinished = Number(previousMonthData?.tarefa ?? 0);
 
-  const finishedDifference = calculateDifference(todayFinished, yesterdayFinished);
+  const finishedDifference = calculateDifference(
+    currentFinished,
+    previousFinished
+  );
 
   const year = new Date().getFullYear()
 
   return (
-    <Card className="col-span-2">
+    <Card className="col-span-1 md:col-span-2">
       <CardHeader>
         <CardTitle className="chartTitleCustom">Tarefas finalizadas por mês</CardTitle>
         <CardDescription>
