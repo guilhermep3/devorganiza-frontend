@@ -47,6 +47,7 @@ export interface Attempt {
 export interface AttemptReturn {
   userId: string;
   quizId: string;
+  quizTitle: string;
   startedAt: string;
   finishedAt: string;
   durationSec: number;

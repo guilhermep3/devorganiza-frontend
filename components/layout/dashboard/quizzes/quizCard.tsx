@@ -15,14 +15,14 @@ export const QuizCard = ({ quiz, locked }: { quiz: Quiz, locked?: boolean }) => 
       }}
     >
       <p className="text-center text-lg md:text-xl font-bold">{quiz.title}</p>
-      <div className="flex justify-center items-center max-w-56 max-h-56 w-full aspect-square">
+      <div className="flex justify-center items-center max-w-56 max-h-56 w-full aspect-square my-auto">
         <Image
           src={`${quiz.imageUrl}`} alt={quiz.title}
           width={320} height={320}
           className="w-full h-full object-contain"
         />
       </div>
-      <Button className={`w-full h-full ${locked && "pointer-events-none"}`} href={`/quizzes/${quiz.id}`}>
+      <Button className={`w-full ${locked && "pointer-events-none"}`} href={`/quizzes/${quiz.id}`}>
         Iniciar
       </Button>
     </div>

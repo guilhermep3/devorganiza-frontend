@@ -57,7 +57,7 @@ export function FinishedTasksByMonthChart({ data }: { data: Record<number, Task[
   const year = new Date().getFullYear()
 
   return (
-    <Card>
+    <Card className="col-span-2">
       <CardHeader>
         <CardTitle className="chartTitleCustom">Tarefas finalizadas por mês</CardTitle>
         <CardDescription>

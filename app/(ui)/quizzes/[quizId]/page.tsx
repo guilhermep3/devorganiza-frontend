@@ -15,11 +15,11 @@ export default function Page() {
   const { data, loading } = useQuiz(quizId as string);
   const { insertQuiz, quiz } = useQuizStore();
 
-  useEffect(() => {
-    if (data && !loading) {
-      insertQuiz(data);
-    }
-  }, [data])
+  function handleStartQuiz() {
+    if (!data) return;
+    insertQuiz(data);
+    router.push(`/quizzes/${data.id}/attempt`)
+  }
 
   return (
     <div className="layoutDiv">
@@ -51,7 +51,7 @@ export default function Page() {
             </div>
           </div>
           <p className="text-center">{data.description}</p>
-          <Button href={`/quizzes/${data.id}/attempt`}>Iniciar Quiz</Button>
+          <Button onClick={handleStartQuiz}>Iniciar Quiz</Button>
         </section>
       )}
     </div>

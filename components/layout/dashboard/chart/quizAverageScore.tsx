@@ -1,59 +1,78 @@
 "use client"
 import { TrendingUp } from "lucide-react"
-import { Pie, PieChart } from "recharts"
+import { Cell, Pie, PieChart } from "recharts"
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from "@/components/ui/card"
 import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
+  ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
 
-export const description = "A simple pie chart"
+type QuizKey = "HTML" | "CSS" | "Javascript" | "Node.js" | "Python";
 
-const chartData = [
-  { quiz: "HTML", visitors: 29, fill: "var(--color-green-20)" },
-  { quiz: "CSS", visitors: 27, fill: "var(--color-main-20)" },
-  { quiz: "Javascript", visitors: 25, fill: "var(--color-main-30)" },
-  { quiz: "Node.js", visitors: 20, fill: "var(--color-main-40)" },
-  { quiz: "Python", visitors: 15, fill: "var(--color-green-10)" },
+const quizKeys: QuizKey[] = [
+  "HTML",
+  "CSS",
+  "Javascript",
+  "Node.js",
+  "Python",
 ]
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  HTML: {
+    label: "HTML",
+    color: "var(--color-green-20)",
   },
-  chrome: {
-    label: "Chrome",
-    color: "var(--chart-1)",
+  CSS: {
+    label: "CSS",
+    color: "var(--color-main-20)",
   },
-  safari: {
-    label: "Safari",
-    color: "var(--chart-2)",
+  Javascript: {
+    label: "Javascript",
+    color: "var(--color-main-30)",
   },
-  firefox: {
-    label: "Firefox",
-    color: "var(--chart-3)",
+  "Node.js": {
+    label: "Node.js",
+    color: "var(--color-main-40)",
   },
-  edge: {
-    label: "Edge",
-    color: "var(--chart-4)",
-  },
-  other: {
-    label: "Other",
-    color: "var(--chart-5)",
+  Python: {
+    label: "Python",
+    color: "var(--color-green-10)",
   },
 } satisfies ChartConfig
 
-export function QuizAverageScoreChart() {
+
+export function QuizAverageScoreChart({ data }: { data: any }) {
+  const chartData = quizKeys.map((quiz) => ({
+    quiz,
+    score: data?.[quiz]?.averageScore ?? 0,
+  }))
+  console.log("data", data)
+  console.log("chartData", chartData)
+
+  const sortedData = [...chartData].sort(
+    (a, b) => b.score - a.score
+  )
+
+  const [first, second, last, penultimate] = [
+    sortedData[0],
+    sortedData[1],
+    sortedData[sortedData.length - 1],
+    sortedData[sortedData.length - 2],
+  ]
+
+  const differenceTop =
+    second && second.score > 0
+      ? ((first.score - second.score) / second.score) * 100
+      : 0
+
+  const differenceBottom =
+    penultimate && penultimate.score > 0
+      ? ((penultimate.score - last.score) / penultimate.score) * 100
+      : 0
+
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
@@ -70,16 +89,32 @@ export function QuizAverageScoreChart() {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Pie data={chartData} dataKey="visitors" nameKey="quiz" />
+            <Pie data={chartData} dataKey="score" nameKey="quiz">
+              {chartData.map((entry) => (
+                <Cell
+                  key={entry.quiz}
+                  fill={chartConfig[entry.quiz]?.color}
+                />
+              ))}
+            </Pie>
           </PieChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 leading-none font-medium">
-          HTML tem 5% a mais de média de pontuação comparado com CSS
+          <TrendingUp className="h-4 w-4 text-green-20" />
+          {first.quiz} tem{" "}
+          <span className="font-bold">
+            {differenceTop.toFixed(0)}%
+          </span>{" "}
+          a mais de média de pontuação que {second.quiz}
         </div>
         <div className="text-muted-foreground leading-none">
-          Node.js tem 5% a menos de média de pontuação comparado com Python
+          {last.quiz} tem{" "}
+          <span className="font-bold">
+            {differenceBottom.toFixed(0)}%
+          </span>{" "}
+          a menos de média de pontuação que {penultimate.quiz}
         </div>
       </CardFooter>
     </Card>
