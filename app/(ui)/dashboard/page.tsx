@@ -16,72 +16,126 @@ import { useFinishedTasksByMonth } from "@/src/api/chart/useFinishedTasks";
 import { AverageTimeFinishTaskChart } from "@/components/layout/dashboard/chart/averageTimeFinishTask";
 import { useAverageTimeFinishTasksChart } from "@/src/api/chart/useAverageTimeFinishTasks";
 import { useAverageScore } from "@/src/api/chart/useAverageScore";
+import { ChartLoading } from "@/components/layout/dashboard/chart/chartLoading";
+import { TopInfosSkeleton } from "@/components/layout/dashboard/topInfosSkeleton";
 
 export default function Page() {
   const { data: weeklyProductivityData, loading: weeklyProductivityLoading } = useWeeklyProductivity();
   const { data: tasksByTypeData, loading: tasksByTypeLoading } = useTasksByType();
   const { data: finishedTasksData, loading: finishedTasksLoading } = useFinishedTasksByMonth();
   const { data: averageTimeData, loading: averageTimeLoading } = useAverageTimeFinishTasksChart();
-  const { data: averageScoreData, loading: AverageScoreLoading } = useAverageScore();
+  const { data: averageScoreData, loading: averageScoreLoading } = useAverageScore();
   const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
 
-  const { data: studiesData } = useStudies();
-  const { data: quizzesData } = useQuizzes();
-  const { data: quizzesLockData } = useQuizzesLocked();
-  const { data: attemptsData } = useQuizAttempts();
+  const { data: studiesData, loading: studiesLoading } = useStudies();
+  const { data: quizzesData, loading: quizzesLoading } = useQuizzes();
+  const { data: quizzesLockData, loading: quizzesLockLoading } = useQuizzesLocked();
+  const { data: attemptsData, loading: attemptsLoading } = useQuizAttempts();
 
-  const attemptsByQuiz = attemptsData?.reduce((acc, attempt) => {
-    const quizTitle = attempt.quizTitle
+  const isMainDataLoading = weeklyProductivityLoading ||
+    tasksByTypeLoading ||
+    finishedTasksLoading ||
+    averageTimeLoading ||
+    studiesLoading ||
+    quizzesLoading;
 
-    if (!acc[quizTitle]) {
-      acc[quizTitle] = {
-        totalScore: 0,
-        count: 0,
-        averageScore: 0,
-      }
-    }
-
-    acc[quizTitle].totalScore += attempt.score;
-    acc[quizTitle].count += 1;
-    acc[quizTitle].averageScore = acc[quizTitle].totalScore / acc[quizTitle].count;
-
-    return acc
-  }, {} as Record<string, { totalScore: number, count: number, averageScore: number }>)
+  const isQuizzesDataLoading = averageScoreLoading ||
+    fasterAttemptsLoading ||
+    attemptsLoading ||
+    quizzesLockLoading;
 
   return (
     <div className="layoutDiv">
-      <TopInfos
-        studiesData={studiesData} quizzesData={quizzesData} quizzesLockData={quizzesLockData}
-      />
-      <section className="flex flex-col">
+      {(studiesLoading || quizzesLoading || quizzesLockLoading) ? (
+        <TopInfosSkeleton />
+      ) : (
+        <TopInfos
+          studiesData={studiesData}
+          quizzesData={quizzesData}
+          quizzesLockData={quizzesLockData}
+        />
+      )}
+      <section className="flex flex-col mb-8">
         <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho e evolução</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {!weeklyProductivityLoading && weeklyProductivityData &&
-            <WeeklyProductivity data={weeklyProductivityData} />
-          }
-          {!tasksByTypeLoading && tasksByTypeData &&
-            <TasksByType data={tasksByTypeData} />
-          }
-          {!finishedTasksLoading && finishedTasksData &&
-            <FinishedTasksByMonthChart data={finishedTasksData} />
-          }
-          {!averageTimeLoading && averageTimeData &&
-            <AverageTimeFinishTaskChart data={averageTimeData} />
-          }
-        </div>
+        {isMainDataLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[...Array(4)].map((_, index) => (
+              <ChartLoading key={`study-loading-${index}`} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {weeklyProductivityData && weeklyProductivityData.length > 0 ? (
+              <WeeklyProductivity data={weeklyProductivityData} />
+            ) : (
+              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-500 dark:text-gray-400 text-center">
+                  Nenhum dado de produtividade semanal disponível
+                </p>
+              </div>
+            )}
+            {tasksByTypeData && tasksByTypeData.length > 0 ? (
+              <TasksByType data={tasksByTypeData} />
+            ) : (
+              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-500 dark:text-gray-400 text-center">
+                  Nenhum dado de tarefas por tipo disponível
+                </p>
+              </div>
+            )}
+            {finishedTasksData && finishedTasksData.length > 0 ? (
+              <FinishedTasksByMonthChart data={finishedTasksData} />
+            ) : (
+              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-500 dark:text-gray-400 text-center">
+                  Nenhum dado de tarefas finalizadas por mês disponível
+                </p>
+              </div>
+            )}
+            {averageTimeData && averageTimeData.length > 0 ? (
+              <AverageTimeFinishTaskChart data={averageTimeData} />
+            ) : (
+              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-500 dark:text-gray-400 text-center">
+                  Nenhum dado de tempo médio de conclusão disponível
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </section>
       <section className="flex flex-col">
         <h1 className="dashboardSectionTitle">Dados dos quizzes</h1>
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho em tentativas dos quizzes</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {!AverageScoreLoading && averageScoreData &&
-            <QuizAverageScoreChart data={averageScoreData} />
-          }
-          {!fasterAttemptsLoading && fasterAttemptsData &&
-            <QuizFasterAttemptsChart data={fasterAttemptsData} />
-          }
-        </div>
+        {isQuizzesDataLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[...Array(2)].map((_, index) => (
+              <ChartLoading key={`quiz-loading-${index}`} />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {averageScoreData && averageScoreData.length > 0 ? (
+              <QuizAverageScoreChart data={averageScoreData} />
+            ) : (
+              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-500 dark:text-gray-400 text-center">
+                  Nenhum dado de pontuação média disponível
+                </p>
+              </div>
+            )}
+            {fasterAttemptsData && fasterAttemptsData.length > 0 ? (
+              <QuizFasterAttemptsChart data={fasterAttemptsData} />
+            ) : (
+              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-500 dark:text-gray-400 text-center">
+                  Nenhum dado de tentativas rápidas disponível
+                </p>
+              </div>
+            )}
+          </div>
+        )}
       </section>
     </div>
   )
