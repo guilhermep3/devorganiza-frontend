@@ -1,5 +1,5 @@
 "use client"
-import { TrendingUp } from "lucide-react"
+import { TrendingDown, TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 
 import {
@@ -51,9 +51,9 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
 
   const [first, second] = chartData;
 
-  const firstPercentage = totalTasks > 0 ? (first.tarefas / totalTasks) * 100 : 0
+  const firstPercentage = totalTasks > 0 ? (first.tarefas / totalTasks) * 100 : 0;
 
-  const secondPercentage = totalTasks > 0 ? (second.tarefas / totalTasks) * 100 : 0
+  const secondPercentage = totalTasks > 0 ? (second.tarefas / totalTasks) * 100 : 0;
 
   const difference = firstPercentage - secondPercentage;
 
@@ -84,7 +84,11 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="chartFooter font-medium">
-          <TrendingUp className="h-4 w-4 text-green-20" />
+          {firstPercentage >= 0 ? (
+            <TrendingUp className="h-4 w-4 text-green-20" />
+          ) : (
+            <TrendingDown className="h-4 w-4 text-red-500" />
+          )}
           <span className="font-bold">{first.setor}</span> concentra{" "}
           <span className="font-bold">
             {formatPercentage(firstPercentage)}%
@@ -92,6 +96,11 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
           de todas as tarefas
         </div>
         <div className="chartFooter text-gray-50">
+          {firstPercentage >= 0 ? (
+            <TrendingUp className="h-4 w-4 text-green-20" />
+          ) : (
+            <TrendingDown className="h-4 w-4 text-red-500" />
+          )}
           {first.setor} tem{" "}
           <span className="font-bold">
             {formatPercentage(difference)}%

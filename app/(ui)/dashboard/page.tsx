@@ -30,7 +30,6 @@ export default function Page() {
   const { data: studiesData, loading: studiesLoading } = useStudies();
   const { data: quizzesData, loading: quizzesLoading } = useQuizzes();
   const { data: quizzesLockData, loading: quizzesLockLoading } = useQuizzesLocked();
-  const { data: attemptsData, loading: attemptsLoading } = useQuizAttempts();
 
   const isMainDataLoading = weeklyProductivityLoading ||
     tasksByTypeLoading ||
@@ -41,7 +40,6 @@ export default function Page() {
 
   const isQuizzesDataLoading = averageScoreLoading ||
     fasterAttemptsLoading ||
-    attemptsLoading ||
     quizzesLockLoading;
 
   return (

@@ -9,7 +9,7 @@ import {
   ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig,
 } from "@/components/ui/chart"
 import { AverageTimeFinish } from "@/src/types/chart"
-import { formatTimeToMMSS } from "@/src/utils/calc"
+import { formatPercentage, formatTimeToMMSS } from "@/src/utils/calc"
 
 const chartData = [
   { month: "January", desktop: 186 },
@@ -35,6 +35,9 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
       media: (media / 60)
     }
   })
+
+  const [first, second] = chartData;
+  const difference = ((first.media - second.media) / second.media) * 100;
 
   return (
     <Card>
@@ -77,10 +80,10 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+          {second.estudo} é finalizado aproximadamente {formatPercentage(difference)}% mais rápido que {first.estudo}.
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Comparação baseada no tempo médio de conclusão das tarefas.
         </div>
       </CardFooter>
     </Card>

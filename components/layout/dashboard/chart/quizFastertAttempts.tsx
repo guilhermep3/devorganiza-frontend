@@ -30,7 +30,18 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
       ...i,
       duracao: seconds / 60
     }
-  })
+  }).sort(
+    (a, b) => a.duracao - b.duracao
+  );
+
+  const fastest = chartData[0];
+  const slowest = chartData[chartData.length - 1];
+
+  const difference =
+    ((slowest.duracao - fastest.duracao) / slowest.duracao) * 100;
+
+  const percentage = Math.abs(difference).toFixed(2);
+
 
   return (
     <Card>
@@ -73,12 +84,14 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Quiz de HTML foi finalizado 1% mais rápido que o de CSS
+          Quiz de {fastest.quiz} foi finalizado aproximadamente {percentage}% mais rápido
+          que o de {slowest.quiz}.
         </div>
         <div className="text-muted-foreground leading-none">
-          Quiz de Git foi finalizado 5% mais demorado que o de Python
+          Baseada no menor tempo registrado para conclusão dos quizzes.
         </div>
       </CardFooter>
+
     </Card>
   )
 }
