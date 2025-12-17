@@ -28,24 +28,24 @@ export const TopInfos = ({ studiesData, quizzesData, quizzesLockData }: props) =
         <TopInfosCard
           title="Total de tarefas"
           Icon={<ListChecks className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-main-30" />}
-          data={isLoading ? <Loader2 className="animate-spin w-5 h-5" /> : totalTasks}
+          data={isLoading ? 0 : totalTasks}
         />
         <TopInfosCard
           title="Tarefas finalizadas"
           Icon={<ListCheck className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-green-600" />}
-          data={isLoading ? <Loader2 className="animate-spin w-5 h-5" /> : totalFinished}
+          data={isLoading ? 0 : totalFinished}
         />
         <TopInfosCard
           title="Tarefas pendentes"
           Icon={<ListX className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-red-600" />}
-          data={isLoading ? <Loader2 className="animate-spin w-5 h-5" /> : totalPendent}
+          data={isLoading ? 0 : totalPendent}
         />
         <TopInfosCard
           title="Quizzes desbloqueados"
           Icon={<CircleQuestionMark className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-main-30" />}
           data={
             isLoading
-              ? <Loader2 className="animate-spin w-5 h-5" />
+              ? 0
               : `${totalQuizzes} de ${totalQuizzesLock}`
           }
         />
