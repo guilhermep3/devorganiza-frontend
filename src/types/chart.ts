@@ -14,14 +14,19 @@ export interface FinishedTasksByMonth {
   tarefa: number,
 }
 
+export interface AverageTimeFinish {
+  estudo: string,
+  media: number,
+}
+
 export interface AverageScore {
   quizId: string,
   quizTitle: string,
-  averageScore: string | null,
+  averageScore: number | null,
   attempts: string,
 }
 
 export interface FasterAttempts {
   quiz: string,
-  duracao: string
+  duracao: number
 }

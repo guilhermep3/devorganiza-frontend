@@ -12,3 +12,15 @@ export function formatPercentage(value: number) {
     ? abs.toString()
     : abs.toFixed(2)
 }
+
+export function formatTimeToMMSS(value: number, format: 'short' | 'long') {
+  const totalSeconds = Math.round(value * 60)
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = Math.floor(totalSeconds % 60);
+
+  if (format === 'short') {
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`
+  } else {
+    return `${minutes} m ${seconds.toString().padStart(2, '0')} s`
+  }
+}

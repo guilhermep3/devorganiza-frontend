@@ -31,7 +31,7 @@ export const useWeeklyProductivity = () => {
       const data: WeeklyProductivity[] = await res.json();
       setData(data);
     } catch (error) {
-      setError("Erro ao acessar weekly-productivity")
+      setError("Erro ao conectar ao servidor")
     } finally {
       setLoading(false);
     }

@@ -31,7 +31,7 @@ export const useTasksByType = () => {
       const data: TasksByType[] = await res.json();
       setData(data);
     } catch (error) {
-      setError("Erro ao acessar tasks-by-type")
+      setError("Erro ao conectar ao servidor")
     } finally {
       setLoading(false);
     }

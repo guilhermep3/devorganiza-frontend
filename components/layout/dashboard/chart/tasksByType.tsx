@@ -34,29 +34,28 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
   };
 
   const chartData = setorTypes.map((type) => {
-    const item = data.find(i => i.type === type);
+    const item = data.find((i) => i.type === type)
 
     return {
       setor: formatSetor(type),
-      tarefas: item?.tasks ?? 0
+      tarefas: item?.tasks ? Number(item.tasks) : 0,
     }
-  })
+  }).sort(
+    (a, b) => b.tarefas - a.tarefas
+  );
 
-  const totalTasks = chartData.reduce((acc, item) => {
-    return acc + item.tarefas
-  }, 0)
+  const totalTasks = chartData.reduce(
+    (acc, data) => acc + data.tarefas,
+    0
+  )
 
-  const sortedData = [...chartData].sort((a, b) => b.tarefas - a.tarefas)
+  const [first, second] = chartData;
 
-  const [first, second] = sortedData
+  const firstPercentage = totalTasks > 0 ? (first.tarefas / totalTasks) * 100 : 0
 
-  const firstPercentage =
-    totalTasks > 0 ? (first.tarefas / totalTasks) * 100 : 0
+  const secondPercentage = totalTasks > 0 ? (second.tarefas / totalTasks) * 100 : 0
 
-  const secondPercentage =
-    totalTasks > 0 ? (second.tarefas / totalTasks) * 100 : 0
-
-  const difference = firstPercentage - secondPercentage
+  const difference = firstPercentage - secondPercentage;
 
   return (
     <Card>

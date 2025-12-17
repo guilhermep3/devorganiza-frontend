@@ -8,68 +8,55 @@ import {
 import {
   ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
-
-type QuizKey = "HTML" | "CSS" | "Javascript" | "Node.js" | "Python";
-
-const quizKeys: QuizKey[] = [
-  "HTML",
-  "CSS",
-  "Javascript",
-  "Node.js",
-  "Python",
-]
+import { AverageScore } from "@/src/types/chart"
 
 const chartConfig = {
-  HTML: {
-    label: "HTML",
-    color: "var(--color-green-20)",
-  },
-  CSS: {
-    label: "CSS",
-    color: "var(--color-main-20)",
-  },
-  Javascript: {
-    label: "Javascript",
-    color: "var(--color-main-30)",
-  },
-  "Node.js": {
-    label: "Node.js",
-    color: "var(--color-main-40)",
-  },
-  Python: {
-    label: "Python",
-    color: "var(--color-green-10)",
-  },
-} satisfies ChartConfig
+  // HTML: {
+  //   label: "HTML",
+  //   color: "var(--color-green-20)",
+  // },
+  // CSS: {
+  //   label: "CSS",
+  //   color: "var(--color-main-20)",
+  // },
+} satisfies ChartConfig;
 
+const colors = [
+  "var(--color-main-30)",
+  "var(--color-green-20)",
+  "var(--color-main-50)",
+  "var(--color-main-40)",
+  "var(--color-main-20)",
+  "var(--color-main-30)",
+  "var(--color-green-20)",
+  "var(--color-main-50)",
+  "var(--color-main-40)",
+  "var(--color-main-20)",
+]
 
-export function QuizAverageScoreChart({ data }: { data: any }) {
-  const chartData = quizKeys.map((quiz) => ({
-    quiz,
-    score: data?.[quiz]?.averageScore ?? 0,
-  }))
+export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
 
-  const sortedData = [...chartData].sort(
+  const chartData = [...data].map((i) => ({
+    quiz: i.quizTitle,
+    score: Number(i.averageScore) ?? 0
+  })).sort(
     (a, b) => b.score - a.score
-  )
+  ).slice(0, 5)
 
   const [first, second, last, penultimate] = [
-    sortedData[0],
-    sortedData[1],
-    sortedData[sortedData.length - 1],
-    sortedData[sortedData.length - 2],
+    chartData[0],
+    chartData[1],
+    chartData[chartData.length - 1],
+    chartData[chartData.length - 2],
   ]
 
   const differenceTop =
     second && second.score > 0
-      ? ((first.score - second.score) / second.score) * 100
-      : 0
+      ? ((first.score - second.score) / second.score) * 100 : 0
 
   const differenceBottom =
     penultimate && penultimate.score > 0
-      ? ((penultimate.score - last.score) / penultimate.score) * 100
-      : 0
-
+      ? ((penultimate.score - last.score) / penultimate.score) * 100 : 0;
 
   return (
     <Card className="flex flex-col">
@@ -88,10 +75,10 @@ export function QuizAverageScoreChart({ data }: { data: any }) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Pie data={chartData} dataKey="score" nameKey="quiz">
-              {chartData.map((entry) => (
+              {chartData.map((entry, index) => (
                 <Cell
                   key={entry.quiz}
-                  fill={chartConfig[entry.quiz]?.color}
+                  fill={colors[index]}
                 />
               ))}
             </Pie>

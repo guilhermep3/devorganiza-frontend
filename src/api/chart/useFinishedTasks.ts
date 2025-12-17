@@ -31,7 +31,7 @@ export const useFinishedTasksByMonth = () => {
       const data: FinishedTasksByMonth[] = await res.json();
       setData(data);
     } catch (error) {
-      setError("Erro ao acessar finished-tasks-by-month")
+      setError("Erro ao conectar ao servidor")
     } finally {
       setLoading(false);
     }

@@ -6,37 +6,41 @@ import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from "@/components/ui/card"
 import {
-  ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
+  ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig,
 } from "@/components/ui/chart"
-import { FasterAttempts } from "@/src/types/chart"
+import { AverageTimeFinish } from "@/src/types/chart"
 import { formatTimeToMMSS } from "@/src/utils/calc"
 
-// const chartData = [
-//   { quiz: "HTML", duração: 10 },
-//   { quiz: "CSS", duração: 11 },
-// ]
+const chartData = [
+  { month: "January", desktop: 186 },
+  { month: "February", desktop: 305 },
+  { month: "March", desktop: 237 },
+  { month: "April", desktop: 73 },
+  { month: "May", desktop: 209 },
+  { month: "June", desktop: 214 },
+]
 
 const chartConfig = {
-  duração: {
-    label: "duração",
+  desktop: {
+    label: "Desktop",
     color: "var(--color-main-30)",
   },
 } satisfies ChartConfig
 
-export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
+export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[] }) {
   const chartData = data.map((i) => {
-    const seconds = i.duracao;
+    const media = i.media;
     return {
       ...i,
-      duracao: seconds / 60
+      media: (media / 60)
     }
   })
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tentativas de quizzes mais rápidas</CardTitle>
-        <CardDescription>Quizzes finalizados no menor tempo</CardDescription>
+        <CardTitle>Tempo médio para finalizar tarefas</CardTitle>
+        <CardDescription>Organizado por estudos</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -49,23 +53,23 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="quiz"
+              dataKey="estudo"
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 10)}
+              tickFormatter={(value) => value.slice(0, 3)}
             />
             <ChartTooltip
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Bar dataKey="duracao" fill="var(--color-main-30)" radius={8}>
+            <Bar dataKey="media" fill="var(--color-desktop)" radius={8}>
               <LabelList
                 position="top"
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
-                formatter={(value: number) => formatTimeToMMSS(value, 'short')}
+                formatter={(value: number) => formatTimeToMMSS(value, 'long')}
               />
             </Bar>
           </BarChart>
@@ -73,10 +77,10 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          Quiz de HTML foi finalizado 1% mais rápido que o de CSS
+          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Quiz de Git foi finalizado 5% mais demorado que o de Python
+          Showing total visitors for the last 6 months
         </div>
       </CardFooter>
     </Card>

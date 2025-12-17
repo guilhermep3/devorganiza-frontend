@@ -8,18 +8,22 @@ import { QuizFasterAttemptsChart } from "@/components/layout/dashboard/chart/qui
 import { useStudies } from "@/src/api/study/useStudies";
 import { useQuizzes } from "@/src/api/quiz/useQuizzes";
 import { useQuizzesLocked } from "@/src/api/quiz/useQuizzesLocked";
-import { Task } from "@/src/types/study";
 import { useQuizAttempts } from "@/src/api/quiz/useQuizAttempts";
 import { useFasterAttempts } from "@/src/api/chart/useFasterAttempts";
 import { useWeeklyProductivity } from "@/src/api/chart/useWeeklyProductivity";
 import { useTasksByType } from "@/src/api/chart/useTasksByType";
 import { useFinishedTasksByMonth } from "@/src/api/chart/useFinishedTasks";
+import { AverageTimeFinishTaskChart } from "@/components/layout/dashboard/chart/averageTimeFinishTask";
+import { useAverageTimeFinishTasksChart } from "@/src/api/chart/useAverageTimeFinishTasks";
+import { useAverageScore } from "@/src/api/chart/useAverageScore";
 
 export default function Page() {
-  const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
   const { data: weeklyProductivityData, loading: weeklyProductivityLoading } = useWeeklyProductivity();
   const { data: tasksByTypeData, loading: tasksByTypeLoading } = useTasksByType();
-  const { data: finishedTasksData, loading: finishedTasksLoading } = useFinishedTasksByMonth()
+  const { data: finishedTasksData, loading: finishedTasksLoading } = useFinishedTasksByMonth();
+  const { data: averageTimeData, loading: averageTimeLoading } = useAverageTimeFinishTasksChart();
+  const { data: averageScoreData, loading: AverageScoreLoading } = useAverageScore();
+  const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
 
   const { data: studiesData } = useStudies();
   const { data: quizzesData } = useQuizzes();
@@ -62,13 +66,18 @@ export default function Page() {
           {!finishedTasksLoading && finishedTasksData &&
             <FinishedTasksByMonthChart data={finishedTasksData} />
           }
+          {!averageTimeLoading && averageTimeData &&
+            <AverageTimeFinishTaskChart data={averageTimeData} />
+          }
         </div>
       </section>
       <section className="flex flex-col">
         <h1 className="dashboardSectionTitle">Dados dos quizzes</h1>
         <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho em tentativas dos quizzes</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <QuizAverageScoreChart data={attemptsByQuiz} />
+          {!AverageScoreLoading && averageScoreData &&
+            <QuizAverageScoreChart data={averageScoreData} />
+          }
           {!fasterAttemptsLoading && fasterAttemptsData &&
             <QuizFasterAttemptsChart data={fasterAttemptsData} />
           }
