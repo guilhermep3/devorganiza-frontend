@@ -35,14 +35,16 @@ export default function Page() {
               ))}
             </div>
           ) : data ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
-              {data.length > 0
-                ? data.map((i: StudyTask, index) => (
-                  <StudyCard key={index} data={i} />
-                ))
-                : <p>Nenhum estudo criado ainda, crie seu primeiro</p>
+            <>
+              {data.length > 0 ? (
+                <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+                  {data.map((i: StudyTask, index) => (
+                    <StudyCard key={index} data={i} />
+                  ))}
+                </div>
+              ) : <p className="text-sm w-full text-gray-60">Nenhum estudo criado ainda, crie seu primeiro</p>
               }
-            </div>
+            </>
           ) : (
             <p className="text-gray-40 w-full">Nenhum dado encontrado</p>
           )}

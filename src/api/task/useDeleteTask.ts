@@ -23,7 +23,6 @@ export function useDeleteTask(taskId: string | null) {
           "Authorization": `Bearer ${TOKEN}`,
         },
       });
-      console.log("res", res)
 
       if (!res.ok) {
         setError("Erro ao excluir a tarefa");
