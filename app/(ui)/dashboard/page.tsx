@@ -8,7 +8,6 @@ import { QuizFasterAttemptsChart } from "@/components/layout/dashboard/chart/qui
 import { useStudies } from "@/src/api/study/useStudies";
 import { useQuizzes } from "@/src/api/quiz/useQuizzes";
 import { useQuizzesLocked } from "@/src/api/quiz/useQuizzesLocked";
-import { useQuizAttempts } from "@/src/api/quiz/useQuizAttempts";
 import { useFasterAttempts } from "@/src/api/chart/useFasterAttempts";
 import { useWeeklyProductivity } from "@/src/api/chart/useWeeklyProductivity";
 import { useTasksByType } from "@/src/api/chart/useTasksByType";

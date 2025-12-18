@@ -28,16 +28,24 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[] }) {
-  const chartData = data.map((i) => {
-    const media = i.media;
-    return {
-      ...i,
-      media: (media / 60)
-    }
-  })
+  const chartData = data.map((i) => ({
+    ...i,
+    media: (i.media ?? 0) / 60,
+  }))
 
-  const [first, second] = chartData;
-  const difference = ((first.media - second.media) / second.media) * 100;
+  const hasComparison = chartData.length >= 2;
+
+  let difference = 0
+
+  if (hasComparison && chartData[1].media !== 0) {
+    difference =
+      ((chartData[0].media - chartData[1].media) /
+        chartData[1].media) *
+      100
+  }
+
+  const first = chartData[0]
+  const second = chartData[1]
 
   return (
     <Card>
@@ -80,7 +88,9 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="flex gap-2 leading-none font-medium">
-          {second.estudo} é finalizado aproximadamente {formatPercentage(difference)}% mais rápido que {first.estudo}.
+          {second &&
+            `${second.estudo} é finalizado aproximadamente ${formatPercentage(difference)}% mais rápido que ${first.estudo}.`
+          }
         </div>
         <div className="text-muted-foreground leading-none">
           Comparação baseada no tempo médio de conclusão das tarefas.

@@ -59,8 +59,8 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
   )
 
   const finishedDifference = calculateDifference(
-    todayData.finalizado,
-    yesterdayData.finalizado
+    Number(todayData.finalizado),
+    Number(yesterdayData.finalizado)
   )
 
   return (
@@ -112,7 +112,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
           )}
           {finishedDifference >= 0 ? "Aumento" : "Diminuição"} de{" "}
           <span className="font-bold">
-            {formatPercentage(finishedDifference)}%
+            {formatPercentage(finishedDifference ?? 0)}%
           </span>{" "}
           de tarefas finalizadas de hoje pra ontem
         </div>

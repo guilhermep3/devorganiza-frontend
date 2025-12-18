@@ -2,6 +2,7 @@ import { CircleQuestionMark, ListCheck, ListChecks, ListX, Loader2 } from "lucid
 import { TopInfosCard } from "./topInfosCard"
 import { StudyTask } from "@/src/types/study"
 import { Quiz } from "@/src/types/quiz"
+import { useUser } from "@/src/api/user/useUser"
 
 type props = {
   studiesData: StudyTask[] | null
@@ -10,6 +11,7 @@ type props = {
 }
 
 export const TopInfos = ({ studiesData, quizzesData, quizzesLockData }: props) => {
+  const { data } = useUser();
   const isLoading = !studiesData || !quizzesData || !quizzesLockData;
 
   const allTasks = studiesData?.flatMap(i => i.tasks) ?? [];
@@ -22,7 +24,7 @@ export const TopInfos = ({ studiesData, quizzesData, quizzesLockData }: props) =
 
   return (
     <section className="flex flex-col">
-      <h1 className="dashboardSectionTitle">Bem vindo de volta, Nome do Usuário!</h1>
+      <h1 className="dashboardSectionTitle">Bem vindo de volta, {data?.user.name ?? 'Nome do Usuário'}!</h1>
       <h2 className="dashboardSectionSubtitle">Organize seus estudos e veja os dados do seu desempenho</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
         <TopInfosCard
