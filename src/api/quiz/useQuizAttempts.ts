@@ -1,3 +1,4 @@
+"use client";
 import { AttemptReturn } from "@/src/types/quiz";
 import { useEffect, useState } from "react";
 

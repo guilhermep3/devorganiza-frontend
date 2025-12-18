@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Study } from "@/src/types/study";
+import { useEffect } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -11,11 +12,26 @@ type Props = {
   description: string;
   id: string | null;
   handleAction: () => void;
+  fetchStudy: () => void;
   loading?: boolean;
   error?: any;
+  success?: string | null;
 };
 
-export const DeleteModal = ({ isOpen, setIsOpen, title, description, id, handleAction, loading, error }: Props) => {
+export const DeleteModal = ({
+  isOpen, setIsOpen, title, description, id, handleAction, fetchStudy, loading, error, success
+}: Props) => {
+
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        fetchStudy();
+      }, 3000);
+
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -26,7 +42,8 @@ export const DeleteModal = ({ isOpen, setIsOpen, title, description, id, handleA
             {description}
           </DialogDescription>
         </DialogHeader>
-        {error && <p className="errorSubmit">{error}</p>}
+        {error && <p className="errorMsg">{error}</p>}
+        {success && <p className="successMsg">{success}</p>}
         <div className="flex justify-center gap-3 pt-6">
           <ButtonCN type="button"
             variant="outline"

@@ -27,10 +27,12 @@ export default function Page() {
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [isDeletingTask, setIsDeletingTask] = useState(false);
   const {
-    handleDelete: deleteStudy, loading: loadingDeleteStudy, error: errorDeleteStudy
+    handleDelete: deleteStudy, loading: loadingDeleteStudy,
+    error: errorDeleteStudy, success: successDeleteStudy
   } = useDeleteStudy(studyId ?? null);
   const {
-    handleDelete: deleteTask, loading: loadingDeleteTask, error: errorDeleteTask
+    handleDelete: deleteTask, loading: loadingDeleteTask,
+    error: errorDeleteTask, success: successDeleteTask
   } = useDeleteTask(taskId);
 
   return (
@@ -86,7 +88,8 @@ export default function Page() {
       <DeleteModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
         id={studyId!} handleAction={deleteStudy}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
-        loading={loadingDeleteStudy} error={errorDeleteStudy}
+        loading={loadingDeleteStudy} error={errorDeleteStudy} success={successDeleteStudy}
+        fetchStudy={fetchStudy}
       />
       <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
         task={data?.tasks.find((i) => i.id === taskId)} fetchStudy={fetchStudy}
@@ -94,7 +97,8 @@ export default function Page() {
       <DeleteModal isOpen={isDeletingTask} setIsOpen={setIsDeletingTask}
         id={studyId!} handleAction={deleteTask}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
-        loading={loadingDeleteTask} error={errorDeleteTask}
+        loading={loadingDeleteTask} error={errorDeleteTask} success={successDeleteTask}
+        fetchStudy={fetchStudy}
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
         studyId={studyId!} fetchStudy={fetchStudy}

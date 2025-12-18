@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FullQuiz } from "@/src/types/quiz";
 import { useEffect, useState } from "react"
 

@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 export function useSignup() {
@@ -9,7 +10,7 @@ export function useSignup() {
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

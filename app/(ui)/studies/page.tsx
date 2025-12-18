@@ -41,7 +41,7 @@ export default function Page() {
               ))}
             </div>
           ) : (
-            <p className="text-gray-30 w-full">Nenhum dado encontrado</p>
+            <p className="text-gray-40 w-full">Nenhum dado encontrado</p>
           )}
         </div>
       </section>

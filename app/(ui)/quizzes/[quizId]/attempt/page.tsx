@@ -73,10 +73,9 @@ export default function Page() {
 
   return (
     <div className="layoutDiv">
-      {!loading && !data && <div>Nenhum dado encontrado</div>}
       {loading ? (
         <LoadingPage />
-      ) : (
+      ) : data ? (
         <>
           <div className="flex items-center gap-5 text-sm">
             <p>Questão {questionIndex + 1} de 30</p>
@@ -120,6 +119,8 @@ export default function Page() {
             </div>
           </div>
         </>
+      ) : (
+        <div className="text-gray-40 w-full">Nenhum dado encontrado</div>
       )}
     </div>
   )

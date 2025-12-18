@@ -24,7 +24,7 @@ export default function Home() {
           </div>
         </section>
         <div className="containerCustom py-0! rounded-lg overflow-hidden shadow-md shadow-main-20">
-          <Image src={`/dashboard.png`} alt="dashboard"
+          <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
             width={2400} height={2400}
             className="w-full"
           />

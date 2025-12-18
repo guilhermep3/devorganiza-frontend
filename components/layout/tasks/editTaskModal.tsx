@@ -57,7 +57,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            {errors.title && <p className="errorSubmit">{errors.title}</p>}
+            {errors.title && <p className="errorMsg">{errors.title}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Link</label>

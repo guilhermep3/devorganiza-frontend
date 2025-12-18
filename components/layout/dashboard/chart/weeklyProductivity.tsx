@@ -33,8 +33,12 @@ const chartConfig = {
 } satisfies ChartConfig
 
 export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
+  const dataByWeekDay = Object.fromEntries(
+    data.map(item => [Number(item.weekDay), item])
+  );
+
   const chartData = weekDays.map((day, index) => {
-    const tasksOfDay = data[index] ?? [];
+    const tasksOfDay = dataByWeekDay[index] ?? [];
 
     return {
       semana: day,

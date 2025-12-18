@@ -63,7 +63,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
               ))}
             </datalist>
             {errors.name && (
-              <p className="errorSubmit">{errors.name}</p>
+              <p className="errorMsg">{errors.name}</p>
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
@@ -79,7 +79,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
               <option value="ferramenta">Ferramenta</option>
             </select>
             {errors.type && (
-              <p className="errorSubmit">{errors.type}</p>
+              <p className="errorMsg">{errors.type}</p>
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
@@ -90,7 +90,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
               onChange={(e: any) => setLink(e.target.value)}
             />
             {errors.link && (
-              <p className="errorSubmit">{errors.link}</p>
+              <p className="errorMsg">{errors.link}</p>
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
@@ -101,7 +101,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
               onChange={(e: any) => setDescription(e.target.value)}
             />
             {errors.description && (
-              <p className="errorSubmit">{errors.description}</p>
+              <p className="errorMsg">{errors.description}</p>
             )}
           </div>
           <div className="flex justify-center gap-3 pt-4">

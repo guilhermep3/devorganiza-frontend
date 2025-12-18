@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Quiz } from "@/src/types/quiz";
 import { useEffect, useState } from "react"
 

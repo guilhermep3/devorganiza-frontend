@@ -47,7 +47,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, fetchStudy }: Prop
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            {errors.title && <p className="errorSubmit">{errors.title}</p>}
+            {errors.title && <p className="errorMsg">{errors.title}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Link <span className="text-xs text-gray-50 ml-1">(opcional)</span></label>

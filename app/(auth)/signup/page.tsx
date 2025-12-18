@@ -3,8 +3,6 @@ import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignup } from "@/src/api/useSignup";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Page() {
   const {
@@ -12,14 +10,6 @@ export default function Page() {
     email, setEmail, password, setPassword,
     errors, loading, handleSubmit,
   } = useSignup();
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if(token){
-      router.push('/dashboard')
-    }
-  }, [])
 
   return (
     <div>
@@ -35,7 +25,7 @@ export default function Page() {
             onChange={(e) => setName(e.target.value)}
           />
           {errors.name && (
-            <p className="errorSubmit">{errors.name}</p>
+            <p className="errorMsg">{errors.name}</p>
           )}
         </div>
         <div className="flex flex-col gap-0">
@@ -47,7 +37,7 @@ export default function Page() {
             onChange={(e) => setUsername(e.target.value)}
           />
           {errors.username && (
-            <p className="errorSubmit">{errors.username}</p>
+            <p className="errorMsg">{errors.username}</p>
           )}
         </div>
         <div className="flex flex-col gap-0">
@@ -59,13 +49,13 @@ export default function Page() {
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email && (
-            <p className="errorSubmit">{errors.email}</p>
+            <p className="errorMsg">{errors.email}</p>
           )}
         </div>
         <div className="flex flex-col gap-0">
           <PasswordInput value={password} onChange={setPassword} />
           {errors.password && (
-            <p className="errorSubmit">{errors.password}</p>
+            <p className="errorMsg">{errors.password}</p>
           )}
         </div>
         {errors.submit && (

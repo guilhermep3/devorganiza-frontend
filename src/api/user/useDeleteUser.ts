@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 
 export const useDeleteUser = () => {
@@ -9,11 +10,11 @@ export const useDeleteUser = () => {
   const TOKEN = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
   async function deleteAccount() {
-    try {
-      setLoading(true);
-      setError(null);
-      setSuccess(null);
+    setLoading(true);
+    setError(null);
+    setSuccess(null);
 
+    try {
       const res = await fetch(`${API_URL}/users/delete`, {
         method: "DELETE",
         headers: {
@@ -25,13 +26,11 @@ export const useDeleteUser = () => {
       if (!res.ok) {
         throw new Error("Não foi possível excluir a conta");
       }
-
       setSuccess("Usuário deletado com sucesso!");
       return true;
     } catch (err: any) {
       setError(err.message);
       return false;
-
     } finally {
       setLoading(false);
     }

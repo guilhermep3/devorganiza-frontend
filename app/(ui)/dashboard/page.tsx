@@ -67,8 +67,8 @@ export default function Page() {
             {weeklyProductivityData && weeklyProductivityData.length > 0 ? (
               <WeeklyProductivity data={weeklyProductivityData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-500 dark:text-gray-400 text-center">
+              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-50 text-center">
                   Nenhum dado de produtividade semanal disponível
                 </p>
               </div>
@@ -76,8 +76,8 @@ export default function Page() {
             {tasksByTypeData && tasksByTypeData.length > 0 ? (
               <TasksByType data={tasksByTypeData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-500 dark:text-gray-400 text-center">
+              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-50 text-center">
                   Nenhum dado de tarefas por tipo disponível
                 </p>
               </div>
@@ -85,8 +85,8 @@ export default function Page() {
             {finishedTasksData && finishedTasksData.length > 0 ? (
               <FinishedTasksByMonthChart data={finishedTasksData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-500 dark:text-gray-400 text-center">
+              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-50 text-center">
                   Nenhum dado de tarefas finalizadas por mês disponível
                 </p>
               </div>
@@ -94,8 +94,8 @@ export default function Page() {
             {averageTimeData && averageTimeData.length > 0 ? (
               <AverageTimeFinishTaskChart data={averageTimeData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-500 dark:text-gray-400 text-center">
+              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-50 text-center">
                   Nenhum dado de tempo médio de conclusão disponível
                 </p>
               </div>
@@ -117,8 +117,8 @@ export default function Page() {
             {averageScoreData && averageScoreData.length > 0 ? (
               <QuizAverageScoreChart data={averageScoreData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-500 dark:text-gray-400 text-center">
+              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-50 text-center">
                   Nenhum dado de pontuação média disponível
                 </p>
               </div>
@@ -126,8 +126,8 @@ export default function Page() {
             {fasterAttemptsData && fasterAttemptsData.length > 0 ? (
               <QuizFasterAttemptsChart data={fasterAttemptsData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-gray-20 flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-500 dark:text-gray-400 text-center">
+              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
+                <p className="text-gray-50 text-center">
                   Nenhum dado de tentativas rápidas disponível
                 </p>
               </div>

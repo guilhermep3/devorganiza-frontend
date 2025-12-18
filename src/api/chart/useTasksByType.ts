@@ -1,3 +1,4 @@
+"use client";
 import { TasksByType } from "@/src/types/chart";
 import { useEffect, useState } from "react";
 

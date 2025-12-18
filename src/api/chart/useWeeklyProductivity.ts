@@ -1,3 +1,4 @@
+"use client";
 import { WeeklyProductivity } from "@/src/types/chart";
 import { useEffect, useState } from "react";
 

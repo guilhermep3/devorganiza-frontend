@@ -9,7 +9,7 @@ export const PasswordInput = ({ value, onChange }: props) => {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <div className="inputCustom flex focus-within:ring focus-within:ring-main-30">
+    <div className="inputCustom flex gap-2 focus-within:ring focus-within:ring-main-30">
       <input type={showPass ? 'text' : 'password'}
         placeholder="Senha"
         className="text-base w-full outline-none"
@@ -22,8 +22,8 @@ export const PasswordInput = ({ value, onChange }: props) => {
         }}
       >
         {showPass
-          ? <Eye />
-          : <EyeOff />
+          ? <Eye className="cursor-pointer" />
+          : <EyeOff className="cursor-pointer" />
         }
       </div>
     </div>

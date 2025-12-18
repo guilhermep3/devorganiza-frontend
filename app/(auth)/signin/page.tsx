@@ -3,28 +3,17 @@ import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignin } from "@/src/api/useSignin";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function Page() {
   const {
     email, setEmail, password, setPassword,
     errors, loading, handleSubmit
   } = useSignin();
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token")
-    if (token) {
-      router.push('/dashboard')
-    }
-  }, [])
 
   return (
     <div className="">
       <h1 className="text-2xl font-bold text-center mb-2">Faça login</h1>
       <h2 className="text-sm text-center">Preencha o formulário abaixo</h2>
-
       <form onSubmit={handleSubmit} className="my-10 space-y-5">
         <div className="flex flex-col gap-0">
           <input
@@ -35,26 +24,22 @@ export default function Page() {
             onChange={(e) => setEmail(e.target.value)}
           />
           {errors.email && (
-            <p className="errorSubmit">{errors.email}</p>
+            <p className="errorMsg">{errors.email}</p>
           )}
         </div>
-
         <div className="flex flex-col gap-0">
           <PasswordInput value={password} onChange={setPassword} />
           {errors.password && (
-            <p className="errorSubmit">{errors.password}</p>
+            <p className="errorMsg">{errors.password}</p>
           )}
         </div>
-
         {errors.submit && (
-          <p className="errorSubmit">{errors.submit}</p>
+          <p className="errorMsg">{errors.submit}</p>
         )}
-
         <Button submit className={`w-full ${loading ? 'pointer-events-none opacity-75' : ''}`}>
           {loading ? "Entrando..." : "Entrar"}
         </Button>
       </form>
-
       <p className="text-center text-sm">
         Não tem uma conta?{" "}
         <Link

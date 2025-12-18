@@ -7,6 +7,7 @@ import { useState } from "react";
 import { EditProfileModal } from "@/components/layout/profile/editProfileModal";
 import { DeleteProfileModal } from "@/components/layout/profile/deleteProfileModal";
 import { ProfileCardSkeleton } from "@/components/layout/profile/profileCardSkeleton";
+import { TopCard } from "@/components/layout/profile/topCard";
 
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
@@ -28,34 +29,30 @@ export default function Page() {
           )}
           <div className="flex flex-col gap-4 w-full">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4 flex-1 w-full">
-              <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md">
-                <div className="flex items-center gap-2 text-sm xl:text-base">
-                  <BookOpenCheck className="text-main-30" />
-                  Total de estudos
-                </div>
-                <div className="font-bold text-xl lg:text-3xl">{data?.studiesCount ?? <Loader2 className="w-5 h-5 animate-spin" />}</div>
-              </div>
-              <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md">
-                <div className="flex items-center gap-2 text-sm xl:text-base">
-                  <ListChecks className="text-main-30" />
-                  Total de tarefas
-                </div>
-                <div className="font-bold text-xl lg:text-3xl">{data?.tasksCount ?? <Loader2 className="w-5 h-5 animate-spin" />}</div>
-              </div>
-              <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md col-span-2 lg:col-span-1">
-                <div className="flex items-center gap-2 text-sm xl:text-base">
-                  <GaugeCircle className="text-main-30" />
-                  Conclusão geral
-                </div>
-                <div className="font-bold text-xl lg:text-3xl">{data?.studiesPercentage ?? <Loader2 className="w-5 h-5 animate-spin" />}</div>
-              </div>
+              <TopCard title="Total de estudos"
+                data={data?.studiesCount ?? 0}
+                Icon={BookOpenCheck}
+              />
+              <TopCard title="Total de tarefas"
+                data={data?.tasksCount ?? 0}
+                Icon={ListChecks}
+              />
+              <TopCard title="Conclusão geral"
+                data={data?.studiesPercentage ?? 0}
+                Icon={GaugeCircle}
+              />
             </div>
             <div className="flex flex-col gap-8 bg-card p-4 rounded-md border border-gray-20">
               <div className="flex gap-2">
                 <CircleQuestionMark className="text-main-30" />
                 <p className="text-sm xl:text-base">Histórico de tentativas de quizzes</p>
               </div>
-              <ProfileAttemptTable />
+              {data ? (
+                <ProfileAttemptTable />
+              ) : (
+                <div className="text-gray-40 w-full">Nenhum dado encontrado</div>
+              )
+              }
             </div>
           </div>
         </div>

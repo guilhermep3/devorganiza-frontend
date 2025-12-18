@@ -58,7 +58,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, fetchStudy }: Props) 
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
-            {errors.name && <p className="errorSubmit">{errors.name}</p>}
+            {errors.name && <p className="errorMsg">{errors.name}</p>}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Tipo</label>

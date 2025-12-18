@@ -1,3 +1,4 @@
+"use client";
 import { AverageScore } from "@/src/types/chart";
 import { useEffect, useState } from "react";
 
