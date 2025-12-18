@@ -20,7 +20,7 @@ export const StudyCard = ({ data }: props) => {
   const { total, completed, percentage } = getTasksStats();
 
   return (
-    <div className={`flex flex-col bg-card h-[300px] sm:h-80 lg:h-96 border rounded-md overflow-hidden transition
+    <div className={`flex flex-col bg-card border rounded-md overflow-hidden transition
       ${data.study.status === 'finalizado' ? "border-green-20" : "border-yellow-500"}
     `}>
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">

@@ -194,10 +194,10 @@ body {
     @apply text-green-500 text-sm text-center
   }
   .dashboardSectionTitle {
-    @apply text-xl md:text-2xl font-bold text-center md:text-start
+    @apply text-xl md:text-2xl font-bold text-start
   }
   .dashboardSectionSubtitle {
-    @apply text-sm md:text-base text-gray-50 mb-5 text-center md:text-start
+    @apply text-sm md:text-base text-gray-50 mb-5 text-start
   }
   .chartTitleCustom {
     @apply text-xl font-semibold
