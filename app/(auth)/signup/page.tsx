@@ -3,6 +3,8 @@ import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignup } from "@/src/api/useSignup";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
   const {
@@ -10,6 +12,14 @@ export default function Page() {
     email, setEmail, password, setPassword,
     errors, loading, handleSubmit,
   } = useSignup();
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if(token){
+      router.push('/dashboard')
+    }
+  }, [])
 
   return (
     <div>
@@ -65,7 +75,7 @@ export default function Page() {
           {loading ? "Criando..." : "Criar Conta"}
         </Button>
       </form>
-      <p className="text-center">
+      <p className="text-center text-sm">
         Já tem uma conta?{" "}
         <Link
           href={`/signin`}

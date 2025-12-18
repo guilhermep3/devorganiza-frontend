@@ -20,7 +20,7 @@ export const StudyCard = ({ data }: props) => {
   const { total, completed, percentage } = getTasksStats();
 
   return (
-    <div className={`flex flex-col bg-card h-[300px] sm:h-80 lg:h-[340px] border rounded-md overflow-hidden transition
+    <div className={`flex flex-col bg-card h-[300px] sm:h-80 lg:h-96 border rounded-md overflow-hidden transition
       ${data.study.status === 'finalizado' ? "border-green-20" : "border-yellow-500"}
     `}>
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
@@ -48,6 +48,15 @@ export const StudyCard = ({ data }: props) => {
             <p className="text-xs lg:text-sm text-gray-60 mt-2 line-clamp-2">
               {data.study.description}
             </p>
+          )}
+          {data.study.link && (
+            <a
+              href={data.study.link}
+              target="_blank"
+              className="text-xs text-blue-400 break-all"
+            >
+              {data.study.link.length > 100 ? data.study.link.slice(0, 100) + "..." : data.study.link}
+            </a>
           )}
         </div>
         <div className="mt-auto">

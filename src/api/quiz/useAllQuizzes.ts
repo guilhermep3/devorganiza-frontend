@@ -29,7 +29,9 @@ export const useAllQuizzes = () => {
       }
 
       const dataRes: Quiz[] = await res.json();
-      setData(dataRes);
+      const dataSort = dataRes.sort((a, b) => a.title.localeCompare(b.title))
+      console.log("dataSort",dataSort)
+      setData(dataSort);
     } catch (err) {
       setError("Erro ao conectar ao servidor");
     } finally {

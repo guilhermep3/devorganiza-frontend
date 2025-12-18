@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useCreateStudy } from "@/src/api/study/useCreateStudy";
 import { useEffect } from "react";
+import { useAllQuizzes } from "@/src/api/quiz/useAllQuizzes";
 
 type Props = {
   isOpen: boolean;
@@ -17,6 +18,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
     link, setLink, description, setDescription,
     handleSubmit, loading, errors, success
   } = useCreateStudy();
+  const { data } = useAllQuizzes();
 
   useEffect(() => {
     if (success !== null) {
@@ -28,6 +30,14 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
       return () => clearTimeout(timer)
     }
   }, [success])
+
+  useEffect(() => {
+    if (!data) return;
+    if (data.find(i => i.title === name)) {
+      const dataChoosed = data.find(i => i.title === name);
+      setType(dataChoosed?.type!)
+    }
+  }, [name])
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -42,11 +52,16 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
           {success && <p className="successMsg">{success}</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
-            <input className="inputCustom w-full"
+            <input list="study" className="inputCustom w-full"
               placeholder="Ex: Criar modal com React"
               value={name}
               onChange={(e: any) => setName(e.target.value)}
             />
+            <datalist id="study">
+              {data?.map((q, i) => (
+                <option key={q.id} value={q.title}></option>
+              ))}
+            </datalist>
             {errors.name && (
               <p className="errorSubmit">{errors.name}</p>
             )}

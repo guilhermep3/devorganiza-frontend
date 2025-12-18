@@ -3,12 +3,22 @@ import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignin } from "@/src/api/useSignin";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
   const {
     email, setEmail, password, setPassword,
     errors, loading, handleSubmit
   } = useSignin();
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    if (token) {
+      router.push('/dashboard')
+    }
+  }, [])
 
   return (
     <div className="">
@@ -45,7 +55,7 @@ export default function Page() {
         </Button>
       </form>
 
-      <p className="text-center">
+      <p className="text-center text-sm">
         Não tem uma conta?{" "}
         <Link
           href={`/signup`}

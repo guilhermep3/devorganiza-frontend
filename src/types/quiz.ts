@@ -2,6 +2,7 @@ export interface Quiz {
   id: string;
   title: string;
   description: string;
+  type: string;
   imageUrl?: string | null;
   createdAt: Date | string;
   updatedAt: Date | string;
