@@ -14,19 +14,19 @@ export default function Home() {
     <AOSPage>
       <div className="relative">
         <Header />
-        <section id="hero" className="pt-24! h-screen bg-linear-to-b from-main-10 to-background">
+        <section id="hero" className="pt-24! h-[calc(100vh+40px)] bg-linear-to-b from-main-10 to-main-20/50 rounded-b-4xl">
           <div className="containerCustom justify-center items-center gap-7">
             <h1 data-aos="fade-up" className="text-center font-bold tracking-tight text-pretty text-5xl sm:text-6xl md:text-7xl leading-12 lg:leading-20 max-w-3xl z-10">
               <p className="inline-block text-main-30 relative">Organize <span className="highlight_underline"></span></p> seus <p className="inline-block text-main-30 relative">estudos <span className="highlight_underline"></span></p> na programação
             </h1>
-            <h2 data-aos="fade-down" className="h2Custom">O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.</h2>
+            <h2 data-aos="fade-down" className="h2Custom font-semibold">O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.</h2>
             <Button data-aos="zoom-in" href="/signup" size={3}>Criar conta</Button>
           </div>
         </section>
-        <div className="containerCustom py-0! rounded-lg overflow-hidden shadow-md shadow-main-20">
+        <div className="containerCustom p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20 mt-20">
           <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
             width={2400} height={2400}
-            className="w-full"
+            className="w-full rounded-lg"
           />
         </div>
         <section id="about" className="containerCustom justify-center items-center">
@@ -38,7 +38,7 @@ export default function Home() {
 
               return (
                 <div key={i.id} data-aos="zoom-in">
-                  <div className={`flex flex-col gap-4 p-6 rounded-lg text-black transition
+                  <div className={`flex flex-col gap-4 p-6 rounded-lg text-white dark:text-black transition
                     shadow-lg shadow-gray-20 hover:shadow-gray-30 hover:-translate-y-1
                     ${i.id === 1 && 'bg-main-30'}
                     ${i.id === 2 && 'bg-green-20'}
@@ -57,7 +57,7 @@ export default function Home() {
             })}
           </div>
         </section>
-        <section id="services" className="bg-gray-10/50">
+        <section id="services" className="bg-card">
           <div className="containerCustom justify-center items-center">
             <h1 data-aos="fade-up" className="h1Custom">Nossas ferramentas</h1>
             <h2 data-aos="fade-down" className="h2Custom">Veja as ferramentas do nosso site</h2>
@@ -67,7 +67,10 @@ export default function Home() {
 
                 return (
                   <div key={i.id} data-aos="zoom-in">
-                    <div className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md hover:inset-shadow-sm hover:bg-white hover:dark:bg-gray-10">
+                    <div
+                      className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md
+                      hover:inset-shadow-sm hover:bg-gray-10 dark:hover:bg-background"
+                    >
                       <div className="flex items-center gap-5">
                         <span>{i.id}.</span>
                         <div className="p-2 bg-main-10 rounded-sm">
@@ -93,9 +96,7 @@ export default function Home() {
             <h1 data-aos="fade-up" className="h1Custom text-center max-w-2xl">Faça da organização e consistência suas maiores qualidades</h1>
             <h2 data-aos="fade-down" className="h2Custom text-foreground">Dê o primeiro passo para melhorar seus estudos na programação e progredir de maneira mais eficaz</h2>
             <Button href="/signup">Criar conta</Button>
-            <div className="absolute inset-x-0 h-[480px] -z-10 rounded-t-[100%] translate-y-10 scale-110 md:scale-100
-          bg-radial from-main-20/75 via-main-10 to-background"
-            ></div>
+
           </div>
         </section>
         <Footer />

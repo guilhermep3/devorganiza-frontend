@@ -11,8 +11,8 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
         shadow-md shadow-gray-20 border border-gray-10"
       >
         {children}
-        <div className="rounded-lg hidden md:flex overflow-hidden max-w-md h-[560px]">
-          <Image src={"/auth.jpg"} alt="imagem de singin e signup"
+        <div className="rounded-lg hidden md:flex overflow-hidden max-w-md h-[560px] dark:brightness-75">
+          <Image src={"/blue-mountains.jpg"} alt="imagem de singin e signup"
             width={1000} height={1000}
             className="w-full h-full object-cover"
           />

@@ -179,7 +179,7 @@ body {
     @apply container w-full h-full px-3 md:px-5 py-10 md:py-20 mx-auto flex flex-col
   }
   .h1Custom {
-    @apply font-bold text-4xl mt-10
+    @apply font-bold text-4xl mt-10 text-center
   }
   .h2Custom {
     @apply max-w-2xl mx-auto mt-4 text-center text-gray-60 mb-14
