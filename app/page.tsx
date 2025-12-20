@@ -1,6 +1,7 @@
 import { BackBtn } from "@/components/backBtn";
 import { Button } from "@/components/button";
 import { AOSPage } from "@/components/layout/aos";
+import { AuroraBackgroundDemo } from "@/components/layout/auroraBg";
 import { Faq } from "@/components/layout/faq";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -14,15 +15,8 @@ export default function Home() {
     <AOSPage>
       <div className="relative">
         <Header />
-        <section id="hero" className="pt-24! h-[calc(100vh+40px)] bg-linear-to-b from-main-10 to-main-20/50 rounded-b-4xl">
-          <div className="containerCustom justify-center items-center gap-7">
-            <h1 data-aos="fade-up" className="text-center font-bold tracking-tight text-pretty text-5xl sm:text-6xl md:text-7xl leading-12 lg:leading-20 max-w-3xl z-10">
-              <p className="inline-block text-main-30 relative">Organize <span className="highlight_underline"></span></p> seus <p className="inline-block text-main-30 relative">estudos <span className="highlight_underline"></span></p> na programação
-            </h1>
-            <h2 data-aos="fade-down" className="h2Custom font-semibold">O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.</h2>
-            <Button data-aos="zoom-in" href="/signup" size={3}>Criar conta</Button>
-          </div>
-        </section>
+        <AuroraBackgroundDemo />
+        
         <div className="containerCustom p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20 mt-20">
           <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
             width={2400} height={2400}
