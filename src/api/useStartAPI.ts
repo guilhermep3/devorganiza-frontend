@@ -1,33 +1,55 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function useStartAPI() {
-  const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState<number | null>(null);
+  const [ready, setReady] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const startedRef = useRef(false);
+
+  const sleep = (ms: number) =>
+    new Promise(resolve => setTimeout(resolve, ms));
 
   const startAPI = async () => {
+    if (!API_URL || startedRef.current) return;
+
+    startedRef.current = true;
     setLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/`, {
-        signal: AbortSignal.timeout(10000)
-      });
 
-      setResponse(res.status);
+    const MAX_RETRIES = 3;
+    const DELAY = 3000;
 
-      if (!res.ok) {
-        throw new Error(`API respondeu com status: ${res.status}`);
+    for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+      try {
+        const res = await fetch(`${API_URL}/health`, {
+          cache: "no-store"
+        });
+
+        if (!res.ok) {
+          throw new Error(`Status ${res.status}`);
+        }
+
+        setReady(true);
+        setError(null);
+        break;
+
+      } catch (err) {
+        if (attempt === MAX_RETRIES) {
+          setError(
+            err instanceof Error
+              ? err
+              : new Error("Falha ao iniciar API")
+          );
+        } else {
+          await sleep(DELAY);
+        }
       }
-
-    } catch (err) {
-      const error = err instanceof Error ? err : new Error("Erro desconhecido");
-      setError(error);
-
-    } finally {
-      setLoading(false);
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -35,7 +57,6 @@ export function useStartAPI() {
   }, []);
 
   return {
-    response, error, loading,
-    startAPI
+    loading, ready, error
   };
 }

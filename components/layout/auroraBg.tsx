@@ -1,8 +1,6 @@
 "use client";
-
 import { AuroraBackground } from "@/src/components/ui/aurora-background";
 import { motion } from "motion/react";
-import React from "react";
 import { Button } from "../button";
 
 export function AuroraBackgroundDemo() {
@@ -18,7 +16,7 @@ export function AuroraBackgroundDemo() {
         }}
         className="relative flex flex-col gap-4 items-center justify-center px-4 text-foreground"
       >
-        <div id="hero" className="containerCustom justify-center items-center gap-7">
+        <div id="hero" className="containerCustom justify-center items-center gap-7 mt-5">
           <h1 data-aos="fade-up" className="text-center font-bold tracking-tight text-pretty text-5xl sm:text-6xl md:text-7xl leading-12 lg:leading-20 max-w-3xl z-10">
             <p className="inline-block text-main-30 relative">Organize <span className="highlight_underline"></span></p> seus <p className="inline-block text-main-30 relative">estudos <span className="highlight_underline"></span></p> na programação
           </h1>

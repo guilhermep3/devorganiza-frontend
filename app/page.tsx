@@ -16,7 +16,6 @@ export default function Home() {
       <div className="relative">
         <Header />
         <AuroraBackgroundDemo />
-        
         <div className="containerCustom p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20 mt-20">
           <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
             width={2400} height={2400}
