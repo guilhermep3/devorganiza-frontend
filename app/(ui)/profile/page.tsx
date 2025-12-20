@@ -3,15 +3,17 @@ import { BookOpenCheck, ListChecks, GaugeCircle, CircleQuestionMark, Loader2 } f
 import { useUser } from "@/src/api/user/useUser";
 import { ProfileAttemptTable } from "@/components/layout/profile/profileAttemptTable";
 import { ProfileCard } from "@/components/layout/profile/profileCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EditProfileModal } from "@/components/layout/profile/editProfileModal";
 import { DeleteProfileModal } from "@/components/layout/profile/deleteProfileModal";
 import { ProfileCardSkeleton } from "@/components/layout/profile/profileCardSkeleton";
 import { TopCard } from "@/components/layout/profile/topCard";
+import { LogoutModal } from "@/components/layout/profile/logoutModal";
 
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isLogOut, setIsLogout] = useState(false);
   const { data, loading, fetchUser } = useUser();
 
   return (
@@ -25,6 +27,7 @@ export default function Page() {
           ) : (
             <ProfileCard data={data?.user}
               setIsEditing={setIsEditing} setIsDeleting={setIsDeleting}
+              setIsLogout={setIsLogout}
             />
           )}
           <div className="flex flex-col gap-4 w-full">
@@ -40,6 +43,7 @@ export default function Page() {
               <TopCard title="Conclusão geral"
                 data={data?.studiesPercentage ?? 0}
                 Icon={GaugeCircle}
+                percentage
               />
             </div>
             <div className="flex flex-col gap-8 bg-card p-4 rounded-md border border-gray-20">
@@ -67,6 +71,7 @@ export default function Page() {
         />
       }
       <DeleteProfileModal isDeleting={isDeleting} setIsDeleting={setIsDeleting} />
+      <LogoutModal isLogOut={isLogOut} setIsLogout={setIsLogout} />
     </div>
   );
 }

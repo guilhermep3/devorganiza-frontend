@@ -17,6 +17,7 @@ import { useAverageTimeFinishTasksChart } from "@/src/api/chart/useAverageTimeFi
 import { useAverageScore } from "@/src/api/chart/useAverageScore";
 import { ChartLoading } from "@/components/layout/dashboard/chart/chartLoading";
 import { TopInfosSkeleton } from "@/components/layout/dashboard/topInfosSkeleton";
+import { useUser } from "@/src/api/user/useUser";
 
 export default function Page() {
   const { data: weeklyProductivityData, loading: weeklyProductivityLoading } = useWeeklyProductivity();
@@ -25,6 +26,7 @@ export default function Page() {
   const { data: averageTimeData, loading: averageTimeLoading } = useAverageTimeFinishTasksChart();
   const { data: averageScoreData, loading: averageScoreLoading } = useAverageScore();
   const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
+  const { data: userData, loading: userLoading } = useUser();
 
   const { data: studiesData, loading: studiesLoading } = useStudies();
   const { data: quizzesData, loading: quizzesLoading } = useQuizzes();
@@ -43,10 +45,11 @@ export default function Page() {
 
   return (
     <div className="layoutDiv">
-      {(studiesLoading || quizzesLoading || quizzesLockLoading) ? (
+      {(studiesLoading || quizzesLoading || quizzesLockLoading || userLoading) ? (
         <TopInfosSkeleton />
       ) : (
         <TopInfos
+          userData={userData}
           studiesData={studiesData}
           quizzesData={quizzesData}
           quizzesLockData={quizzesLockData}

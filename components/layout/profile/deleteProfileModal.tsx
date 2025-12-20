@@ -40,7 +40,6 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
               Cancelar
             </ButtonCN>
             <ButtonCN
-              variant="destructive"
               onClick={handleDelete}
               disabled={loading}
               className={`bg-red-600 hover:bg-red-700 text-white ${loading && 'pointer-events-none'}`}

@@ -3,17 +3,16 @@ import { TopInfosCard } from "./topInfosCard"
 import { StudyTask } from "@/src/types/study"
 import { Quiz } from "@/src/types/quiz"
 import { useUser } from "@/src/api/user/useUser"
+import { User, UserResponse } from "@/src/types/user"
 
 type props = {
-  studiesData: StudyTask[] | null
-  quizzesData: Quiz[] | null
-  quizzesLockData: Quiz[] | null
+  userData: UserResponse | null;
+  studiesData: StudyTask[] | null;
+  quizzesData: Quiz[] | null;
+  quizzesLockData: Quiz[] | null;
 }
 
-export const TopInfos = ({ studiesData, quizzesData, quizzesLockData }: props) => {
-  const { data } = useUser();
-  const isLoading = !studiesData || !quizzesData || !quizzesLockData;
-
+export const TopInfos = ({ userData, studiesData, quizzesData, quizzesLockData }: props) => {
   const allTasks = studiesData?.flatMap(i => i.tasks) ?? [];
   const totalTasks = allTasks.length;
   const totalFinished = allTasks.filter(t => t.done === true).length;
@@ -24,31 +23,33 @@ export const TopInfos = ({ studiesData, quizzesData, quizzesLockData }: props) =
 
   return (
     <section className="flex flex-col">
-      <h1 className="dashboardSectionTitle">Bem vindo de volta, {data?.user.name ?? 'Nome do Usuário'}!</h1>
+      <h1 className="dashboardSectionTitle">
+        Bem vindo de volta{userData ? ", "+userData.user.name : ''}!
+      </h1>
       <h2 className="dashboardSectionSubtitle">Organize seus estudos e veja os dados do seu desempenho</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
         <TopInfosCard
           title="Total de tarefas"
           Icon={<ListChecks className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-main-30" />}
-          data={isLoading ? 0 : totalTasks}
+          data={totalTasks ?? 0}
         />
         <TopInfosCard
           title="Tarefas finalizadas"
           Icon={<ListCheck className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-green-600" />}
-          data={isLoading ? 0 : totalFinished}
+          data={totalFinished ?? 0}
         />
         <TopInfosCard
           title="Tarefas pendentes"
           Icon={<ListX className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-red-600" />}
-          data={isLoading ? 0 : totalPendent}
+          data={totalPendent ?? 0}
         />
         <TopInfosCard
           title="Quizzes desbloqueados"
           Icon={<CircleQuestionMark className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-main-30" />}
           data={
-            isLoading
-              ? 0
-              : `${totalQuizzes} de ${totalQuizzesLock}`
+            totalQuizzes && totalQuizzesLock
+              ? `${totalQuizzes} de ${totalQuizzesLock}`
+              : 0
           }
         />
       </div>

@@ -19,8 +19,7 @@ export const useUser = () => {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
-        },
-        credentials: "include"
+        }
       });
 
       if (!res.ok) {
@@ -43,7 +42,6 @@ export const useUser = () => {
   }, []);
 
   return {
-    data, fetchUser,
-    errors, loading
+    data, fetchUser, errors, loading
   }
 }

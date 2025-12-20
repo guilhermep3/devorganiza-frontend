@@ -4,8 +4,9 @@ type props = {
   title: string;
   Icon: LucideIcon,
   data: number
+  percentage?: boolean;
 }
-export const TopCard = ({ title, Icon, data }: props) => {
+export const TopCard = ({ title, Icon, data, percentage }: props) => {
 
   return (
     <div className="flex flex-col gap-3 p-3 lg:p-4 bg-card border border-gray-20 rounded-md">
@@ -14,7 +15,7 @@ export const TopCard = ({ title, Icon, data }: props) => {
         {title}
       </div>
       <div className="font-bold text-xl lg:text-3xl">
-        {Number.isInteger(data) ? data : data.toFixed(2) ?? <Loader2 className="w-5 h-5 animate-spin" />}
+        {Number.isInteger(data) ? data : data.toFixed(2) ?? <Loader2 className="w-5 h-5 animate-spin" />}{percentage && '%'}
       </div>
     </div>
   )

@@ -1,17 +1,18 @@
 import { Button } from "@/components/ui/button"
+import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarShortcut, MenubarTrigger } from "@/components/ui/menubar";
 import { User } from "@/src/types/user";
-import { AtSign, Mail, User2 } from "lucide-react"
-import Image from "next/image"
+import { AtSign, EllipsisVertical, LogOut, Mail, User2 } from "lucide-react"
 
 type props = {
   data: User;
   setIsEditing: (value: boolean) => void;
   setIsDeleting: (value: boolean) => void;
+  setIsLogout: (value: boolean) => void;
 }
-export const ProfileCard = ({ data, setIsEditing, setIsDeleting }: props) => {
+export const ProfileCard = ({ data, setIsEditing, setIsDeleting, setIsLogout }: props) => {
 
   return (
-    <div className="flex flex-col items-center gap-4 w-full lg:w-1/3 p-4 bg-card border border-gray-20 rounded-md">
+    <div className="relative flex flex-col items-center gap-4 w-full lg:w-1/3 p-4 bg-card border border-gray-20 rounded-md">
       <div className="w-32 h-32 rounded-full overflow-hidden">
         <img
           src={`${data.profileImage || '/no-profile.webp'}`}
@@ -19,6 +20,16 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting }: props) => {
           className="object-cover w-full h-full"
         />
       </div>
+      <Menubar className="absolute top-1 right-1">
+        <MenubarMenu>
+          <MenubarTrigger className="px-1"><EllipsisVertical className="w-4" /></MenubarTrigger>
+          <MenubarContent>
+            <MenubarItem onClick={() => setIsLogout(true)}>
+              Sair do login <MenubarShortcut><LogOut /></MenubarShortcut>
+            </MenubarItem>
+          </MenubarContent>
+        </MenubarMenu>
+      </Menubar>
       <div className="w-full flex flex-col gap-2 text-center">
         <p className="font-semibold text-xl flex items-center justify-center gap-1">
           <User2 className="text-main-30" /> {data.name}
@@ -26,7 +37,7 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting }: props) => {
         <p className="font-semibold text-xs lg:text-sm text-gray-40 flex items-center justify-center gap-1">
           <AtSign className="text-main-30 w-4 h-4" /> {data.username}
         </p>
-        <p className="text-sm lg:text-base text-gray-50 flex justify-center items-center gap-1">
+        <p className="text-xs lg:text-sm text-gray-50 flex justify-center items-center gap-1">
           <Mail className="text-main-30" /> {data.email}
         </p>
       </div>

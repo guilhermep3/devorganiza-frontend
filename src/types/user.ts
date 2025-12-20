@@ -10,8 +10,8 @@ export type User = {
 };
 
 export type UserResponse = {
-  user: User;
   studiesCount: number;
   tasksCount?: number;
   studiesPercentage?: number;
+  user: User;
 };
