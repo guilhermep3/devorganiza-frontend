@@ -1,5 +1,4 @@
 "use client"
-
 import { Button } from "@/components/button";
 import { LoadingPage } from "@/components/layout/loadingPage";
 import { Logo } from "@/components/logo";
@@ -35,7 +34,7 @@ export default function Page() {
 
   return (
     <div className="layoutDiv">
-      {loading || quizLoading || userLoading ? (
+      {loading || quizLoading || userLoading || !userData || !quizData || !data ? (
         <LoadingPage />
       ) : (
         <div className="flex flex-col items-center gap-2">
@@ -43,12 +42,12 @@ export default function Page() {
             <Logo width={40} />
             <p className="text-base md:text-lg font-bold -mb-1 text-main-60">DevOrganiza</p>
           </div>
-          <p className="text-lg md:text-xl">Parabéns, {userData?.user.name}!</p>
-          <p className="text-gray-50">Você completou o quiz de {quizData?.title}</p>
+          <p className="text-lg md:text-xl">Parabéns, {userData.user.name}!</p>
+          <p className="text-gray-50">Você completou o quiz de {quizData.title}</p>
           <div className="flex justify-center items-center my-6 w-28 h-28 border-12 border-main-30 rounded-full text-3xl font-bold">
-            {data?.score}
+            {data.score}
           </div>
-          {data?.score !== undefined && (
+          {data.score !== undefined && (
             <div className="text-center">
               <p>
                 Você acertou <span className="font-bold">{data.score}</span> de 30 perguntas!

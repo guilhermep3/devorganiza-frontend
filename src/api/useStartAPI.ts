@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -8,15 +8,12 @@ export function useStartAPI() {
   const [ready, setReady] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
-  const startedRef = useRef(false);
-
   const sleep = (ms: number) =>
     new Promise(resolve => setTimeout(resolve, ms));
 
   const startAPI = async () => {
-    if (!API_URL || startedRef.current) return;
+    if (!API_URL) return;
 
-    startedRef.current = true;
     setLoading(true);
 
     const MAX_RETRIES = 3;
@@ -27,7 +24,8 @@ export function useStartAPI() {
         const res = await fetch(`${API_URL}/health`, {
           cache: "no-store"
         });
-
+        console.log("res", res)
+        console.log("res.status", res.status)
         if (!res.ok) {
           throw new Error(`Status ${res.status}`);
         }
@@ -35,7 +33,6 @@ export function useStartAPI() {
         setReady(true);
         setError(null);
         break;
-
       } catch (err) {
         if (attempt === MAX_RETRIES) {
           setError(
