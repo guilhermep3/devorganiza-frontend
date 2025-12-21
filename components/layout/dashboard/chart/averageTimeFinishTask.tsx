@@ -11,14 +11,10 @@ import {
 import { AverageTimeFinish } from "@/src/types/chart"
 import { formatPercentage, formatTimeToMMSS } from "@/src/utils/calc"
 
-const chartData = [
-  { month: "January", desktop: 186 },
-  { month: "February", desktop: 305 },
-  { month: "March", desktop: 237 },
-  { month: "April", desktop: 73 },
-  { month: "May", desktop: 209 },
-  { month: "June", desktop: 214 },
-]
+// const chartData = [
+//   { month: "January", desktop: 186 },
+//   { month: "February", desktop: 305 },
+// ]
 
 const chartConfig = {
   desktop: {
@@ -35,7 +31,7 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
 
   const hasComparison = chartData.length >= 2;
 
-  let difference = 0
+  let difference = 0;
 
   if (hasComparison && chartData[1].media !== 0) {
     difference =

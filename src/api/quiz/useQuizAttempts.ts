@@ -1,9 +1,9 @@
 "use client";
-import { AttemptReturn } from "@/src/types/quiz";
+import { QuizzesAttempt } from "@/src/types/quiz";
 import { useEffect, useState } from "react";
 
 export const useQuizAttempts = () => {
-  const [data, setData] = useState<AttemptReturn[] | null>(null);
+  const [data, setData] = useState<QuizzesAttempt[] | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [loading, setLoading] = useState(false);
 

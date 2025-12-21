@@ -8,7 +8,6 @@ import {
 import {
   ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
-import { Task } from "@/src/types/study"
 import { calculateDifference, formatPercentage } from "@/src/utils/calc"
 import type { FinishedTasksByMonth } from "@/src/types/chart"
 

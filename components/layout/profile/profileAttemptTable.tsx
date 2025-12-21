@@ -3,6 +3,7 @@ import { useQuizAttempts } from "@/src/api/quiz/useQuizAttempts"
 import Image from "next/image"
 import { AttemptSkeleton } from "./attemptSkeleton";
 import { useEffect, useState } from "react";
+import { QuizzesAttempt } from "@/src/types/quiz";
 
 export const ProfileAttemptTable = () => {
   const { data, loading } = useQuizAttempts();
@@ -36,14 +37,16 @@ export const ProfileAttemptTable = () => {
       </thead>
       <tbody>
         {!loading ? (
-          sortedAttempts.slice(0, 5).map((attempt: any) => (
+          sortedAttempts.slice(0, 5).map((attempt: QuizzesAttempt) => (
             <tr key={attempt.id} className="rounded-lg shadow-sm">
               <td className="rounded-l-lg pb-3">
                 <div className="flex gap-3 items-center">
-                  <Image src="/auth.jpg" alt="foto quiz"
-                    width={32} height={32}
-                    className="w-8 h-8 rounded-sm object-cover"
-                  />
+                  <div className="w-8 h-8">
+                    <Image src={`${attempt.quizImage}`} alt="foto quiz"
+                      width={32} height={32}
+                      className=" rounded-sm object-cover"
+                    />
+                  </div>
                   Quiz {attempt.quizTitle}
                 </div>
               </td>

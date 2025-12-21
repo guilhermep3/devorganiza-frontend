@@ -2,8 +2,7 @@ import { CircleQuestionMark, ListCheck, ListChecks, ListX, Loader2 } from "lucid
 import { TopInfosCard } from "./topInfosCard"
 import { StudyTask } from "@/src/types/study"
 import { Quiz } from "@/src/types/quiz"
-import { useUser } from "@/src/api/user/useUser"
-import { User, UserResponse } from "@/src/types/user"
+import { UserResponse } from "@/src/types/user"
 
 type props = {
   userData: UserResponse | null;
@@ -11,7 +10,6 @@ type props = {
   quizzesData: Quiz[] | null;
   quizzesLockData: Quiz[] | null;
 }
-
 export const TopInfos = ({ userData, studiesData, quizzesData, quizzesLockData }: props) => {
   const allTasks = studiesData?.flatMap(i => i.tasks) ?? [];
   const totalTasks = allTasks.length;

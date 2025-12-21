@@ -35,22 +35,13 @@ export interface AttemptAnswer {
   answerId: string;
 }
 
-export interface Attempt {
+export interface QuizzesAttempt {
   id: string;
-  userId: string;
-  quizId: string;
-  startedAt: string;
-  finishedAt: string | null;
-  score: number;
-  durationSec: number;
-}
-
-export interface AttemptReturn {
-  userId: string;
   quizId: string;
   quizTitle: string;
+  quizImage: string;
   startedAt: string;
   finishedAt: string;
-  durationSec: number;
   score: number;
+  durationSec: number;
 }

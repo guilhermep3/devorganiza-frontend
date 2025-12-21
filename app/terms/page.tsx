@@ -6,7 +6,7 @@ export default function Page() {
 
   return (
     <div>
-      <Header />
+      <Header noNav />
       <div className="text-center bg-main-10 pt-28 pb-20">
         <h1 className="h1Custom">Termos de serviço</h1>
       </div>

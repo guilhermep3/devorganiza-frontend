@@ -2,7 +2,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { Study } from "@/src/types/study";
 import { useEffect } from "react";
 
 type Props = {
