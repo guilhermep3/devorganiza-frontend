@@ -24,8 +24,6 @@ export function useStartAPI() {
         const res = await fetch(`${API_URL}/health`, {
           cache: "no-store"
         });
-        console.log("res", res)
-        console.log("res.status", res.status)
         if (!res.ok) {
           throw new Error(`Status ${res.status}`);
         }
