@@ -45,3 +45,10 @@ export interface QuizzesAttempt {
   score: number;
   durationSec: number;
 }
+
+export interface FinishAttempt {
+  attempt: string;
+  duration: number;
+  message: string;
+  score: number;
+}

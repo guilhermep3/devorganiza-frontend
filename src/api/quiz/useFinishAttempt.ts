@@ -1,9 +1,9 @@
 "use client";
-import { AttemptAnswer, QuizzesAttempt } from "@/src/types/quiz";
+import { AttemptAnswer, FinishAttempt } from "@/src/types/quiz";
 import { useState } from "react";
 
 export const useFinishAttempt = () => {
-  const [data, setData] = useState<QuizzesAttempt | null>(null);
+  const [data, setData] = useState<FinishAttempt | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -29,7 +29,7 @@ export const useFinishAttempt = () => {
         setError(errorData.error || "Erro ao finalizar tentativa de quiz");
         return;
       }
-      const data: QuizzesAttempt = await res.json();
+      const data: FinishAttempt = await res.json();
       setData(data);
       return data;
     } catch (err) {

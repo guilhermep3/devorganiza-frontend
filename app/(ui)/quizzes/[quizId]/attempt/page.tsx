@@ -49,20 +49,22 @@ export default function Page() {
 
   function handleConfirm() {
     if (!selected) return;
-    setQuestionIndex(questionIndex === quiz?.questions.length! - 1 ? questionIndex : questionIndex + 1);
+    if (!quiz) return;
+    setQuestionIndex(questionIndex === quiz.questions.length! - 1 ? questionIndex : questionIndex + 1);
     setAnswers((prev) => [
       ...prev,
       { questionId: currentQuestion!.id, answerId: selected }
     ]);
     setSelected(null);
 
-    if (questionIndex === quiz?.questions.length! - 1) {
+    if (questionIndex === quiz.questions.length! - 1) {
       finishAttempt();
     }
   }
 
   function finishAttempt() {
-    createAttempt(quiz!.id!, answers);
+    if (!quiz) return;
+    createAttempt(quiz.id, answers);
     router.push(`/quizzes/${quiz?.id}/finish`);
   }
 
