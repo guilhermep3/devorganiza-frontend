@@ -38,12 +38,12 @@ export const Header = ({ noNav, noAnimate }: props) => {
   }, [])
 
   return (
-    <header className={`fixed z-50 flex justify-center items-center transition-all duration-500 bg-background dark:bg-zinc-900
-      shadow-md shadow-secondary mx-auto border-2 border-muted-foreground/25
+    <header className={`fixed z-50 flex justify-center items-center transition-all duration-500 bg-background/80 backdrop-blur-md
+      shadow-md shadow-gray-30 mx-auto border-2 border-muted-foreground/25
       ${active && !noAnimate ?
         'top-2 md:top-3 left-4 right-4 md:left-10 md:right-10 rounded-full w-80 sm:w-xl md:w-2xl lg:w-4xl' :
         'top-0 left-0 right-0 w-full min-h-20'
-      }
+      } ${noNav ? 'p-3' : ''}
     `}>
       <div className="container mx-auto flex justify-between items-center px-2 md:px-6 py-1 md:py-0">
         <Logo width={64} />
@@ -52,7 +52,7 @@ export const Header = ({ noNav, noAnimate }: props) => {
             <div className="flex items-center">
               {navLinksData.map((i) => (
                 <Link key={i.id}
-                  href={`#${i.href}`} className="text-lg hover:bg-secondary p-6"
+                  href={`#${i.href}`} className="text-lg hover:bg-gray-10 p-6"
                 >
                   {i.name}
                 </Link>

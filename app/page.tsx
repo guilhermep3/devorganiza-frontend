@@ -47,7 +47,7 @@ export default function Home() {
                 whileInView={{ scale: 1 }}
                 transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
               >
-                <div className={`flex flex-col gap-4 p-6 rounded-lg text-white dark:text-black transition
+                <div className={`group flex flex-col gap-4 p-6 md:p-8 rounded-lg text-white dark:text-black transition
                     shadow-lg shadow-gray-20 hover:shadow-gray-30 hover:-translate-y-1
                     ${i.id === 1 && 'bg-main-30'}
                     ${i.id === 2 && 'bg-green-20'}
@@ -57,7 +57,7 @@ export default function Home() {
                     <p className="text-xl font-bold">
                       <span className="mr-2">{i.id}.</span> {i.title}
                     </p>
-                    <Icon />
+                    <Icon className="transition-all duration-200 group-hover:scale-125" />
                   </div>
                   <p>{i.description}</p>
                 </div>
@@ -66,7 +66,7 @@ export default function Home() {
           })}
         </div>
       </section>
-      <section id="services" className="bg-card">
+      <section id="services" className="bg-background dark:bg-gray-10/50">
         <div className="containerCustom justify-center items-center">
           <motion.h1 className="h1Custom"
             initial={{ scale: 0.4, y: -40 }}

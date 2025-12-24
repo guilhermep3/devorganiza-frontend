@@ -15,7 +15,7 @@ export default function Page() {
     <div>
       <h1 className="text-2xl font-bold text-center mb-2">Crie sua conta</h1>
       <h2 className="text-sm text-center">Preencha o formulário abaixo</h2>
-      <form onSubmit={handleSubmit} className="my-10 space-y-5">
+      <form onSubmit={handleSubmit} className="my-10 space-y-4">
         <div className="flex flex-col gap-0">
           <input
             type="text"

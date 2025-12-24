@@ -31,7 +31,7 @@ export const Faq = () => {
     <div className="flex flex-col gap-7 w-full max-w-xl">
       {faqData.map((i, index) => (
         <div key={index} className="w-full flex">
-          <div className="flex flex-col items-center gap-1 w-full bg-background rounded-md shadow-sm ">
+          <div className="flex flex-col items-center gap-1 w-full bg-card rounded-md shadow-sm ">
             <div className="flex justify-between items-center gap-5 p-3 w-full cursor-pointer"
               onClick={() => toggleQuestion(index)}
             >
@@ -45,10 +45,10 @@ export const Faq = () => {
                 />
               </div>
             </div>
-            <div className={`text-gray-50 ml-14 transition-all duration-300
+            <div className={`text-gray-70 ml-14 transition-all duration-300 overflow-hidden
               ${openIndex === index
-                ? 'translate-y-0 max-h-96 opacity-100 pointer-events-auto pb-4'
-                : '-translate-y-5 h-0 opacity-0 pointer-events-none pb-0'}`}
+                ? 'translate-y-0 max-h-44 opacity-100 pb-4'
+                : '-translate-y-2 max-h-0 opacity-0 pb-0'}`}
             >
               {i.answer}
             </div>
