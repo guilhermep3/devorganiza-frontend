@@ -186,10 +186,10 @@ body {
     @apply container w-full h-full px-3 md:px-5 py-10 md:py-20 mx-auto flex flex-col
   }
   .h1Custom {
-    @apply font-bold text-3xl md:text-4xl mt-10 text-center
+    @apply font-extrabold text-3xl md:text-4xl mt-10 text-center
   }
   .h2Custom {
-    @apply max-w-2xl mx-auto mt-4 text-center text-gray-60 mb-14
+    @apply max-w-2xl mx-auto mt-4 text-center text-gray-70 mb-14
   }
   .inputCustom {
     @apply px-3 py-2 w-72 rounded-md border border-gray-30 bg-background shadow-sm shadow-gray-10 outline-none focus:ring ring-main-30 transition-all duration-200

@@ -93,12 +93,12 @@ export default function Home() {
                   transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
                 >
                   <div
-                    className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md
-                      hover:inset-shadow-sm hover:bg-gray-10 dark:hover:bg-background"
+                    className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md hover:shadow-gray-30
+                       hover:bg-gray-10 dark:hover:bg-background"
                   >
                     <div className="flex items-center gap-5">
-                      <span>{i.id}.</span>
-                      <div className="p-2 bg-main-10 rounded-sm">
+                      <span className="text-lg">{i.id}.</span>
+                      <div className="p-3 bg-main-10 rounded-sm">
                         <Icon />
                       </div>
                     </div>

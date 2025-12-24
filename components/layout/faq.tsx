@@ -35,13 +35,15 @@ export const Faq = () => {
             <div className="flex justify-between items-center gap-5 p-3 w-full cursor-pointer"
               onClick={() => toggleQuestion(index)}
             >
-              <div className="text-gray-50 p-2 border border-gray-20 rounded-sm mb-auto">
+              <div className={`p-2 border border-gray-20 rounded-sm mb-auto transition-all
+                ${openIndex === index ? 'text-main-30' : 'text-gray-70'}
+              `}>
                 {i.icon}
               </div>
               <p className="font-bold cursor-pointer">{i.question}</p>
               <div className="ml-auto">
                 <ChevronDown
-                  className={`transition-all duration-300 ${openIndex === index && 'rotate-180'}`}
+                  className={`transition-all duration-300 ${openIndex === index && 'rotate-180 text-main-30'}`}
                 />
               </div>
             </div>

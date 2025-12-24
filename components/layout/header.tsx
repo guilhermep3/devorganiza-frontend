@@ -39,7 +39,7 @@ export const Header = ({ noNav, noAnimate }: props) => {
 
   return (
     <header className={`fixed z-50 flex justify-center items-center transition-all duration-500 bg-background/80 backdrop-blur-md
-      shadow-md shadow-gray-30 mx-auto border-2 border-muted-foreground/25
+      shadow-md shadow-gray-20 dark:shadow-gray-10 mx-auto border-2 border-gray-20
       ${active && !noAnimate ?
         'top-2 md:top-3 left-4 right-4 md:left-10 md:right-10 rounded-full w-80 sm:w-xl md:w-2xl lg:w-4xl' :
         'top-0 left-0 right-0 w-full min-h-20'

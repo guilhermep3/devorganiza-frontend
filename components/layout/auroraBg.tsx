@@ -17,7 +17,7 @@ export function AuroraBackgroundDemo() {
         className="relative flex flex-col gap-4 items-center justify-center px-4 text-foreground"
       >
         <div id="hero" className="containerCustom justify-center items-center gap-6 mt-4">
-          <h1 className="text-center font-bold tracking-tight text-pretty text-5xl sm:text-6xl md:text-7xl leading-12 lg:leading-20 max-w-3xl z-10">
+          <h1 className="text-center font-extrabold tracking-tight text-pretty text-5xl sm:text-6xl md:text-7xl leading-12 lg:leading-20 max-w-3xl z-10">
             <p className="inline-block text-main-30 relative">
               Organize <span className="highlight_underline"></span></p> seus <p className="inline-block text-main-30 relative">estudos <span className="highlight_underline"></span>
             </p> na <span className="text-transparent bg-linear-to-r from-main-70 to-main-60 bg-clip-text">programação</span>
