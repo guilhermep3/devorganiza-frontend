@@ -1,6 +1,13 @@
-import { ChartNoAxesCombined, CircleQuestionMark, ListChecks, NotebookPen } from "lucide-react";
+import { ChartNoAxesCombined, CircleQuestionMark, ListChecks, LucideIcon, NotebookPen } from "lucide-react";
 
-export const servicesData = [
+export interface ServicesData {
+  id: number;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+export const servicesData: ServicesData[] = [
   {
     id: 1,
     title: 'Organize seus estudos',

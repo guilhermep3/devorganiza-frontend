@@ -1,10 +1,12 @@
 "use client"
+import { AboutCard } from "@/components/aboutCard";
 import { BackBtn } from "@/components/backBtn";
 import { Button } from "@/components/button";
 import { AuroraBackgroundDemo } from "@/components/layout/auroraBg";
 import { Faq } from "@/components/layout/faq";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
+import { ServicesCard } from "@/components/servicesCard";
 import { aboutData } from "@/src/data/about";
 import { servicesData } from "@/src/data/services";
 import { motion } from "motion/react";
@@ -41,28 +43,7 @@ export default function Home() {
           {aboutData.map((i) => {
             const Icon = i.icon;
 
-            return (
-              <motion.div key={i.id}
-                initial={{ scale: 0.3 }}
-                whileInView={{ scale: 1 }}
-                transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
-              >
-                <div className={`group flex flex-col gap-4 p-6 md:p-8 rounded-lg text-white dark:text-black transition
-                    shadow-lg shadow-gray-20 hover:shadow-gray-30 hover:-translate-y-1
-                    ${i.id === 1 && 'bg-main-30'}
-                    ${i.id === 2 && 'bg-green-20'}
-                    ${i.id === 3 && 'bg-main-40'}
-                    `}>
-                  <div className="flex justify-between">
-                    <p className="text-xl font-bold">
-                      <span className="mr-2">{i.id}.</span> {i.title}
-                    </p>
-                    <Icon className="transition-all duration-200 group-hover:scale-125" />
-                  </div>
-                  <p>{i.description}</p>
-                </div>
-              </motion.div>
-            )
+            return (<AboutCard data={i} key={i.id} Icon={Icon} />)
           })}
         </div>
       </section>
@@ -86,27 +67,7 @@ export default function Home() {
             {servicesData.map((i) => {
               const Icon = i.icon;
 
-              return (
-                <motion.div key={i.id}
-                  initial={{ scale: 0.3 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
-                >
-                  <div
-                    className="flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md hover:shadow-gray-30
-                       hover:bg-gray-10 dark:hover:bg-background"
-                  >
-                    <div className="flex items-center gap-5">
-                      <span className="text-lg">{i.id}.</span>
-                      <div className="p-3 bg-main-10 rounded-sm">
-                        <Icon />
-                      </div>
-                    </div>
-                    <p className="text-lg font-semibold">{i.title}</p>
-                    <p className="text-sm">{i.description}</p>
-                  </div>
-                </motion.div>
-              )
+              return (<ServicesCard data={i} key={i.id} Icon={Icon} />)
             })}
           </div>
         </div>

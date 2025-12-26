@@ -1,6 +1,13 @@
-import { Clock9, ListCheck, NotebookPen } from "lucide-react";
+import { Clock9, ListCheck, LucideIcon, NotebookPen } from "lucide-react";
 
-export const aboutData = [
+export interface AboutData {
+  id: number;
+  title: string;
+  description: string;
+  icon: LucideIcon;
+}
+
+export const aboutData: AboutData[] = [
   {
     id: 1,
     title: 'Organize',
