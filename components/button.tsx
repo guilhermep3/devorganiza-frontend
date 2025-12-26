@@ -23,6 +23,7 @@ export const Button = ({ whiteBg, size = 2, className, onClick, children, href, 
   if (href) {
     return (
       <a
+        role="link"
         href={href}
         className={commonClasses}
         onClick={onClick}
@@ -44,6 +45,7 @@ export const Button = ({ whiteBg, size = 2, className, onClick, children, href, 
 
   return (
     <button
+      role="button"
       className={commonClasses}
       onClick={onClick}
       type={submit ? 'submit' : 'button'}

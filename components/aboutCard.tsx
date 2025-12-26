@@ -20,7 +20,7 @@ export const AboutCard = ({ data, Icon }: props) => {
         ${data.id === 2 && 'bg-green-20'}
         ${data.id === 3 && 'bg-main-40'}
       `}>
-        <div className="flex justify-between">
+        <div role="aboutTitle" className="flex justify-between">
           <p className="text-xl font-bold">
             <span className="mr-2">{data.id}.</span> {data.title}
           </p>

@@ -13,9 +13,11 @@ describe('AboutCard', () => {
 
     render(<AboutCard data={mockData} Icon={mockData.icon} />)
 
+    expect(screen.getByRole('aboutTitle'))
     expect(screen.getByText('Organize')).toBeInTheDocument()
     expect(screen
       .getByText('Crie seus estudos e tarefas organizando seus aprendizados')
     ).toBeInTheDocument()
+    
   })
 })
