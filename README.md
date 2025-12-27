@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevOrganiza
 
-## Getting Started
+A DevOrganiza é um web app onde o usuário pode organizar seus estudos e tarefas, além de desbloquear quizzes relacionados aos conteúdos cadastrados para praticar o aprendizado.
+O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.
 
-First, run the development server:
+## 🧩 Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Next.js**: Framework React para aplicações web modernas com renderização híbrida.
+- **React**: Biblioteca para construção de interfaces de usuário.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
+- **Tailwind**: Framework utilitário para estilização rápida e responsiva.
+- **clsx**: Utilitário para composição condicional de classes CSS.
+- **tailwind-merge**: Evita conflitos e duplicações de classes do Tailwind.
+- **Lucide React**: Biblioteca de ícones SVG para React.
+- **Motion**: Biblioteca para animações e transições fluidas.
+- **Next Themes**: Gerenciamento de temas (dark/light mode).
+- **Recharts**: Criação de gráficos e visualização de dados.
+- **React Hook Form**: Gerenciamento eficiente de formulários.
+- **Zod** — Validação e tipagem de dados baseada em schemas.
+- **Zustand** — Gerenciamento de estado global simples e performático.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🧪 Qualidade & Testes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Jest**: Framework de testes unitários.
+- **Testing Library**: Testes focados no comportamento do usuário.
+- **ESLint**: Padronização e análise estática de código.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ⚙️ Ferramentas de Desenvolvimento
 
-## Learn More
+- **Node.js**: Ambiente de execução JavaScript.
+- **TypeScript Compiler (tsc)**: Compilação e verificação de tipos.
+- **PostCSS**: Processamento de CSS para o Tailwind.
+- **Babel**: Transpilação de código moderno para compatibilidade.
 
-To learn more about Next.js, take a look at the following resources:
+## Como Executar o Projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para executar o projeto localmente, siga os passos abaixo:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone o repositório:**
 
-## Deploy on Vercel
+  ```bash
+  git clone https://github.com/guilhermep3/devorganiza-frontend
+  ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. **Instale as dependências**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  ```bash
+  npm install ou yarn install
+  ```
+
+3. **Execute o projeto**
+
+  ```bash
+  npm run dev ou yarn dev
+  ```
+
+Projeto desenvolvido por <a href="https://github.com/guilhermep3" target="_blank">Guilherme Pereira</a>
