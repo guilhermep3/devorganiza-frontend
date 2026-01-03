@@ -8,7 +8,9 @@ export const useAllQuizzes = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  const TOKEN = typeof window !== 'undefined'
+    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
+    : null;
 
   async function fetchQuizzes() {
     setLoading(true);

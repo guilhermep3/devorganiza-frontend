@@ -34,8 +34,8 @@ export const useSignin = () => {
         setErrors({ submit: data.error || "Erro ao fazer login" });
         return;
       }
-
-      localStorage.setItem("token", data.token);
+      
+      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 2}`;
 
       window.location.href = "/dashboard";
     } catch (err) {

@@ -16,7 +16,7 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
     const deleted = await deleteAccount();
 
     if (deleted) {
-      localStorage.removeItem("token");
+      document.cookie = `token=; path=/; max-age=0`;
       window.location.href = "/signin";
     }
   }

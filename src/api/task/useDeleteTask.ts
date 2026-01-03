@@ -8,7 +8,9 @@ export function useDeleteTask(taskId: string | null) {
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
   const TOKEN =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined"
+      ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
+      : null;
 
   async function handleDelete() {
     if (!taskId) return;
