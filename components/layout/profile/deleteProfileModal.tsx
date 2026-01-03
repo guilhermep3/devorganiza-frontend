@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button as ButtonCN } from "@/components/ui/button";
 import { useDeleteUser } from "@/src/api/user/useDeleteUser";
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 
 type Props = {
   isDeleting: boolean;
@@ -19,6 +20,16 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
       window.location.href = "/signin";
     }
   }
+
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => {
+        setIsDeleting(false);
+      }, 2000);
+
+      return () => clearTimeout(timer)
+    }
+  }, [success])
 
   return (
     <Dialog open={isDeleting} onOpenChange={setIsDeleting}>

@@ -34,7 +34,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, fetchStudy }: Props) 
       const timer = setTimeout(() => {
         setIsOpen(false);
         fetchStudy();
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timer)
     }

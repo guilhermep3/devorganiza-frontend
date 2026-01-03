@@ -33,7 +33,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, fetchStudy }: Props) =>
         setIsOpen(false);
         fetchStudy();
         setSuccess(null)
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timer);
     }

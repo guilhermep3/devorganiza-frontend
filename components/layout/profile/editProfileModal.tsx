@@ -60,7 +60,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
         setIsOpen(false);
         fetchUser();
         setSuccess(null)
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timer)
     }

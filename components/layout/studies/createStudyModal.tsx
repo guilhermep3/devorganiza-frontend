@@ -25,7 +25,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
       const timer = setTimeout(() => {
         setIsOpen(false);
         fetchStudies();
-      }, 3000);
+      }, 2000);
 
       return () => clearTimeout(timer)
     }
