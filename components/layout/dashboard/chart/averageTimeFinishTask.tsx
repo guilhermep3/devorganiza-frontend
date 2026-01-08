@@ -9,7 +9,7 @@ import {
   ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig,
 } from "@/components/ui/chart"
 import { AverageTimeFinish } from "@/src/types/chart"
-import { formatPercentage, formatTimeToMMSS } from "@/src/utils/calc"
+import { formatPercentage, handleTimeFormat } from "@/src/utils/calc"
 
 // const chartData = [
 //   { month: "January", desktop: 186 },
@@ -28,6 +28,7 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
     ...i,
     media: (i.media ?? 0) / 60,
   }))
+  console.log('chartData', chartData)
 
   const hasComparison = chartData.length >= 2;
 
@@ -76,7 +77,7 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
-                formatter={(value: number) => formatTimeToMMSS(value, 'long')}
+                formatter={(value: number) => handleTimeFormat(value, 'long')}
               />
             </Bar>
           </BarChart>

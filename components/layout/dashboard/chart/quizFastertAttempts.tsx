@@ -8,7 +8,7 @@ import {
   ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent,
 } from "@/components/ui/chart"
 import { FasterAttempts } from "@/src/types/chart"
-import { formatTimeToMMSS } from "@/src/utils/calc"
+import { handleTimeFormat } from "@/src/utils/calc"
 
 // const chartData = [
 //   { quiz: "HTML", duração: 10 },
@@ -75,7 +75,7 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
                 offset={12}
                 className="fill-foreground"
                 fontSize={12}
-                formatter={(value: number) => formatTimeToMMSS(value, 'short')}
+                formatter={(value: number) => handleTimeFormat(value, 'short')}
               />
             </Bar>
           </BarChart>

@@ -13,14 +13,20 @@ export function formatPercentage(value: number) {
     : abs.toFixed(2)
 }
 
-export function formatTimeToMMSS(value: number, format: 'short' | 'long') {
-  const totalSeconds = Math.round(value * 60)
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = Math.floor(totalSeconds % 60);
+export function handleTimeFormat(value: number, format: 'short' | 'long') {
+  const totalSeconds = Math.floor(value * 60);
+
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
 
   if (format === 'short') {
-    return `${minutes}:${seconds.toString().padStart(2, "0")}`
+    return `${days > 0 ? `${days}d ` : ''}${hours > 0 ? `${hours}:` : ''}${minutes.toString()
+      .padStart(2, '0')}:${seconds
+      .toString().padStart(2, '0')}`;
   } else {
-    return `${minutes} m ${seconds.toString().padStart(2, '0')} s`
+    return `${days > 0 ? `${days}d ` : ''}${hours > 0 ? `${hours}h ` : ''}${minutes}m ${seconds
+      .toString().padStart(2, '0')}s`;
   }
 }
