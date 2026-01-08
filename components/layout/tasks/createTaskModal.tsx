@@ -58,8 +58,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, fetchStudy }: Prop
             />
           </div>
           <div className="flex justify-center gap-3 pt-4">
-            <ButtonCN
-              variant="outline"
+            <ButtonCN variant="outline" type="button"
               onClick={() => {
                 setIsOpen(false);
               }}

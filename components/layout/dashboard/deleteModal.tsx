@@ -44,8 +44,7 @@ export const DeleteModal = ({
         {error && <p className="errorMsg">{error}</p>}
         {success && <p className="successMsg">{success}</p>}
         <div className="flex justify-center gap-3 pt-6">
-          <ButtonCN type="button"
-            variant="outline"
+          <ButtonCN variant="outline" type="button"
             onClick={() => setIsOpen(false)}
             className="bg-gray-20 hover:bg-gray-30"
           >

@@ -63,7 +63,7 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 10)}
+              tickFormatter={(value) => { return value.length > 7 ? value.slice(0, 6) + '...' : value }}
             />
             <ChartTooltip
               cursor={false}

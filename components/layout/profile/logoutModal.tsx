@@ -29,8 +29,7 @@ export const LogoutModal = ({ isLogOut, setIsLogout }: Props) => {
         </DialogHeader>
         <div className="flex flex-col items-center gap-6 pt-4">
           <div className="flex items-center gap-3">
-            <ButtonCN
-              variant="outline"
+            <ButtonCN variant="outline" type="button"
               className="bg-gray-200 hover:bg-gray-300"
               onClick={() => setIsLogout(false)}
             >

@@ -43,8 +43,7 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
         <div className="flex flex-col items-center gap-6 pt-4">
           {error && <p className="text-red-500 text-sm">{error}</p>}
           <div className="flex items-center gap-3">
-            <ButtonCN
-              variant="outline"
+            <ButtonCN variant="outline" type="button"
               className="bg-gray-200 hover:bg-gray-300"
               onClick={() => setIsDeleting(false)}
             >

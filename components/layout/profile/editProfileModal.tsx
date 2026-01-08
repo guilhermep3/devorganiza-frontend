@@ -140,8 +140,8 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
             )}
           </div>
           <div className="flex items-center gap-3 pt-4">
-            <ButtonCN type="button"
-              variant="outline" className="bg-red-600 hover:bg-red-700 text-white!"
+            <ButtonCN variant="outline" type="button"
+              className="bg-red-600 hover:bg-red-700 text-white!"
               onClick={() => setIsOpen(false)}
             >
               Cancelar

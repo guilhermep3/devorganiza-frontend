@@ -105,8 +105,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
             )}
           </div>
           <div className="flex justify-center gap-3 pt-4">
-            <ButtonCN
-              variant="outline"
+            <ButtonCN variant="outline" type="button"
               onClick={() => setIsOpen(false)}
               className="bg-gray-20 hover:bg-gray-30"
             >

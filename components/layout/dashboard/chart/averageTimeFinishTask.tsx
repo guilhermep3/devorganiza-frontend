@@ -65,7 +65,7 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => { return value.length > 7 ? value.slice(0, 6) + '...' : value }}
             />
             <ChartTooltip
               cursor={false}
