@@ -3,42 +3,46 @@ import Link from "next/link"
 import { Github, Linkedin } from "lucide-react"
 
 export const Footer = () => {
-
+  
   return (
-    <footer className="bg-card">
-      <div className="containerCustom flex-col md:flex-row justify-between items-start gap-8">
-        <div className="flex justify-center items-center gap-2">
-          <Logo width={64} />
-          <p className="text-lg font-bold -mb-1 text-main-60">DevOrganiza</p>
+    <footer className="bg-card border-t border-main-20 mt-16">
+      <div className="containerCustom py-10 flex flex-col gap-10">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+          <div className="flex items-center gap-3">
+            <Logo width={56} />
+            <span className="text-xl font-bold text-main-60">DevOrganiza</span>
+          </div>
+          <nav className="flex flex-col sm:flex-row gap-4 text-sm">
+            <Link href="/terms"
+              className="text-main-60 hover:text-main-80 transition-colors"
+            >
+              Termos de Serviço
+            </Link>
+          </nav>
+          <div className="flex gap-3">
+            <Link href="https://www.linkedin.com/in/guilherme-pereira3/" target="_blank"
+              className="p-2 rounded-md border border-main-20 text-main-40 hover:text-main-80 hover:border-main-40 transition"
+            >
+              <Linkedin size={18} />
+            </Link>
+            <Link href="https://github.com/guilhermep3" target="_blank"
+              className="p-2 rounded-md border border-main-20 text-main-40 hover:text-main-80 hover:border-main-40 transition"
+            >
+              <Github size={18} />
+            </Link>
+          </div>
         </div>
-        <div className="flex flex-col gap-6 text-sm">
-          <div>
-            &copy; Desenvolvido por <Link href={'https://github.com/guilhermep3'}
-              target="_blank"
-              className="font-semibold text-main-60 hover:underline"
+        <div className="h-px bg-main-20/50" />
+        <div className="text-xs text-main-40 flex flex-col sm:flex-row justify-between gap-2">
+          <span>© {new Date().getFullYear()} DevOrganiza</span>
+          <span>
+            Desenvolvido por{" "}
+            <Link href="https://github.com/guilhermep3" target="_blank"
+              className="font-medium text-main-60 hover:underline"
             >
               Guilherme Pereira
             </Link>
-          </div>
-          <div className="flex flex-col gap-1 md:gap-3">
-            <Link href={`/terms`} className="hover:underline w-fit text-main-60">
-              Termos de Serviço
-            </Link>
-          </div>
-        </div>
-        <div className="flex gap-4">
-          <Link href={`https://www.linkedin.com/in/guilherme-pereira3/`}
-            target="_blank"
-            className="text-main-30 p-2 border border-main-20 rounded-sm"
-          >
-            <Linkedin className="fill-main-20" />
-          </Link>
-          <Link href={`https://github.com/guilhermep3`}
-            target="_blank"
-            className="text-main-30 p-2 border border-main-20 rounded-sm"
-          >
-            <Github className="fill-main-20" />
-          </Link>
+          </span>
         </div>
       </div>
     </footer>
