@@ -19,9 +19,9 @@ export default function Home() {
     <div className="relative">
       <Header />
       <AuroraBackgroundDemo />
-      <div className="relative">
+      <div className="relative mt-20">
         <DottedBg />
-        <div className="containerCustom justify-center items-center p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20 mt-20">
+        <div className="containerCustom justify-center items-center p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20">
           <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
             width={2400} height={2400}
             className="w-full rounded-lg"
@@ -54,7 +54,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id="services" className="bg-background dark:bg-gray-10/50">
+      <section id="services" className="bg-background">
         <div className="containerCustom justify-center items-center">
           <motion.h1 className="h1Custom"
             initial={{ scale: 0.4, y: -40 }}
@@ -79,7 +79,8 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section id="faq">
+      <section id="faq" className="relative">
+        <DottedBg />
         <div className="containerCustom flex flex-col justify-center items-center">
           <motion.h1 className="h1Custom"
             initial={{ scale: 0.4, y: -40 }}
@@ -98,9 +99,8 @@ export default function Home() {
           <Faq />
         </div>
       </section>
-      <section id="start" className="relative overflow-hidden">
+      <section id="start" className="overflow-hidden bg-background">
         <div className="containerCustom justify-center items-center">
-          <DottedBg />
           <motion.h1 className="h1Custom text-center max-w-2xl"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}

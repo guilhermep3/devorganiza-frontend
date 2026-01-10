@@ -15,8 +15,8 @@ export const ServicesCard = ({ data, Icon }: props) => {
       transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
     >
       <div
-        className="group flex flex-col gap-3 p-6 rounded-lg transition hover:shadow-md hover:shadow-gray-30
-        hover:bg-gray-10 dark:hover:bg-background"
+        className="group flex flex-col gap-3 p-6 rounded-lg transition border border-transparent hover:border-gray-20
+        hover:shadow-md hover:shadow-gray-30 dark:hover:shadow-black"
       >
         <div className="flex items-center gap-5">
           <span className="text-lg">{data.id}.</span>

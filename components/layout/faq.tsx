@@ -31,7 +31,7 @@ export const Faq = () => {
     <div className="flex flex-col gap-7 w-full max-w-xl">
       {faqData.map((i, index) => (
         <div key={index} className="w-full flex">
-          <div className="flex flex-col items-center gap-1 w-full bg-card rounded-md shadow-sm ">
+          <div className="flex flex-col items-center gap-1 w-full bg-card rounded-md shadow-md border">
             <div className="flex justify-between items-center gap-5 p-3 w-full cursor-pointer"
               onClick={() => toggleQuestion(index)}
             >
