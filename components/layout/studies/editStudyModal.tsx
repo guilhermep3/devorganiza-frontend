@@ -6,6 +6,7 @@ import { Button } from "@/components/button";
 import { Study } from "@/src/types/study";
 import { useEffect } from "react";
 import { useEditStudy } from "@/src/api/study/useEditStudy";
+import { setorTypes } from "@/src/types/setor";
 
 type Props = {
   isOpen: boolean;
@@ -68,9 +69,11 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, fetchStudy }: Props) 
               onChange={(e) => setType(e.target.value)}
             >
               <option value="">Selecione...</option>
-              <option value="frontend">Frontend</option>
-              <option value="backend">Backend</option>
-              <option value="ferramenta">Ferramenta</option>
+              {setorTypes.map((setor) => (
+                <option key={setor} value={setor}>
+                  {setor.charAt(0).toUpperCase() + setor.slice(1)}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex flex-col gap-2 w-full">

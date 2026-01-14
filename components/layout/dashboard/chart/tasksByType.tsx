@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/chart"
 import { formatPercentage } from "@/src/utils/calc"
 import type { TasksByType } from "@/src/types/chart"
+import { SetorType, setorTypes } from "@/src/types/setor"
 
 const chartConfig = {
   tarefas: {
@@ -17,8 +18,6 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-const setorTypes = ["frontend", "backend", "ferramenta"] as const;
-type SetorType = typeof setorTypes[number];
 
 export function TasksByType({ data }: { data: TasksByType[] }) {
 
@@ -26,7 +25,7 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
     const map: Record<SetorType, string> = {
       frontend: "Front-end",
       backend: "Back-end",
-      ferramenta: "Ferramenta",
+      outro: "outro",
     };
 
     return map[type];
@@ -60,7 +59,7 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
     <Card>
       <CardHeader>
         <CardTitle>Média de tarefas por setor</CardTitle>
-        <CardDescription>Tarefas separadas por Front-end, Back-end e Ferramentas</CardDescription>
+        <CardDescription>Tarefas separadas por Front-end, Back-end e outro</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

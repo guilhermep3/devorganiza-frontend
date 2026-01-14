@@ -47,8 +47,8 @@ DevOrganiza é uma aplicação web fullstack voltada para desenvolvedores que de
 
 ## 🚀 Funcionalidades Principais
 
-- Autenticação de usuários com JWT armazenado em cookies HTTP-only
 - Sistema de cadastro e login com upload de imagem de perfil via Cloudinary
+- Autenticação de usuários com JWT armazenado em cookies HTTP-only
 - Organização de estudos por temas, com criação de tarefas vinculadas
 - Sistema de quizzes desbloqueáveis conforme os estudos cadastrados
 - Registro de pontuação e tempo gasto em cada tentativa de quiz
