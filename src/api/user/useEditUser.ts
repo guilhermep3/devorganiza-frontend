@@ -13,16 +13,16 @@ interface UpdateProfileParams {
   imageFile?: File | null;
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-const TOKEN = typeof window !== "undefined"
-  ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
-
 export const useEditUser = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async ({ data, defaults, imageFile }: UpdateProfileParams) => {
       const changed: Record<string, any> = {};
+
+      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+      const TOKEN = typeof window !== "undefined"
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       if (data.name !== defaults.name) changed.name = data.name;
       if (data.username !== defaults.username) changed.username = data.username;

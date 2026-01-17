@@ -1,21 +1,15 @@
 "use client";
+
 import { WeeklyProductivity } from "@/src/types/chart";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
 export const useWeeklyProductivity = () => {
-  const [data, setData] = useState<WeeklyProductivity[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== 'undefined'
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
-
-  async function fetchWeeklyProductivity() {
-    try {
-      setLoading(true);
-      setError(null);
+  return useQuery<WeeklyProductivity[]>({
+    queryKey: ["weeklyProductivity"],
+    queryFn: async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+      const TOKEN = typeof window !== "undefined"
+        ? document.cookie.split("; ").find(row => row.startsWith("token="))?.split("=")[1] : null;
 
       const res = await fetch(`${API_URL}/charts/weekly-productivity`, {
         method: "GET",
@@ -23,28 +17,14 @@ export const useWeeklyProductivity = () => {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
         },
-      })
+      });
 
       if (!res.ok) {
         const errorData = await res.json();
-        setError(errorData.error || "Erro ao buscar weekly-productivity");
-        return;
+        throw new Error(errorData.error || "Erro ao buscar weekly-productivity");
       }
 
-      const data: WeeklyProductivity[] = await res.json();
-      setData(data);
-    } catch (error) {
-      setError("Erro ao conectar ao servidor")
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  useEffect(() => {
-    fetchWeeklyProductivity();
-  }, [])
-
-  return {
-    data, error, loading
-  }
-}
+      return res.json();
+    },
+  });
+};

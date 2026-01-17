@@ -1,12 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function useStartAPI() {
 
   return useQuery({
     queryKey: ['startAPI'],
     queryFn: async () => {
+
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
       const res = await fetch(`${API_URL}/health`, {
         method: "GET",
         headers: {
@@ -17,7 +19,6 @@ export function useStartAPI() {
       if (!res.ok) {
         throw new Error(`Error: status ${res.status}`)
       }
-      console.log("res", res)
       return res.json();
     },
     retry: 3,

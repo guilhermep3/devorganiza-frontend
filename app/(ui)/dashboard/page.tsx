@@ -18,14 +18,15 @@ import { useAverageScore } from "@/src/api/chart/useAverageScore";
 import { ChartLoading } from "@/components/layout/dashboard/chart/chartLoading";
 import { TopInfosSkeleton } from "@/components/layout/dashboard/topInfosSkeleton";
 import { useUser } from "@/src/api/user/useUser";
+import { EmptyChart } from "@/components/layout/dashboard/chart/emptyChart";
 
 export default function Page() {
-  const { data: weeklyProductivityData, loading: weeklyProductivityLoading } = useWeeklyProductivity();
-  const { data: tasksByTypeData, loading: tasksByTypeLoading } = useTasksByType();
-  const { data: finishedTasksData, loading: finishedTasksLoading } = useFinishedTasksByMonth();
-  const { data: averageTimeData, loading: averageTimeLoading } = useAverageTimeFinishTasksChart();
-  const { data: averageScoreData, loading: averageScoreLoading } = useAverageScore();
-  const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
+  const { data: weeklyProductivityData, isLoading: weeklyProductivityLoading } = useWeeklyProductivity();
+  const { data: tasksByTypeData, isLoading: tasksByTypeLoading } = useTasksByType();
+  const { data: finishedTasksData, isLoading: finishedTasksLoading } = useFinishedTasksByMonth();
+  const { data: averageTimeData, isLoading: averageTimeLoading } = useAverageTimeFinishTasksChart();
+  const { data: averageScoreData, isLoading: averageScoreLoading } = useAverageScore();
+  const { data: fasterAttemptsData, isLoading: fasterAttemptsLoading } = useFasterAttempts();
   const { data: userData, isLoading: userLoading, isFetching: isUserFetching } = useUser();
 
   const { data: studiesData, loading: studiesLoading } = useStudies();
@@ -75,38 +76,22 @@ export default function Page() {
             {weeklyProductivityData && weeklyProductivityData.length > 0 ? (
               <WeeklyProductivity data={weeklyProductivityData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-50 text-center">
-                  Nenhum dado de produtividade semanal disponível
-                </p>
-              </div>
+              <EmptyChart text="produtividade semanal" />
             )}
             {tasksByTypeData && tasksByTypeData.length > 0 ? (
               <TasksByType data={tasksByTypeData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-50 text-center">
-                  Nenhum dado de tarefas por tipo disponível
-                </p>
-              </div>
+              <EmptyChart text="tarefas por tipo" />
             )}
             {finishedTasksData && finishedTasksData.length > 0 ? (
               <FinishedTasksByMonthChart data={finishedTasksData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-50 text-center">
-                  Nenhum dado de tarefas finalizadas por mês disponível
-                </p>
-              </div>
+              <EmptyChart text="tarefas finalizadas por mês" />
             )}
             {averageTimeData && averageTimeData.length > 0 ? (
               <AverageTimeFinishTaskChart data={averageTimeData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-50 text-center">
-                  Nenhum dado de tempo médio de conclusão disponível
-                </p>
-              </div>
+              <EmptyChart text="tempo médio de conclusão" />
             )}
           </div>
         )}
@@ -125,20 +110,12 @@ export default function Page() {
             {averageScoreData && averageScoreData.length > 0 ? (
               <QuizAverageScoreChart data={averageScoreData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-50 text-center">
-                  Nenhum dado de pontuação média disponível
-                </p>
-              </div>
+              <EmptyChart text="pontuação média" />
             )}
             {fasterAttemptsData && fasterAttemptsData.length > 0 ? (
               <QuizFasterAttemptsChart data={fasterAttemptsData} />
             ) : (
-              <div className="p-6 border rounded-lg bg-card flex items-center justify-center min-h-[300px]">
-                <p className="text-gray-50 text-center">
-                  Nenhum dado de tentativas rápidas disponível
-                </p>
-              </div>
+              <EmptyChart text="tentativas rápidas" />
             )}
           </div>
         )}
