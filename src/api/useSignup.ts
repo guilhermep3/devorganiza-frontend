@@ -1,57 +1,81 @@
-"use client";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
+interface SignupData {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+}
+
+interface SignupResponse {
+  newUser: any;
+}
+
 export function useSignup() {
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [errors, setErrors] = useState<any>({});
-  const [loading, setLoading] = useState(false);
-
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    const newErrors: any = {};
-    if (!name) newErrors.name = "Digite seu nome completo";
-    if (!username) newErrors.username = "Digite um nome de usuário";
-    if (!email) newErrors.email = "Digite um email válido";
-    if (!password) newErrors.password = "Digite uma senha";
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) return;
-
-    setLoading(true);
-    try {
+  const mutation = useMutation<SignupResponse, Error, SignupData>({
+    mutationFn: async (credentials: SignupData) => {
       const res = await fetch(`${API_URL}/auth/signup`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, username, email, password }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials)
       });
 
       if (!res.ok) {
-        const data = await res.json();
-        setErrors({ submit: data.error || "Erro ao criar conta" });
-        return;
+        const errorData = await res.json();
+        throw new Error(errorData.error);
       }
 
-      window.location.href = "/signin";
-    } catch (err) {
-      setErrors({ submit: "Erro de conexão com o servidor" });
-    } finally {
-      setLoading(false);
+      const data = await res.json();
+      return data;
+    },
+    onSuccess: () => {
+      window.location.href = '/signin';
+    }
+  });
+
+  async function handleSubmit(e: React.FormEvent, { name, username, email, password }: SignupData) {
+    e.preventDefault();
+    setErrors({});
+
+    const newErrors: Record<string, string> = {};
+
+    if (!name.trim()) newErrors.name = 'Nome é obrigatório';
+    if (!username.trim()) newErrors.username = 'Nome de usuário é obrigatório';
+    if (!email.trim()) newErrors.email = "Email é obrigatório";
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email inválido";
+    if (!password) newErrors.password = "Senha é obrigatória";
+    else if (password.length < 4) newErrors.password = "Mínimo 4 caracteres";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    mutation.mutate({ name, username, email, password });
+
+    return { errors: {}, hasErrors: false };
+  }
+
+  function clearErrors(field: string) {
+    if (errors[field]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      })
     }
   }
 
   return {
-    name, setName,
-    username, setUsername,
-    email, setEmail,
-    password, setPassword,
-    errors, loading, handleSubmit
+    ...mutation,
+    handleSubmit,
+    errors,
+    clearErrors
   };
 }

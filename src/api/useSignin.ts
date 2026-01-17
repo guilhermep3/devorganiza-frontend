@@ -1,53 +1,79 @@
-"use client";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
+interface SigninData {
+  email: string;
+  password: string;
+}
+
+interface SigninResponse {
+  token: string;
+  user: any;
+}
+
 export const useSignin = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const [errors, setErrors] = useState<any>({});
-  const [loading, setLoading] = useState(false);
-
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    const newErrors: any = {};
-    if (!email) newErrors.email = "Digite um email válido";
-    if (!password) newErrors.password = "Digite uma senha";
-
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
-    setLoading(true);
-
-    try {
+  const mutation = useMutation<SigninResponse, Error, SigninData>({
+    mutationFn: async (credentials: SigninData) => {
       const res = await fetch(`${API_URL}/auth/signin`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password })
-      })
-
-      const data = await res.json();
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(credentials)
+      });
 
       if (!res.ok) {
-        setErrors({ submit: data.error || "Erro ao fazer login" });
-        return;
+        const errorData = await res.json();
+        throw new Error(errorData.error);
       }
-      
-      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 2}`;
 
-      window.location.href = "/dashboard";
-    } catch (err) {
-      setErrors({ submit: "Erro ao conectar ao servidor" });
-    } finally {
-      setLoading(false);
+      const data = await res.json();
+      return data;
+    },
+    onSuccess: (data) => {
+      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 2}`; // 2 days
+      window.location.href = '/dashboard';
+    },
+  });
+
+  async function handleSubmit(e: React.FormEvent, { email, password }: SigninData) {
+    e.preventDefault();
+    setErrors({});
+
+    const newErrors: Record<string, string> = {};
+
+    if (!email.trim()) newErrors.email = "Email é obrigatório";
+    else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Email inválido";
+    if (!password) newErrors.password = "Senha é obrigatória";
+    else if (password.length < 4) newErrors.password = "Mínimo 4 caracteres";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    mutation.mutate({ email, password });
+
+    return { errors: {}, hasErrors: false };
+  }
+
+  function clearErrors(field: string) {
+    if (errors[field]) {
+      setErrors(prev => {
+        const newErrors = { ...prev };
+        delete newErrors[field];
+        return newErrors;
+      })
     }
   }
 
   return {
-    email, setEmail,
-    password, setPassword,
-    errors, loading, handleSubmit
+    ...mutation,
+    handleSubmit,
+    errors,
+    clearErrors
   }
 }

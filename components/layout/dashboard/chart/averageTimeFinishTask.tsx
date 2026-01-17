@@ -28,7 +28,6 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
     ...i,
     media: (i.media ?? 0) / 60,
   }))
-  console.log('chartData', chartData)
 
   const hasComparison = chartData.length >= 2;
 

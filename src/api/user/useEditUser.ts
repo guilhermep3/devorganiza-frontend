@@ -1,24 +1,24 @@
 import { EditProfileForm } from "@/src/schema/profile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-type UserDefaultValues = {
+interface UserDefaultValues {
   name: string;
   username: string;
   profileImage?: string | null;
 };
 
-type UpdateProfileParams = {
+interface UpdateProfileParams {
   data: EditProfileForm;
   defaults: UserDefaultValues;
   imageFile?: File | null;
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const TOKEN = typeof window !== "undefined"
+  ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
+
 export const useEditUser = () => {
   const queryClient = useQueryClient();
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== "undefined"
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
   const mutation = useMutation({
     mutationFn: async ({ data, defaults, imageFile }: UpdateProfileParams) => {

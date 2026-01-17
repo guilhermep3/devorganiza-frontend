@@ -1,12 +1,12 @@
 import { useMutation } from "@tanstack/react-query";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const TOKEN = typeof window !== "undefined" ?
+  document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
+
 export const useDeleteUser = () => {
   const mutation = useMutation({
     mutationFn: async () => {
-
-      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-      const TOKEN = typeof window !== "undefined" ?
-        document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/users/delete`, {
         method: "DELETE",
@@ -23,14 +23,9 @@ export const useDeleteUser = () => {
     },
 
     onSuccess: () => {
-      console.log("Conta excluída com sucesso");
       setTimeout(() => {
         mutation.reset();
       }, 2000);
-    },
-
-    onError: (error) => {
-      console.error(error.message);
     },
   });
 

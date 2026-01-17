@@ -57,9 +57,6 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
     }, 2000);
     return () => clearTimeout(timer);
   }, [isSuccess])
-  useEffect(() => {
-    console.log("isSuccess", isSuccess);
-  }, [isSuccess])
 
   function handleImagePreview(file?: File) {
     if (!file) return;
