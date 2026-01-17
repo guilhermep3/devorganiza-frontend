@@ -21,38 +21,30 @@ import { useUser } from "@/src/api/user/useUser";
 import { EmptyChart } from "@/components/layout/dashboard/chart/emptyChart";
 
 export default function Page() {
-  const { data: weeklyProductivityData, isLoading: weeklyProductivityLoading } = useWeeklyProductivity();
-  const { data: tasksByTypeData, isLoading: tasksByTypeLoading } = useTasksByType();
-  const { data: finishedTasksData, isLoading: finishedTasksLoading } = useFinishedTasksByMonth();
-  const { data: averageTimeData, isLoading: averageTimeLoading } = useAverageTimeFinishTasksChart();
-  const { data: averageScoreData, isLoading: averageScoreLoading } = useAverageScore();
-  const { data: fasterAttemptsData, isLoading: fasterAttemptsLoading } = useFasterAttempts();
-  const { data: userData, isLoading: userLoading, isFetching: isUserFetching } = useUser();
 
-  const { data: studiesData, loading: studiesLoading } = useStudies();
-  const { data: quizzesData, loading: quizzesLoading } = useQuizzes();
-  const { data: quizzesLockData, loading: quizzesLockLoading } = useQuizzesLocked();
+  const weeklyProductivity = useWeeklyProductivity();
+  const tasksByType = useTasksByType();
+  const finishedTasks = useFinishedTasksByMonth();
+  const averageTime = useAverageTimeFinishTasksChart();
+  const averageScore = useAverageScore();
+  const fasterAttempts = useFasterAttempts();
 
-  const isMainDataLoading = weeklyProductivityLoading ||
-    tasksByTypeLoading ||
-    finishedTasksLoading ||
-    averageTimeLoading ||
-    studiesLoading ||
-    quizzesLoading;
+  const { data: userData } = useUser();
+  const { data: studiesData } = useStudies();
+  const { data: quizzesData } = useQuizzes();
+  const { data: quizzesLockData } = useQuizzesLocked();
 
-  const isQuizzesDataLoading = averageScoreLoading ||
-    fasterAttemptsLoading ||
-    quizzesLockLoading;
+  const hasTopInfosData = !!userData && !!studiesData &&
+    !!quizzesData && !!quizzesLockData;
 
-  const isTopInfosLoading = studiesLoading || quizzesLoading ||
-    quizzesLockLoading || userLoading ||
-    isUserFetching;
+  const hasStudiesData = !!weeklyProductivity.data && !!tasksByType.data &&
+    !!finishedTasks.data && !!averageTime.data;
 
-  const isTopInfosData = !studiesData || !quizzesData || !quizzesLockData || !userData;
+  const hasQuizzesData = !!averageScore.data && !!fasterAttempts.data;
 
   return (
     <div className="layoutDiv">
-      {(isTopInfosLoading || isTopInfosData) ? (
+      {!hasTopInfosData ? (
         <TopInfosSkeleton />
       ) : (
         <TopInfos
@@ -64,8 +56,11 @@ export default function Page() {
       )}
       <section className="flex flex-col mb-8">
         <h1 className="dashboardSectionTitle">Dados dos seus estudos</h1>
-        <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho e evolução</h2>
-        {isMainDataLoading ? (
+        <h2 className="dashboardSectionSubtitle">
+          Acompanhe seu desempenho e evolução
+        </h2>
+
+        {!hasStudiesData ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[...Array(4)].map((_, index) => (
               <ChartLoading key={`study-loading-${index}`} />
@@ -73,23 +68,23 @@ export default function Page() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {weeklyProductivityData && weeklyProductivityData.length > 0 ? (
-              <WeeklyProductivity data={weeklyProductivityData} />
+            {weeklyProductivity.data.length ? (
+              <WeeklyProductivity data={weeklyProductivity.data} />
             ) : (
               <EmptyChart text="produtividade semanal" />
             )}
-            {tasksByTypeData && tasksByTypeData.length > 0 ? (
-              <TasksByType data={tasksByTypeData} />
+            {tasksByType.data.length ? (
+              <TasksByType data={tasksByType.data} />
             ) : (
               <EmptyChart text="tarefas por tipo" />
             )}
-            {finishedTasksData && finishedTasksData.length > 0 ? (
-              <FinishedTasksByMonthChart data={finishedTasksData} />
+            {finishedTasks.data.length ? (
+              <FinishedTasksByMonthChart data={finishedTasks.data} />
             ) : (
               <EmptyChart text="tarefas finalizadas por mês" />
             )}
-            {averageTimeData && averageTimeData.length > 0 ? (
-              <AverageTimeFinishTaskChart data={averageTimeData} />
+            {averageTime.data.length ? (
+              <AverageTimeFinishTaskChart data={averageTime.data} />
             ) : (
               <EmptyChart text="tempo médio de conclusão" />
             )}
@@ -98,8 +93,10 @@ export default function Page() {
       </section>
       <section className="flex flex-col">
         <h1 className="dashboardSectionTitle">Dados dos quizzes</h1>
-        <h2 className="dashboardSectionSubtitle">Acompanhe seu desempenho em tentativas dos quizzes</h2>
-        {isQuizzesDataLoading ? (
+        <h2 className="dashboardSectionSubtitle">
+          Acompanhe seu desempenho em tentativas dos quizzes
+        </h2>
+        {!hasQuizzesData ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[...Array(2)].map((_, index) => (
               <ChartLoading key={`quiz-loading-${index}`} />
@@ -107,13 +104,14 @@ export default function Page() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {averageScoreData && averageScoreData.length > 0 ? (
-              <QuizAverageScoreChart data={averageScoreData} />
+            {averageScore.data.length ? (
+              <QuizAverageScoreChart data={averageScore.data} />
             ) : (
               <EmptyChart text="pontuação média" />
             )}
-            {fasterAttemptsData && fasterAttemptsData.length > 0 ? (
-              <QuizFasterAttemptsChart data={fasterAttemptsData} />
+
+            {fasterAttempts.data.length ? (
+              <QuizFasterAttemptsChart data={fasterAttempts.data} />
             ) : (
               <EmptyChart text="tentativas rápidas" />
             )}
