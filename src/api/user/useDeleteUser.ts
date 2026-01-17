@@ -1,24 +1,16 @@
-"use client";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 export const useDeleteUser = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const mutation = useMutation({
+    mutationFn: async () => {
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== "undefined" ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
+      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+      const TOKEN = typeof window !== "undefined" ?
+        document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  async function deleteAccount() {
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-
-    try {
       const res = await fetch(`${API_URL}/users/delete`, {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
         }
       });
@@ -26,17 +18,21 @@ export const useDeleteUser = () => {
       if (!res.ok) {
         throw new Error("Não foi possível excluir a conta");
       }
-      setSuccess("Usuário deletado com sucesso!");
-      return true;
-    } catch (err: any) {
-      setError(err.message);
-      return false;
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  return {
-    deleteAccount, loading, error, success
-  };
-};
+      return true;
+    },
+
+    onSuccess: () => {
+      console.log("Conta excluída com sucesso");
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
+    },
+
+    onError: (error) => {
+      console.error(error.message);
+    },
+  });
+
+  return mutation;
+}

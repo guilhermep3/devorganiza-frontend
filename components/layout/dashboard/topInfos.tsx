@@ -5,10 +5,10 @@ import { Quiz } from "@/src/types/quiz"
 import { UserResponse } from "@/src/types/user"
 
 type props = {
-  userData: UserResponse | null;
-  studiesData: StudyTask[] | null;
-  quizzesData: Quiz[] | null;
-  quizzesLockData: Quiz[] | null;
+  userData: UserResponse | undefined;
+  studiesData: StudyTask[];
+  quizzesData: Quiz[];
+  quizzesLockData: Quiz[];
 }
 export const TopInfos = ({ userData, studiesData, quizzesData, quizzesLockData }: props) => {
   const allTasks = studiesData?.flatMap(i => i.tasks) ?? [];

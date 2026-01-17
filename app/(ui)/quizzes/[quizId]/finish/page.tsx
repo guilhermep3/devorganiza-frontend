@@ -11,7 +11,7 @@ export default function Page() {
   const { quizId } = useParams();
   const { data, loading } = useLastAttempt(quizId as string);
   const { data: quizData, loading: quizLoading } = useQuiz(quizId as string)
-  const { data: userData, loading: userLoading } = useUser();
+  const { data: userData, isLoading: userLoading } = useUser();
 
   const getScoreMessage = (score: number) => {
     if (score === 30) {

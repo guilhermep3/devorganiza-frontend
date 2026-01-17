@@ -19,8 +19,8 @@ export const Header = ({ noNav, noAnimate }: props) => {
   const asideCtx = useContext(AsideContext);
   const haveMenu = ["dashboard", "studies", "quizzes", "profile"];
   const pathname = usePathname();
-  const { } = useStartAPI();
-  const { } = useUser();
+  const {} = useStartAPI();
+  const {} = useUser();
 
   useEffect(() => {
     function handleScroll() {

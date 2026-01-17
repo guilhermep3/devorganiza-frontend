@@ -10,26 +10,22 @@ type Props = {
   setIsDeleting: (value: boolean) => void;
 };
 export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
-  const { deleteAccount, loading, error, success } = useDeleteUser();
+  const { isPending, error, isSuccess } = useDeleteUser();
 
   async function handleDelete() {
-    const deleted = await deleteAccount();
-
-    if (deleted) {
+    if (isSuccess) {
       document.cookie = `token=; path=/; max-age=0`;
       window.location.href = "/signin";
     }
   }
 
   useEffect(() => {
-    if (success !== null) {
-      const timer = setTimeout(() => {
-        setIsDeleting(false);
-      }, 2000);
+    const timer = setTimeout(() => {
+      setIsDeleting(false);
+    }, 2000);
 
-      return () => clearTimeout(timer)
-    }
-  }, [success])
+    return () => clearTimeout(timer);
+  }, [isSuccess])
 
   return (
     <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
@@ -41,7 +37,8 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-6 pt-4">
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          {error && <p className="errorMsg">{error.message}</p>}
+          {isSuccess && <p className="successMsg">Conta excluída com sucesso</p>}
           <div className="flex items-center gap-3">
             <ButtonCN variant="outline" type="button"
               className="bg-gray-200 hover:bg-gray-300"
@@ -51,10 +48,10 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
             </ButtonCN>
             <ButtonCN
               onClick={handleDelete}
-              disabled={loading}
-              className={`bg-red-600 hover:bg-red-700 text-white ${loading && 'pointer-events-none'}`}
+              disabled={isPending}
+              className={`bg-red-600 hover:bg-red-700 text-white ${isPending && 'pointer-events-none'}`}
             >
-              {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
+              {isPending && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
               Excluir conta
             </ButtonCN>
           </div>

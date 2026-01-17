@@ -26,7 +26,7 @@ export default function Page() {
   const { data: averageTimeData, loading: averageTimeLoading } = useAverageTimeFinishTasksChart();
   const { data: averageScoreData, loading: averageScoreLoading } = useAverageScore();
   const { data: fasterAttemptsData, loading: fasterAttemptsLoading } = useFasterAttempts();
-  const { data: userData, loading: userLoading } = useUser();
+  const { data: userData, isLoading: userLoading, isFetching: isUserFetching } = useUser();
 
   const { data: studiesData, loading: studiesLoading } = useStudies();
   const { data: quizzesData, loading: quizzesLoading } = useQuizzes();
@@ -43,9 +43,15 @@ export default function Page() {
     fasterAttemptsLoading ||
     quizzesLockLoading;
 
+  const isTopInfosLoading = studiesLoading || quizzesLoading ||
+    quizzesLockLoading || userLoading ||
+    isUserFetching;
+
+  const isTopInfosData = !studiesData || !quizzesData || !quizzesLockData || !userData;
+
   return (
     <div className="layoutDiv">
-      {(studiesLoading || quizzesLoading || quizzesLockLoading || userLoading) ? (
+      {(isTopInfosLoading || isTopInfosData) ? (
         <TopInfosSkeleton />
       ) : (
         <TopInfos

@@ -1,6 +1,5 @@
-"use client";
-import { useState } from "react";
-import { EditProfileForm } from "../../schema/profile";
+import { EditProfileForm } from "@/src/schema/profile";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type UserDefaultValues = {
   name: string;
@@ -8,34 +7,29 @@ type UserDefaultValues = {
   profileImage?: string | null;
 };
 
+type UpdateProfileParams = {
+  data: EditProfileForm;
+  defaults: UserDefaultValues;
+  imageFile?: File | null;
+};
+
 export const useEditUser = () => {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== "undefined" ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
+  const TOKEN = typeof window !== "undefined"
+    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  async function updateProfile(data: EditProfileForm, defaults: UserDefaultValues, imageFile?: File | null) {
-    try {
-      setLoading(true);
-      setError(null);
-      setSuccess(null);
-
+  const mutation = useMutation({
+    mutationFn: async ({ data, defaults, imageFile }: UpdateProfileParams) => {
       const changed: Record<string, any> = {};
 
-      if (data.name !== defaults.name) {
-        changed.name = data.name;
-      }
-      if (data.username !== defaults.username) {
-        changed.username = data.username;
-      }
-      if (data.password && data.password.trim() !== "") {
-        changed.password = data.password;
-      }
+      if (data.name !== defaults.name) changed.name = data.name;
+      if (data.username !== defaults.username) changed.username = data.username;
+      if (data.password && data.password.trim() !== "") changed.password = data.password;
+
       if (Object.keys(changed).length === 0 && !imageFile) {
-        setSuccess(null);
-        return setError("Nada foi alterado");
+        throw new Error("Nada foi alterado");
       }
 
       if (imageFile) {
@@ -51,10 +45,8 @@ export const useEditUser = () => {
         });
 
         if (!resImage.ok) {
-          const errText = await resImage.text();
-          throw new Error("Falha ao enviar imagem: " + errText);
+          throw new Error("Falha ao enviar imagem");
         }
-        const jsonImage = await resImage.json();
       }
 
       if (Object.keys(changed).length > 0) {
@@ -68,24 +60,24 @@ export const useEditUser = () => {
         });
 
         if (!res.ok) {
-          const errText = await res.text();
-          throw new Error("Falha ao atualizar usuário: " + errText);
+          throw new Error("Falha ao atualizar usuário");
         }
-
-        const json = await res.json();
       }
 
-      setSuccess("Usuário atualizado com sucesso!");
       return true;
-    } catch (err: any) {
-      setError(err.message || "Erro desconhecido");
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
+    },
+  })
 
   return {
-    updateProfile, loading, error, success, setSuccess
-  };
-};
+    ...mutation,
+    updateProfile: mutation.mutateAsync,
+  }
+}

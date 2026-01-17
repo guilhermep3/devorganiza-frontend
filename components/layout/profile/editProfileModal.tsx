@@ -23,7 +23,7 @@ type Props = {
 };
 export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValues }: Props) => {
   const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImage || "/no-profile.webp");
-  const { updateProfile, loading, success, setSuccess } = useEditUser();
+  const { updateProfile, isPending, isSuccess, error } = useEditUser();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({
     resolver: zodResolver(editProfileSchema),
@@ -43,28 +43,23 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
       password: data.password
     };
 
-    await updateProfile(
-      textData,
-      {
-        name: defaultValues.name,
-        username: defaultValues.username,
-        profileImage: defaultValues.profileImage
-      },
+    await updateProfile({
+      data: textData,
+      defaults: defaultValues,
       imageFile
-    );
+    });
   }
 
   useEffect(() => {
-    if (success !== null) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        fetchUser();
-        setSuccess(null)
-      }, 2000);
-
-      return () => clearTimeout(timer)
-    }
-  }, [success])
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+      fetchUser();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [isSuccess])
+  useEffect(() => {
+    console.log("isSuccess", isSuccess);
+  }, [isSuccess])
 
   function handleImagePreview(file?: File) {
     if (!file) return;
@@ -80,7 +75,8 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
           <DialogDescription>Edite as informações do seu perfil</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 w-full max-w-80 mx-auto">
-          {success && <p className="successMsg">{success}</p>}
+          {error && <p className="errorMsg">{error.message}</p>}
+          {isSuccess && <p className="successMsg">Usuário atualizado com sucesso</p>}
           <div className="flex flex-col gap-2 w-full">
             <Label>Foto de perfil</Label>
             <input
@@ -146,8 +142,8 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
             >
               Cancelar
             </ButtonCN>
-            <Button submit className={`bg-main-30 hover:bg-main-20 text-white ${loading && 'pointer-events-none'}`}>
-              {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
+            <Button submit className={`bg-main-30 hover:bg-main-20 text-white ${isPending && 'pointer-events-none'}`}>
+              {isPending && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
               Salvar
             </Button>
           </div>

@@ -14,7 +14,7 @@ export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isLogOut, setIsLogout] = useState(false);
-  const { data, loading, fetchUser } = useUser();
+  const { data, isLoading, refetch } = useUser();
 
   return (
     <div className="layoutDiv flex flex-col gap-10">
@@ -22,7 +22,7 @@ export default function Page() {
         <h1 className="dashboardSectionTitle">Perfil</h1>
         <h2 className="dashboardSectionSubtitle">Veja e gerencie seus dados pessoais</h2>
         <div className="flex flex-col lg:flex-row items-start gap-4">
-          {loading || !data?.user ? (
+          {isLoading || !data?.user ? (
             <ProfileCardSkeleton />
           ) : (
             <ProfileCard data={data?.user}
@@ -62,7 +62,7 @@ export default function Page() {
         </div>
       </section>
       {data && data.user &&
-        <EditProfileModal isEditing={isEditing} setIsOpen={setIsEditing} fetchUser={fetchUser}
+        <EditProfileModal isEditing={isEditing} setIsOpen={setIsEditing} fetchUser={refetch}
           defaultValues={{
             name: data.user.name,
             username: data.user.username,
