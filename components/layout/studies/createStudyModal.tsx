@@ -4,32 +4,29 @@ import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useCreateStudy } from "@/src/api/study/useCreateStudy";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAllQuizzes } from "@/src/api/quiz/useAllQuizzes";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
-  fetchStudies: () => void;
+  refetch: () => void;
 };
-export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => {
-  const {
-    name, setName, type, setType,
-    link, setLink, description, setDescription,
-    handleSubmit, loading, errors, success
-  } = useCreateStudy();
+export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
+  const [name, setName] = useState("");
+  const [type, setType] = useState("");
+  const [link, setLink] = useState("");
+  const [description, setDescription] = useState("");
+  const { handleSubmit, isSuccess, error, errors, isPending } = useCreateStudy();
   const { data } = useAllQuizzes();
 
   useEffect(() => {
-    if (success !== null) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        fetchStudies();
-      }, 2000);
-
-      return () => clearTimeout(timer)
-    }
-  }, [success])
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+      refetch();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [isSuccess])
 
   useEffect(() => {
     if (!data) return;
@@ -48,8 +45,11 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
             Crie um novo estudo
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4 pt-2">
-          {success && <p className="successMsg">{success}</p>}
+        <form className="flex flex-col gap-4 pt-2"
+          onSubmit={(e) => handleSubmit(e, { name, type, link, description })}
+        >
+          {error && <p className="errorMsg">{error.message}</p>}
+          {isSuccess && <p className="successMsg">Estudo criado com sucesso</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
             <input list="study" className="inputCustom w-full"
@@ -112,9 +112,9 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, fetchStudies }: Props) => 
               Cancelar
             </ButtonCN>
             <Button submit
-              className={`${loading && 'pointer-events-none'}`}
+              className={`${isPending && 'pointer-events-none'}`}
             >
-              {loading && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
+              {isPending && <Loader2 className="animate-spin mr-2 w-5 h-5" />}
               Criar tarefa
             </Button>
           </div>

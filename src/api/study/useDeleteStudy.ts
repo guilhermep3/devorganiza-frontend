@@ -1,42 +1,34 @@
-"use client";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query"
 
-export function useDeleteStudy(studyId: string | null) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+export const useDeleteStudy = (studyId: string) => {
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const TOKEN = typeof window !== 'undefined'
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== "undefined"
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
-
-  async function handleDelete() {
-    if (!studyId) return;
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-
-    try {
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
         method: "DELETE",
         headers: {
-          "Authorization": `Bearer ${TOKEN}`,
-        },
+          "Authorization": `Bearer ${TOKEN}`
+        }
       });
-      if (!res.ok) {
-        setError("Erro ao excluir o estudo");
-        return;
-      }
-      setSuccess("Estudo deletado com sucesso!")
-    } catch {
-      setError("Erro ao conectar com o servidor");
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  return {
-    handleDelete, loading, error, success
-  };
+      const resJson = await res.json();
+
+      if (!res.ok) {
+        throw new Error(resJson.error || "Erro ao deletar um estudo")
+      }
+
+      return resJson;
+    },
+
+    onSuccess: () => {
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
+    }
+  })
+
+  return mutation;
 }

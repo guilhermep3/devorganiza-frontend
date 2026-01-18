@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 import { useState } from "react";
 
 export default function Page() {
-  const { data, loading, error, fetchStudies } = useStudies();
+  const { data, isLoading, refetch } = useStudies();
   const [isCreating, setIsCreating] = useState(false);
 
   return (
@@ -28,7 +28,7 @@ export default function Page() {
           </Button>
         </div>
         <div>
-          {loading ? (
+          {isLoading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
               {Array.from({ length: 3 }).map((_, index) => (
                 <StudySkeleton key={index} />
@@ -50,7 +50,7 @@ export default function Page() {
           )}
         </div>
       </section>
-      <CreateStudyModal isOpen={isCreating} setIsOpen={setIsCreating} fetchStudies={fetchStudies} />
+      <CreateStudyModal isOpen={isCreating} setIsOpen={setIsCreating} refetch={refetch} />
     </div>
   )
 }

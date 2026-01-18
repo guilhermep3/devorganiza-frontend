@@ -9,28 +9,28 @@ type Props = {
   setIsOpen: (value: boolean) => void;
   title: string;
   description: string;
-  id: string | null;
   handleAction: () => void;
-  fetchStudy: () => void;
+  refetch: () => void;
   loading?: boolean;
-  error?: any;
-  success?: string | null;
+  error?: string;
+  isSuccess?: boolean;
+  successMsg: string;
 };
 
 export const DeleteModal = ({
-  isOpen, setIsOpen, title, description, id, handleAction, fetchStudy, loading, error, success
+  isOpen, setIsOpen, title, description, handleAction, refetch, loading, error, isSuccess, successMsg
 }: Props) => {
 
   useEffect(() => {
-    if (success !== null) {
+    if (isSuccess) {
       const timer = setTimeout(() => {
         setIsOpen(false);
-        fetchStudy();
+        refetch();
       }, 2000);
 
-      return () => clearTimeout(timer)
+      return () => clearTimeout(timer);
     }
-  }, [success])
+  }, [isSuccess]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -42,7 +42,7 @@ export const DeleteModal = ({
           </DialogDescription>
         </DialogHeader>
         {error && <p className="errorMsg">{error}</p>}
-        {success && <p className="successMsg">{success}</p>}
+        {isSuccess && <p className="successMsg">{successMsg}</p>}
         <div className="flex justify-center gap-3 pt-6">
           <ButtonCN variant="outline" type="button"
             onClick={() => setIsOpen(false)}
@@ -51,7 +51,9 @@ export const DeleteModal = ({
             Cancelar
           </ButtonCN>
           <ButtonCN className={`bg-red-600 hover:bg-red-700 text-white ${loading && 'pointer-events-none'}`}
-            onClick={handleAction}
+            onClick={() => {
+              handleAction();
+            }}
           >
             {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
             Excluir

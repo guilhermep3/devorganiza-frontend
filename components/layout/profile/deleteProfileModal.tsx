@@ -10,14 +10,7 @@ type Props = {
   setIsDeleting: (value: boolean) => void;
 };
 export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
-  const { isPending, error, isSuccess } = useDeleteUser();
-
-  async function handleDelete() {
-    if (isSuccess) {
-      document.cookie = `token=; path=/; max-age=0`;
-      window.location.href = "/signin";
-    }
-  }
+  const { mutate, isPending, error, isSuccess } = useDeleteUser();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -47,7 +40,7 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
               Cancelar
             </ButtonCN>
             <ButtonCN
-              onClick={handleDelete}
+              onClick={() => mutate()}
               disabled={isPending}
               className={`bg-red-600 hover:bg-red-700 text-white ${isPending && 'pointer-events-none'}`}
             >

@@ -23,6 +23,8 @@ export const useDeleteUser = () => {
     },
 
     onSuccess: () => {
+      document.cookie = `token=; path=/; max-age=0`;
+      window.location.href = "/signin";
       setTimeout(() => {
         mutation.reset();
       }, 2000);

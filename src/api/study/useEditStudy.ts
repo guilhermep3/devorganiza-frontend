@@ -1,79 +1,77 @@
 "use client";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
-export function useEditStudy(studyId: string | null) {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [link, setLink] = useState("");
-  const [description, setDescription] = useState("");
+type EditStudyPayload = {
+  name?: string;
+  type?: string;
+  link?: string;
+  description?: string;
+};
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<any>({});
-  const [success, setSuccess] = useState<string | null>(null);
+export const useEditStudy = (studyId: string | null) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== "undefined"
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: async (payload: EditStudyPayload) => {
+      if (!studyId) throw new Error("ID do estudo não informado");
 
-  function resetState(){
-    setSuccess(null);
-    setErrors({})
-  }
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const TOKEN = typeof window !== "undefined"
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-    if (!studyId) return;
-
-    setLoading(true);
-    setErrors({});
-    setSuccess(null);
-
-    const updated: Record<string, any> = {};
-    if (name) {
-      updated.name = name;
-    }
-    if (type) {
-      updated.type = type;
-    }
-    if (link) {
-      updated.link = link;
-    }
-    if (description) {
-      updated.description = description;
-    }
-
-    try {
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`,
         },
-        body: JSON.stringify(updated),
+        body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      const resJson = await res.json();
 
       if (!res.ok) {
-        setErrors(data.errors || { general: data.error });
-        return;
+        throw new Error(resJson.error || "Erro ao editar o estudo");
       }
 
-      setSuccess("Estudo atualizado com sucesso!");
-      setTimeout(() => {
-        setSuccess(null)
-      }, 3100);
-    } catch {
-      setErrors({ general: "Erro ao conectar com o servidor" });
-    } finally {
-      setLoading(false);
+      return resJson;
+    },
+
+    onSuccess() {
+      queryClient.invalidateQueries({ queryKey: ["studies"] });
+      queryClient.invalidateQueries({ queryKey: ["study", studyId] });
+    },
+  });
+
+  async function handleSubmit(e: React.FormEvent, { name, type, link, description }: EditStudyPayload) {
+    e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+
+    if (!name) newErrors.name = 'Nome é obrigatório';
+    if (!type) newErrors.type = 'O tipo é obrigatório';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
+
+    const data: any = {};
+
+    if (name) data.name = name;
+    if (type) data.type = type;
+    if (link) data.link = link;
+    if (description) data.description = description;
+
+    mutation.mutate(data);
   }
 
   return {
-    name, setName, type, setType,
-    link, setLink, description, setDescription,
-    resetState, handleSubmit, loading, errors, success,
+    ...mutation,
+    handleSubmit,
+    errors,
+    setErrors
   };
-}
+};

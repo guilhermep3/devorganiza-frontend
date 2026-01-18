@@ -19,7 +19,7 @@ export default function Page() {
   const router = useRouter();
   const params = useParams();
   const studyId = Array.isArray(params.studyId) ? params.studyId[0] : params.studyId;
-  const { data, loading, fetchStudy } = useStudy(studyId!);
+  const { data, isLoading, refetch } = useStudy(studyId!);
   const [taskId, setTaskId] = useState<string | null>(null);
   const [isEditingStudy, setIsEditingStudy] = useState(false);
   const [isDeletingStudy, setIsDeletingStudy] = useState(false);
@@ -27,20 +27,20 @@ export default function Page() {
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [isDeletingTask, setIsDeletingTask] = useState(false);
   const {
-    handleDelete: deleteStudy, loading: loadingDeleteStudy,
-    error: errorDeleteStudy, success: successDeleteStudy
-  } = useDeleteStudy(studyId ?? null);
+    mutate: deleteStudy, isPending: isStudyPending, error: errorStudy, isSuccess: isSuccessStudy
+  } = useDeleteStudy(studyId!);
   const {
-    handleDelete: deleteTask, loading: loadingDeleteTask,
-    error: errorDeleteTask, success: successDeleteTask
+    mutate: deleteTask, isPending: isTaskPending, error: errorTask, isSuccess: isSuccessTask
   } = useDeleteTask(taskId);
-
+  console.log("studyId",studyId)
+  console.log("data?.study.id!",data?.study.id!)
   return (
     <div className="layoutDiv">
       <section className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="dashboardSectionTitle text-start">{data?.study?.name ?? "Estudo"}</h1>
+            <p className="text-sm text-gray-60 my-2">{data?.study.description}</p>
             <h2 className="dashboardSectionSubtitle flex items-center gap-2 mt-2">
               <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => router.push('/studies')}>
                 <ArrowLeft className="cursor-pointer w-5 h-5" />
@@ -63,7 +63,7 @@ export default function Page() {
             Nova tarefa
           </Button>
         </div>
-        {loading ? (
+        {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
             {Array.from({ length: 3 }).map((_, index) => (
               <TaskCardSkeleton key={index} />
@@ -83,25 +83,25 @@ export default function Page() {
         )}
       </section>
       <EditStudyModal isOpen={isEditingStudy} setIsOpen={setIsEditingStudy}
-        study={data?.study ?? null} fetchStudy={fetchStudy}
+        study={data?.study!} refetch={refetch}
       />
       <DeleteModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
-        id={studyId!} handleAction={deleteStudy}
+        handleAction={deleteStudy} refetch={refetch}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
-        loading={loadingDeleteStudy} error={errorDeleteStudy} success={successDeleteStudy}
-        fetchStudy={fetchStudy}
+        loading={isStudyPending} error={errorStudy?.message}
+        isSuccess={isSuccessStudy} successMsg="Estudo excluído com sucesso"
       />
       <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
-        task={data?.tasks.find((i) => i.id === taskId)} fetchStudy={fetchStudy}
+        task={data?.tasks.find((i) => i.id === taskId)} refetch={refetch}
       />
       <DeleteModal isOpen={isDeletingTask} setIsOpen={setIsDeletingTask}
-        id={studyId!} handleAction={deleteTask}
+        handleAction={deleteTask} refetch={refetch}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
-        loading={loadingDeleteTask} error={errorDeleteTask} success={successDeleteTask}
-        fetchStudy={fetchStudy}
+        loading={isTaskPending} error={errorTask?.message}
+        isSuccess={isSuccessTask} successMsg="Tarefa excluída com sucesso"
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
-        studyId={studyId!} fetchStudy={fetchStudy}
+        studyId={studyId!} refetch={refetch}
       />
     </div>
   );

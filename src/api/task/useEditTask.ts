@@ -1,68 +1,71 @@
 "use client";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-export function useEditTask(taskId: string | null) {
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
-  const [done, setDone] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<any>({});
-  const [success, setSuccess] = useState<string | null>(null);
+type EditTaskPayload = {
+  title?: string;
+  link?: string;
+  done?: boolean;
+};
+export const useEditTask = (taskId: string | null) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== "undefined"
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
+  const mutation = useMutation({
+    mutationFn: async (payload: EditTaskPayload) => {
+      if (!taskId) throw new Error("ID do estudo não informado");
 
-  function resetState() {
-    setSuccess(null);
-    setErrors({});
-  }
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const TOKEN = typeof window !== "undefined"
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-    if (!taskId) return;
-
-    setLoading(true);
-    setErrors({});
-    setSuccess(null);
-
-    const updated: Record<string, any> = {};
-
-    if (title) {
-      updated.title = title;
-    }
-    if (link) {
-      updated.link = link;
-    }
-    updated.done = done;
-
-    try {
       const res = await fetch(`${API_URL}/tasks/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`,
         },
-        body: JSON.stringify(updated),
+        body: JSON.stringify(payload),
       });
-      const data = await res.json();
+
+      const resJson = await res.json();
 
       if (!res.ok) {
-        setErrors(data.errors || { general: data.error });
-        return;
+        throw new Error(resJson.error || "Erro ao editar o estudo");
       }
 
-      setSuccess("Tarefa atualizada com sucesso!");
-    } catch {
-      setErrors({ general: "Erro ao conectar com o servidor" });
-    } finally {
-      setLoading(false);
+      return resJson;
+    },
+
+    onSuccess() {
+
+    },
+  });
+
+  async function handleSubmit(e: React.FormEvent, { title, link, done }: EditTaskPayload) {
+    e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+
+    if (!title) newErrors.title = 'Nome é obrigatório';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
+
+    const data: any = {};
+
+    if (title) data.title = title;
+    if (link) data.link = link;
+    if (done) data.done = done;
+
+    mutation.mutate(data);
   }
 
   return {
-    title, setTitle, link, setLink, done, setDone,
-    resetState, handleSubmit, loading, errors, success, setSuccess
+    ...mutation,
+    handleSubmit,
+    errors,
+    setErrors
   };
-}
+};

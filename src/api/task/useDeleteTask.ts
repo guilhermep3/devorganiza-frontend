@@ -1,24 +1,12 @@
-"use client";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
-export function useDeleteTask(taskId: string | null) {
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+export const useDeleteTask = (taskId: string | null) => {
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const TOKEN = typeof window !== "undefined"
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN =
-    typeof window !== "undefined"
-      ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-      : null;
-
-  async function handleDelete() {
-    if (!taskId) return;
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-
-    try {
       const res = await fetch(`${API_URL}/tasks/${taskId}`, {
         method: "DELETE",
         headers: {
@@ -26,19 +14,21 @@ export function useDeleteTask(taskId: string | null) {
         },
       });
 
-      if (!res.ok) {
-        setError("Erro ao excluir a tarefa");
-        return;
-      }
-      setSuccess("Tarefa deletada com sucesso!");
-    } catch {
-      setError("Erro ao conectar com o servidor");
-    } finally {
-      setLoading(false);
-    }
-  }
+      const resJson = await res.json();
 
-  return {
-    handleDelete, loading, error, success
-  };
+      if (!res.ok) {
+        throw new Error(resJson.error || "Erro ao excluir a tarefa");
+      }
+
+      return resJson;
+    },
+
+    onSuccess: () => {
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
+    }
+  })
+
+  return mutation;
 }

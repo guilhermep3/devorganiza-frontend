@@ -1,74 +1,71 @@
-"use client";
+import { useMutation } from "@tanstack/react-query"
 import { useState } from "react";
 
-export function useCreateStudy() {
-  const [name, setName] = useState("");
-  const [type, setType] = useState("");
-  const [link, setLink] = useState("");
-  const [description, setDescription] = useState("");
+interface StudyData {
+  name: string;
+  type: string;
+  link: string;
+  description: string;
+}
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<any>({});
-  const [success, setSuccess] = useState<string | null>(null);
+export const useCreateStudy = () => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const TOKEN = typeof window !== 'undefined'
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
+  const mutation = useMutation<any, Error, StudyData>({
+    mutationFn: async (credentials: StudyData) => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const TOKEN = typeof window !== 'undefined'
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSuccess(null)
-
-    const newErrors: any = {};
-    if (!name) newErrors.name = "Digite o nome do estudo";
-    if (!type) newErrors.type = "Selecione o tipo do estudo";
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
-
-    const data: any = {};
-
-    if (name) {
-      data.name = name;
-    }
-    if (type) {
-      data.type = type;
-    }
-    if (link) {
-      data.link = link;
-    }
-    if (description) {
-      data.description = description;
-    }
-
-    setLoading(true);
-    try {
       const res = await fetch(`${API_URL}/studies`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(credentials)
       });
 
-      if (!res.ok) {
-        const data = await res.json();
-        setErrors({ submit: data.error || "Erro ao criar estudo" });
-        return;
-      }
+      const resJson = await res.json();
 
-      setSuccess("Estudo criado com sucesso!");
-    } catch (err) {
-      setErrors("Erro ao conectar ao servidor");
-    } finally {
-      setLoading(false);
+      if (!res.ok) {
+        throw new Error(resJson.error || "Erro ao criar um estudo");
+      }
+      return resJson;
+    },
+    onSuccess: () => {
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
     }
+  })
+
+  async function handleSubmit(e: React.FormEvent, { name, type, link, description }: StudyData) {
+    e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+
+    if (!name) newErrors.name = 'Nome é obrigatório';
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    const data: any = {};
+
+    if (name) data.name = name;
+    if (type) data.type = type;
+    if (link) data.link = link;
+    if (description) data.description = description;
+
+    mutation.mutate(data);
   }
 
   return {
-    name, setName, type, setType,
-    link, setLink, description, setDescription,
-    success, loading, errors, handleSubmit
-  }
+    ...mutation,
+    handleSubmit,
+    errors,
+    setErrors
+  };
 }

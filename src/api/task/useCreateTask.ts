@@ -1,65 +1,64 @@
-"use client";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
-export const useCreateTask = (studyId: string | null) => {
-  const [title, setTitle] = useState("");
-  const [link, setLink] = useState("");
+interface CreateTask {
+  title: string;
+  link: string;
+}
 
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<any>({});
-  const [success, setSuccess] = useState<string | null>(null);
+export const useCreateTask = (taskId: string | null) => {
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const TOKEN = typeof window !== 'undefined'
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
+  const mutation = useMutation({
+    mutationFn: async (credentials: CreateTask) => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const TOKEN = typeof window !== "undefined"
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setSuccess(null);
-
-    const newErrors: any = {};
-    if (!title) { newErrors.title = "Digite o título da tarefa" };
-    setErrors(newErrors);
-    if (Object.keys(newErrors).length > 0) return;
-
-    const data: any = {};
-
-    if (title) {
-      data.title = title;
-    }
-    if (link) {
-      data.link = link;
-    }
-    data.done = false;
-
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/tasks/${studyId}`, {
+      const res = await fetch(`${API_URL}/tasks/${taskId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${TOKEN}`
+          "Authorization": `Bearer ${TOKEN}`,
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(credentials)
       });
 
+      const resJson = await res.json();
+
       if (!res.ok) {
-        const data = await res.json();
-        setErrors({ submit: data.error || "Erro ao criar estudo" });
-        return;
+        throw new Error(resJson.error || "Erro ao criar tarefa");
       }
 
-      setSuccess("Tarefa criada com sucesso!");
-    } catch (err) {
-      setErrors("Erro ao conectar ao servidor");
-    } finally {
-      setLoading(false);
+      return resJson;
+    },
+
+    onSuccess: () => {
+      setTimeout(() => {
+        mutation.reset();
+      }, 2000);
     }
+  })
+
+  async function handleSubmit(e: React.FormEvent, { title, link }: CreateTask) {
+    e.preventDefault();
+
+    const newErrors: Record<string, string> = {};
+
+    if (!title) newErrors.title = 'Título é obrigatório';
+
+    const data: any = {}
+
+    if (title) data.title = title;
+    if (link) data.link = link;
+
+    mutation.mutate(data);
   }
 
   return {
-    title, setTitle, link, setLink,
-    loading, errors, setErrors, success, handleSubmit
-  }
+    ...mutation,
+    handleSubmit,
+    errors,
+    setErrors
+  };
 }
