@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { QuizzesAttempt } from "@/src/types/quiz";
 
 export const ProfileAttemptTable = () => {
-  const { data, loading } = useQuizAttempts();
+  const { data, isLoading } = useQuizAttempts();
   const [sortedAttempts, setSortedAttempts] = useState<any>([]);
 
   const formatTime = (seconds: number) => {
@@ -24,7 +24,7 @@ export const ProfileAttemptTable = () => {
           new Date(a.startedAt).getTime()
       ))
     }
-  }, [loading])
+  }, [isLoading])
 
   return (
     <table className="w-full border-separate border-spacing-y-3">
@@ -36,7 +36,7 @@ export const ProfileAttemptTable = () => {
         </tr>
       </thead>
       <tbody>
-        {!loading ? (
+        {!isLoading ? (
           sortedAttempts.slice(0, 5).map((attempt: QuizzesAttempt) => (
             <tr key={attempt.id} className="rounded-lg shadow-sm">
               <td className="rounded-l-lg pb-3">

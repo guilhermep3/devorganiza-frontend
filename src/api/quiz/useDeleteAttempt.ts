@@ -1,45 +1,27 @@
-"use client";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query"
 
-export const useDeleteAttempt = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<string | null>(null);
+export const useDeleteAttempt = (quizId: string) => {
+  const mutation = useMutation({
+    mutationFn: async () => {
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== 'undefined'
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
-
-  async function deleteAttempt(quizId: string) {
-    try {
-      setLoading(true);
-      setError(null);
+      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+      const TOKEN = typeof window !== "undefined" ?
+        document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/quizzes/${quizId}/attempts/delete`, {
         method: "DELETE",
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${TOKEN}`
-        },
+        }
       })
 
       if (!res.ok) {
-        const errorData = await res.json();
-        setError(errorData.error || "Erro ao finalizar tentativa de quiz");
-        return;
+        throw new Error("Erro ao deletar uma tentativa do quiz");
       }
-      const data = await res.json();
-      setSuccess(data.message);
-    } catch (err) {
-      setError("Erro de conexão com o servidor");
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  return {
-    deleteAttempt, loading, error, success
-  }
+      return res.json();
+    },
+  })
+
+  return mutation;
 }

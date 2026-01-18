@@ -5,10 +5,9 @@ import { useQuizzes } from "@/src/api/quiz/useQuizzes";
 import { QuizCardSkeleton } from "@/components/layout/dashboard/quizzes/quizCardSkeleton";
 
 export default function Page() {
-  const { data, loading } = useQuizzes();
-  const { data: lockData, loading: lockLoading } = useQuizzesLocked();
+  const { data, isLoading } = useQuizzes();
+  const { data: lockData, isLoading: isLockLoading } = useQuizzesLocked();
 
-  const isLoading = loading || lockLoading;
   const hasData = (data && data.length > 0) || (lockData && lockData.length > 0);
 
   return (
@@ -19,7 +18,7 @@ export default function Page() {
           <h2 className="dashboardSectionSubtitle">Pratique com seus quizzes desbloqueados</h2>
         </div>
         <div>
-          {isLoading ? (
+          {isLoading || isLockLoading ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
               {Array.from({ length: 4 }).map((_, i) => (
                 <QuizCardSkeleton key={i} />

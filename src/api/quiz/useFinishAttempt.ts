@@ -1,48 +1,35 @@
 "use client";
+import { useMutation } from "@tanstack/react-query";
 import { AttemptAnswer, FinishAttempt } from "@/src/types/quiz";
-import { useState } from "react";
 
-export const useFinishAttempt = () => {
-  const [data, setData] = useState<FinishAttempt | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== 'undefined'
-    ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
-    : null;
-
-  async function createAttempt(quizId: string, answer: AttemptAnswer[]) {
-    try {
-      setLoading(true);
-      setError(null);
+export const useFinishAttempt = (quizId: string) => {
+  const mutation = useMutation({
+    mutationFn: async (answers: AttemptAnswer[]): Promise<FinishAttempt> => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+      const TOKEN =
+        typeof window !== "undefined"
+          ? document.cookie.split("; ").find(row => row.startsWith("token="))?.split("=")[1] : null;
 
       const res = await fetch(`${API_URL}/quizzes/${quizId}/attempts/finish`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${TOKEN}`
+          "Authorization": `Bearer ${TOKEN}`,
         },
-        body: JSON.stringify(answer)
-      })
+        body: JSON.stringify(answers),
+      }
+      );
 
       if (!res.ok) {
         const errorData = await res.json();
-        setError(errorData.error || "Erro ao finalizar tentativa de quiz");
-        return;
+        throw new Error(
+          errorData?.error || "Erro ao finalizar tentativa de quiz"
+        );
       }
-      const data: FinishAttempt = await res.json();
-      setData(data);
-      return data;
-    } catch (err) {
-      setError("Erro de conexão com o servidor");
-      return null;
-    } finally {
-      setLoading(false);
-    }
-  }
 
-  return {
-    createAttempt, loading, error, data
-  }
-}
+      return res.json();
+    },
+  });
+
+  return mutation;
+};

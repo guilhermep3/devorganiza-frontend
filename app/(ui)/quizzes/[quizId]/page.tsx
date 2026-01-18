@@ -4,15 +4,14 @@ import { LoadingPage } from "@/components/layout/loadingPage";
 import { Logo } from "@/components/logo";
 import { useQuiz } from "@/src/api/quiz/useQuiz"
 import { useQuizStore } from "@/src/store/quiz-store";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation"
-import { useEffect } from "react";
 
 export default function Page() {
   const router = useRouter();
   const { quizId } = useParams();
-  const { data, loading } = useQuiz(quizId as string);
+  const { data, isLoading } = useQuiz(quizId as string);
   const { insertQuiz, quiz } = useQuizStore();
 
   function handleStartQuiz() {
@@ -23,7 +22,7 @@ export default function Page() {
 
   return (
     <div className="layoutDiv">
-      {loading || !data ? (
+      {isLoading || !data ? (
         <LoadingPage />
       ) : (
         <section className="relative flex flex-col justify-center items-center gap-6">

@@ -17,15 +17,15 @@ export default function Page() {
   const params = useParams();
   const attemptStartedRef = useRef(false);
   const quizId = params.quizId as string;
-  const { data, loading } = useQuiz(quizId);
+  const { data, isLoading } = useQuiz(quizId);
   const { quiz } = useQuizStore();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionAlternatives | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [answers, setAnswers] = useState<AttemptAnswer[]>([]);
-  const { createAttempt } = useFinishAttempt();
-  const { startAttempt } = useStartAttempt();
-  const { deleteAttempt } = useDeleteAttempt();
+  const finishAttempt = useFinishAttempt(quizId);
+  const startAttempt = useStartAttempt(quizId);
+  const deleteAttempt = useDeleteAttempt(quizId);
 
   useEffect(() => {
     if (!quiz) return;
@@ -43,39 +43,44 @@ export default function Page() {
     if (attemptStartedRef.current) return;
 
     attemptStartedRef.current = true;
-    startAttempt(quiz.id);
+    startAttempt.mutate();
   }, [quiz?.id]);
 
-
   function handleConfirm() {
-    if (!selected) return;
-    if (!quiz) return;
-    setQuestionIndex(questionIndex === quiz.questions.length! - 1 ? questionIndex : questionIndex + 1);
-    setAnswers((prev) => [
-      ...prev,
-      { questionId: currentQuestion!.id, answerId: selected }
-    ]);
+    if (!selected || !quiz || !currentQuestion) return;
+
+    const newAnswers = [
+      ...answers,
+      { questionId: currentQuestion.id, answerId: selected }
+    ];
+
+    setAnswers(newAnswers);
     setSelected(null);
 
-    if (questionIndex === quiz.questions.length! - 1) {
-      finishAttempt();
+    if (questionIndex === quiz.questions.length - 1) {
+      finishAttempt.mutate(newAnswers, {
+        onSuccess: () => {
+          router.push(`/quizzes/${quiz.id}/finish`);
+        },
+      });
+      return;
     }
-  }
 
-  function finishAttempt() {
-    if (!quiz) return;
-    createAttempt(quiz.id, answers);
-    router.push(`/quizzes/${quiz?.id}/finish`);
+    setQuestionIndex(prev => prev + 1);
   }
 
   function handleDeleteAttempt() {
-    deleteAttempt(quiz?.id!);
-    router.push('/quizzes')
+    deleteAttempt.mutate(undefined, {
+      onSuccess: () => {
+        router.push("/quizzes");
+      },
+    });
   }
+
 
   return (
     <div className="layoutDiv">
-      {loading ? (
+      {isLoading ? (
         <LoadingPage />
       ) : data ? (
         <>

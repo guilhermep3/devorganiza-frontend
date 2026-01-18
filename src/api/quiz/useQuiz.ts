@@ -1,19 +1,14 @@
-"use client";
 import { FullQuiz } from "@/src/types/quiz";
-import { useEffect, useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 
 export const useQuiz = (quizId: string) => {
-  const [data, setData] = useState<FullQuiz | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  return useQuery({
+    queryKey: ['quiz'],
+    queryFn: async () => {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+      const TOKEN = typeof window !== 'undefined'
+        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-  const TOKEN = typeof window !== 'undefined' ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
-
-  async function fetchQuiz() {
-    setLoading(true);
-    setError(null);
-    try {
       const res = await fetch(`${API_URL}/quizzes/${quizId}`, {
         method: "GET",
         headers: {
@@ -24,24 +19,11 @@ export const useQuiz = (quizId: string) => {
 
       if (!res.ok) {
         const errorData = await res.json();
-        setError(errorData.error || "Erro ao buscar quiz");
-        return;
+        throw new Error(errorData.error || "Erro ao buscar um quiz");
       }
 
       const dataRes: FullQuiz = await res.json();
-      setData(dataRes);
-    } catch (err) {
-      setError("Erro ao conectar ao servidor");
-    } finally {
-      setLoading(false);
+      return dataRes;
     }
-  }
-
-  useEffect(() => {
-    fetchQuiz();
-  }, [])
-
-  return {
-    data, error, loading, fetchQuiz
-  }
+  })
 }

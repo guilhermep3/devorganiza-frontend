@@ -9,8 +9,8 @@ import { useParams } from "next/navigation";
 
 export default function Page() {
   const { quizId } = useParams();
-  const { data, loading } = useLastAttempt(quizId as string);
-  const { data: quizData, loading: quizLoading } = useQuiz(quizId as string)
+  const { data, isLoading } = useLastAttempt(quizId as string);
+  const { data: quizData, isLoading: quizLoading } = useQuiz(quizId as string)
   const { data: userData, isLoading: userLoading } = useUser();
 
   const getScoreMessage = (score: number) => {
@@ -54,7 +54,7 @@ export default function Page() {
 
   return (
     <div className="layoutDiv">
-      {loading || quizLoading || userLoading || !userData || !quizData || !data ? (
+      {isLoading || quizLoading || userLoading || !userData || !quizData || !data ? (
         <LoadingPage />
       ) : (
         <div className="flex flex-col items-center gap-2">
