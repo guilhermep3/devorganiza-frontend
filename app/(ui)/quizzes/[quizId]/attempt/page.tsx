@@ -19,13 +19,16 @@ export default function Page() {
   const quizId = params.quizId as string;
   const { data, isLoading } = useQuiz(quizId);
   const { quiz } = useQuizStore();
+
+  const finishAttempt = useFinishAttempt(quizId);
+  const startAttempt = useStartAttempt(quizId);
+  const deleteAttempt = useDeleteAttempt(quizId);
+
   const [questionIndex, setQuestionIndex] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionAlternatives | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
   const [answers, setAnswers] = useState<AttemptAnswer[]>([]);
-  const finishAttempt = useFinishAttempt(quizId);
-  const startAttempt = useStartAttempt(quizId);
-  const deleteAttempt = useDeleteAttempt(quizId);
+  const [shuffledAlternatives, setShuffledAlternatives] = useState<QuestionAlternatives["alternatives"]>([]);
 
   useEffect(() => {
     if (!quiz) return;
@@ -45,6 +48,15 @@ export default function Page() {
     attemptStartedRef.current = true;
     startAttempt.mutate();
   }, [quiz?.id]);
+
+  useEffect(() => {
+    if (!currentQuestion) return;
+
+    setShuffledAlternatives(
+      shuffleArray(currentQuestion.alternatives)
+    );
+  }, [currentQuestion]);
+
 
   function handleConfirm() {
     if (!selected || !quiz || !currentQuestion) return;
@@ -77,6 +89,14 @@ export default function Page() {
     });
   }
 
+  function shuffleArray<T>(array: T[]): T[] {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
 
   return (
     <div className="layoutDiv">
@@ -100,7 +120,7 @@ export default function Page() {
             <p className="text-2xl md:text-3xl font-extrabold">Questão {questionIndex + 1}</p>
             <p className="text-base md:text-lg">{currentQuestion?.question}</p>
             <div className="flex flex-col gap-3 mt-6">
-              {currentQuestion?.alternatives.map((a) => (
+              {shuffledAlternatives.map((a) => (
                 <div key={a.id}
                   className={`flex items-center justify-between p-4 bg-card hover:bg-gray-20/25 transition rounded-md text-sm md:text-base cursor-pointer border 
               ${selected === a.id ? 'border-main-30' : 'border-transparent'}

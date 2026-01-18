@@ -31,7 +31,7 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
     }
   }).sort(
     (a, b) => a.duracao - b.duracao
-  );
+  ).slice(0, 10);
 
   const fastest = chartData[0];
   const slowest = chartData[chartData.length - 1];
@@ -63,7 +63,7 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
               tickLine={false}
               tickMargin={10}
               axisLine={false}
-              tickFormatter={(value) => { return value.length > 7 ? value.slice(0, 6) + '...' : value }}
+              tickFormatter={(value) => { return value.length > 5 ? value.slice(0, 5) + '...' : value }}
             />
             <ChartTooltip
               cursor={false}
