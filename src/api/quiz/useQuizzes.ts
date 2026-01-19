@@ -24,6 +24,7 @@ export const useQuizzes = () => {
       }
 
       return data as Quiz[];
-    }
+    },
+    refetchOnWindowFocus: false
   })
 }

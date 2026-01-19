@@ -1,5 +1,3 @@
-"use client";
-
 import { AverageTimeFinish } from "@/src/types/chart";
 import { useQuery } from "@tanstack/react-query";
 

@@ -24,6 +24,7 @@ export const useUser = () => {
       }
 
       return data;
-    }
+    },
+    refetchOnWindowFocus: false
   });
 }

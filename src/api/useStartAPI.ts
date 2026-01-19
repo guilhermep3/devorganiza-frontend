@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 
 
 export function useStartAPI() {
-
   return useQuery({
     queryKey: ['startAPI'],
     queryFn: async () => {

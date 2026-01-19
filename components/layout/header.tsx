@@ -8,7 +8,6 @@ import { AsideContext } from "@/src/context/asideContext";
 import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useStartAPI } from "@/src/api/useStartAPI";
-import { useUser } from "@/src/api/user/useUser";
 
 type props = {
   noNav?: boolean;
@@ -19,8 +18,7 @@ export const Header = ({ noNav, noAnimate }: props) => {
   const asideCtx = useContext(AsideContext);
   const haveMenu = ["dashboard", "studies", "quizzes", "profile"];
   const pathname = usePathname();
-  const {} = useStartAPI();
-  const {} = useUser();
+  const { } = useStartAPI();
 
   useEffect(() => {
     function handleScroll() {

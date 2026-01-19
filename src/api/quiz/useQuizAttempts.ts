@@ -24,6 +24,7 @@ export const useQuizAttempts = () => {
       }
 
       return data as QuizzesAttempt;
-    }
+    },
+    refetchOnWindowFocus: false
   })
 }

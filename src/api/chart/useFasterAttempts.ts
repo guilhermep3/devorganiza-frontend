@@ -1,5 +1,3 @@
-"use client";
-
 import { FasterAttempts } from "@/src/types/chart";
 import { useQuery } from "@tanstack/react-query";
 

@@ -24,6 +24,7 @@ export const useQuizzesLocked = () => {
       }
 
       return data as Quiz[];
-    }
+    },
+    refetchOnWindowFocus: false
   })
 }

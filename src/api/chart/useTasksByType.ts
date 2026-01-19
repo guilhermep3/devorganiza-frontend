@@ -1,5 +1,3 @@
-"use client";
-
 import { TasksByType } from "@/src/types/chart";
 import { useQuery } from "@tanstack/react-query";
 

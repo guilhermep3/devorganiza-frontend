@@ -1,5 +1,3 @@
-"use client";
-
 import { FinishedTasksByMonth } from "@/src/types/chart";
 import { useQuery } from "@tanstack/react-query";
 

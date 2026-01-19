@@ -24,6 +24,7 @@ export const useStudies = () => {
       }
 
       return data as StudyTask[];
-    }
+    },
+    refetchOnWindowFocus: false
   })
 }

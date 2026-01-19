@@ -24,6 +24,7 @@ export const useQuiz = (quizId: string) => {
       }
 
       return data as FullQuiz;
-    }
+    },
+    refetchOnWindowFocus: false
   })
 }
