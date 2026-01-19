@@ -17,13 +17,13 @@ export const useStudies = () => {
         }
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao buscar estudos");
+        throw new Error(data.error || "Erro ao buscar estudos");
       }
 
-      const dataRes: StudyTask[] = await res.json();
-      return dataRes;
+      return data as StudyTask[];
     }
   })
 }

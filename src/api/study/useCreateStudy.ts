@@ -26,12 +26,12 @@ export const useCreateStudy = () => {
         body: JSON.stringify(credentials)
       });
 
-      const resJson = await res.json();
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(resJson.error || "Erro ao criar um estudo");
+        throw new Error(data.error || "Erro ao criar um estudo");
       }
-      return resJson;
+      return data;
     },
     onSuccess: () => {
       setTimeout(() => {
@@ -59,7 +59,7 @@ export const useCreateStudy = () => {
     if (link) data.link = link;
     if (description) data.description = description;
 
-    mutation.mutate(data);
+    return mutation.mutate(data);
   }
 
   return {

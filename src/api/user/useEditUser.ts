@@ -44,9 +44,13 @@ export const useEditUser = () => {
           body: formData
         });
 
+        const data = await resImage.json();
+
         if (!resImage.ok) {
-          throw new Error("Falha ao enviar imagem");
+          throw new Error(data.error || "Erro ao adicionar imagem");
         }
+
+        return data;
       }
 
       if (Object.keys(changed).length > 0) {
@@ -59,9 +63,13 @@ export const useEditUser = () => {
           body: JSON.stringify(changed)
         });
 
+        const data = await res.json();
+
         if (!res.ok) {
-          throw new Error("Falha ao atualizar usuário");
+          throw new Error(data.error || "Erro ao atualizar usuário");
         }
+
+        return data;
       }
 
       return true;

@@ -17,13 +17,13 @@ export const useQuizzes = () => {
         }
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao buscar quizzes");
+        throw new Error(data.error || "Erro ao buscar quiz");
       }
 
-      const dataRes: Quiz[] = await res.json();
-      return dataRes;
+      return data as Quiz[];
     }
   })
 }

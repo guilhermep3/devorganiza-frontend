@@ -17,13 +17,12 @@ export const useAllQuizzes = () => {
         }
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao buscar todos os quizzes");
-      }
+      const data = await res.json();
 
-      const dataRes: Quiz[] = await res.json();
-      return dataRes;
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao buscar todos os quizzes");
+      }
+      return data as Quiz[];
     }
   })
 }

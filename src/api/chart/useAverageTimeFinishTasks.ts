@@ -20,14 +20,12 @@ export const useAverageTimeFinishTasksChart = () => {
       }
       );
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData.error || "Erro ao buscar average-time-finish-task"
-        );
-      }
+      const data = await res.json();
 
-      return res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao buscar average-time-finish-task");
+      }
+      return data;
     },
   });
 };

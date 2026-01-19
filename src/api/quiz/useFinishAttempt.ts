@@ -20,14 +20,13 @@ export const useFinishAttempt = (quizId: string) => {
       }
       );
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData?.error || "Erro ao finalizar tentativa de quiz"
-        );
+        throw new Error(data.error || "Erro ao finalizar uma tentativa de quiz");
       }
 
-      return res.json();
+      return data;
     },
   });
 

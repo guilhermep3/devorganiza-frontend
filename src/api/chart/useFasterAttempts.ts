@@ -19,12 +19,12 @@ export const useFasterAttempts = () => {
         },
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao buscar faster-attempts");
-      }
+      const data = await res.json();
 
-      return res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao buscar faster-attempts");
+      }
+      return data;
     },
   });
 };

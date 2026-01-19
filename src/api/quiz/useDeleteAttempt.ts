@@ -15,11 +15,12 @@ export const useDeleteAttempt = (quizId: string) => {
         }
       })
 
-      if (!res.ok) {
-        throw new Error("Erro ao deletar uma tentativa do quiz");
-      }
+      const data = await res.json();
 
-      return res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao deletar uma tentativa do quiz");
+      }
+      return data;
     },
   })
 

@@ -14,13 +14,13 @@ export const useDeleteStudy = (studyId: string) => {
         }
       });
 
-      const resJson = await res.json();
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(resJson.error || "Erro ao deletar um estudo")
+        throw new Error(data.error || "Erro ao deletar um estudo")
       }
 
-      return resJson;
+      return data;
     },
 
     onSuccess: () => {

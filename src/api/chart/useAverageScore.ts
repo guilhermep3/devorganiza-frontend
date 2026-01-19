@@ -18,11 +18,12 @@ export const useAverageScore = () => {
         },
       })
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao buscar average-score");
+        throw new Error(data.error || "Erro ao buscar average-score");
       }
-      return res.json();
+      return data;
     }
   })
 }

@@ -17,11 +17,13 @@ export const useUser = () => {
         }
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error('Erro ao buscar dados do usuário');
+        throw new Error(data.error || "Erro ao buscar usuário");
       }
 
-      return res.json();
+      return data;
     }
   });
 }

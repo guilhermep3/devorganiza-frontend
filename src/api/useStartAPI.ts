@@ -22,7 +22,7 @@ export function useStartAPI() {
       return res.json();
     },
     retry: 3,
-    retryDelay: 3000,
+    retryDelay: 5000,
     refetchOnWindowFocus: true
   })
 }

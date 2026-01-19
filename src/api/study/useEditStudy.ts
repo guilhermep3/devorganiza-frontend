@@ -30,13 +30,13 @@ export const useEditStudy = (studyId: string | null) => {
         body: JSON.stringify(payload),
       });
 
-      const resJson = await res.json();
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(resJson.error || "Erro ao editar o estudo");
+        throw new Error(data.error || "Erro ao editar o estudo");
       }
 
-      return resJson;
+      return data;
     },
 
     onSuccess() {
@@ -65,7 +65,7 @@ export const useEditStudy = (studyId: string | null) => {
     if (link) data.link = link;
     if (description) data.description = description;
 
-    mutation.mutate(data);
+    return mutation.mutate(data);
   }
 
   return {

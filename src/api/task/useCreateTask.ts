@@ -24,13 +24,13 @@ export const useCreateTask = (taskId: string | null) => {
         body: JSON.stringify(credentials)
       });
 
-      const resJson = await res.json();
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(resJson.error || "Erro ao criar tarefa");
+        throw new Error(data.error || "Erro ao criar tarefa");
       }
 
-      return resJson;
+      return data;
     },
 
     onSuccess: () => {
@@ -52,7 +52,7 @@ export const useCreateTask = (taskId: string | null) => {
     if (title) data.title = title;
     if (link) data.link = link;
 
-    mutation.mutate(data);
+    return mutation.mutate(data);
   }
 
   return {

@@ -22,14 +22,13 @@ export const useLastAttempt = (quizId: string) => {
       }
       );
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(
-          errorData?.error || "Erro ao pegar última tentativa de quiz"
-        );
+        throw new Error(data.error || "Erro ao pegar última tentativa de quiz");
       }
 
-      return res.json();
+      return data;
     },
   });
 

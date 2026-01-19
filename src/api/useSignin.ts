@@ -25,16 +25,16 @@ export const useSignin = () => {
         body: JSON.stringify(credentials)
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error);
+        throw new Error(data.error || "Erro ao fazer login");
       }
 
-      const data = await res.json();
       return data;
     },
     onSuccess: (data) => {
-      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 2}`; // 2 days
+      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 2 days
       window.location.href = '/dashboard';
     },
   });
@@ -55,9 +55,7 @@ export const useSignin = () => {
       return;
     }
 
-    mutation.mutate({ email, password });
-
-    return { errors: {}, hasErrors: false };
+    return mutation.mutate({ email, password });
   }
 
   function clearErrors(field: string) {

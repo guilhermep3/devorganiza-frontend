@@ -15,11 +15,13 @@ export const useDeleteUser = () => {
         }
       });
 
+      const data = await res.json();
+
       if (!res.ok) {
-        throw new Error("Não foi possível excluir a conta");
+        throw new Error(data.error || "Não foi possível excluir a conta");
       }
 
-      return true;
+      return data;
     },
 
     onSuccess: () => {

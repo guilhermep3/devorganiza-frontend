@@ -32,6 +32,11 @@ export function useSignup() {
       }
 
       const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao criar conta");
+      }
+
       return data;
     },
     onSuccess: () => {
@@ -57,9 +62,7 @@ export function useSignup() {
       return;
     }
 
-    mutation.mutate({ name, username, email, password });
-
-    return { errors: {}, hasErrors: false };
+    return mutation.mutate({ name, username, email, password });
   }
 
   function clearErrors(field: string) {

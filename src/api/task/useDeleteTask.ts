@@ -14,13 +14,13 @@ export const useDeleteTask = (taskId: string | null) => {
         },
       });
 
-      const resJson = await res.json();
+      const data = await res.json();
 
       if (!res.ok) {
-        throw new Error(resJson.error || "Erro ao excluir a tarefa");
+        throw new Error(data.error || "Erro ao excluir a tarefa");
       }
 
-      return resJson;
+      return data;
     },
 
     onSuccess: () => {

@@ -19,12 +19,12 @@ export const useWeeklyProductivity = () => {
         },
       });
 
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Erro ao buscar weekly-productivity");
-      }
+      const data = await res.json();
 
-      return res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Erro ao buscar weekly-productivity");
+      }
+      return data;
     },
   });
 };
