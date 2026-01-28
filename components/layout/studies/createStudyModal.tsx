@@ -76,7 +76,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
               <option value="">Selecione...</option>
               <option value="frontend">Frontend</option>
               <option value="backend">Backend</option>
-              <option value="ferramenta">Ferramenta</option>
+              <option value="outro">Outro</option>
             </select>
             {errors.type && (
               <p className="errorMsg">{errors.type}</p>
