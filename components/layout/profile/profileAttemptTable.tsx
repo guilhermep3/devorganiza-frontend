@@ -17,7 +17,7 @@ export const ProfileAttemptTable = () => {
   };
 
   useEffect(() => {
-    if (data && data.length > 0) {
+    if (Array.isArray(data) && data.length > 0) {
       setSortedAttempts([...data].sort(
         (a, b) =>
           new Date(b.startedAt).getTime() -
