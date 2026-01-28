@@ -24,7 +24,7 @@ export const StudyCard = ({ data }: props) => {
       ${data.study.status === 'finalizado' ? "border-green-20" : "border-yellow-500"}
     `}>
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
-        <div className="mb-3">
+        <div className="mb-1">
           <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
           <div className="flex items-center justify-between gap-1 lg:gap-2 mt-1">
             <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
@@ -53,7 +53,7 @@ export const StudyCard = ({ data }: props) => {
             <a
               href={data.study.link}
               target="_blank"
-              className="text-xs text-blue-400 break-all"
+              className="linkCustom"
             >
               {data.study.link.length > 100 ? data.study.link.slice(0, 100) + "..." : data.study.link}
             </a>

@@ -200,6 +200,9 @@ body {
   .successMsg {
     @apply text-green-500 text-sm text-center
   }
+  .linkCustom {
+    @apply text-xs md:text-sm text-blue-400 break-all inline-block mt-2
+  }
   .dashboardSectionTitle {
     @apply text-xl md:text-2xl font-bold text-start
   }

@@ -20,19 +20,19 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
     <div className={`bg-card p-4 rounded-lg flex flex-col justify-between gap-3 border
       ${task.done ? "border-green-20" : "border-yellow-500"}`}
     >
-      <div>
+      <div className="mb-1">
         <h3 className="text-foreground font-semibold mb-1">{task.title}</h3>
         {task.link && (
           <a
             href={task.link}
             target="_blank"
-            className="text-sm text-blue-400 break-all"
+            className="linkCustom"
           >
             {task.link}
           </a>
         )}
       </div>
-      <div className="flex justify-between items-center mt-2">
+      <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           {task.done
             ? <CheckCircle className=" text-green-900 dark:text-green-200" />
