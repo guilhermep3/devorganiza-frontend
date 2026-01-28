@@ -5,78 +5,75 @@
 A DevOrganiza é um web-app Full-stack onde o usuário pode organizar seus estudos e tarefas, além de desbloquear quizzes relacionados aos conteúdos cadastrados para praticar o aprendizado.
 O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.
 
-
 ## 📌 Visão Geral
 
-DevOrganiza é uma aplicação web fullstack voltada para desenvolvedores que desejam organizar estudos, tarefas e acompanhar sua evolução por meio de quizzes e métricas de desempenho.
+Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e TailwindCSS, com foco em experiência do usuário, organização de estado, consumo de APIs e visualização de dados.
 
+## 🎯 Objetivo do projeto
+
+- Demonstrar domínio em Next.js e TailwindCSS
+- Simular um ambiente próximo ao mundo real / produção
+- Consumir uma API REST organizada, escalável e validada
+- Aplicar boas práticas de organização de código e UI
+- Implementar autenticação e autorização com JWT
+- Trabalhar com estado global e formulários complexos
 
 ## 🧩 Tecnologias Utilizadas
 
-- **Next.js**: Framework React para aplicações web modernas com renderização híbrida.
-- **React**: Biblioteca para construção de interfaces de usuário.
-- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
-- **Tailwind**: Framework utilitário para estilização rápida e responsiva.
-- **clsx**: Utilitário para composição condicional de classes CSS.
-- **tailwind-merge**: Evita conflitos e duplicações de classes do Tailwind.
-- **Lucide React**: Biblioteca de ícones SVG para React.
-- **Motion**: Biblioteca para animações e transições fluidas.
-- **Next Themes**: Gerenciamento de temas (dark/light mode).
-- **Recharts**: Criação de gráficos e visualização de dados.
-- **React Hook Form**: Gerenciamento eficiente de formulários.
-- **Zod** — Validação e tipagem de dados baseada em schemas.
-- **Zustand** — Gerenciamento de estado global simples e performático.
+- **Next.js**: Framework React com renderização híbrida
+- **React**: Construção de interfaces baseadas em componentes
+- **TypeScript**: Superset do JavaScript com tipagem estática
+- **Tailwind**: Framework para estilização utilitária e responsiva
+- **clsx / tailwind-merge**: Composição e organização de classes
 
+## 🧩 Bibliotecas
 
-## ⚙️ Ferramentas de Desenvolvimento
-
-- **Node.js**: Ambiente de execução JavaScript.
-- **TypeScript Compiler (tsc)**: Compilação e verificação de tipos.
-- **PostCSS**: Processamento de CSS para o Tailwind.
-- **Babel**: Transpilação de código moderno para compatibilidade.
-
-
-## 🏗️ Arquitetura
-
-- Front-end desacoplado do back-end, consumindo API REST
-- Comunicação via Fetch API utilizando hooks customizados
-- Backend estruturado por rotas e camadas de responsabilidade
-- Registros de dados em PostgreSQL utilizando Drizzle ORM
-- Validação de dados com Zod tanto no front-end quanto no back-end
-
+- **Next Themes**: Dark e light mode.
+- **Lucide React**: Biblioteca de ícones SVG para React
+- **Motion**: Biblioteca para animações e transições fluidas
+- **Recharts**: Visualização de dados e gráficos
+- **React Hook Form**: Gerenciamento de formulários
+- **Zod** — Validação de dados
+- **Zustand** — Gerenciamento de estado global
 
 ## 🚀 Funcionalidades Principais
 
-- Sistema de cadastro e login com upload de imagem de perfil via Cloudinary
-- Autenticação de usuários com JWT armazenado em cookies HTTP-only
+- Cadastro e login de usuários
+- Upload de imagem de perfil (Cloudinary)
+- Autenticação com JWT armazenado em cookies HTTP-only
 - Organização de estudos por temas, com criação de tarefas vinculadas
 - Sistema de quizzes desbloqueáveis conforme os estudos cadastrados
-- Registro de pontuação e tempo gasto em cada tentativa de quiz
 - Dashboard com visualização de desempenho através de gráficos
-- Controle de acesso por tipo de usuário (user/admin) com rotas protegidas
+
+## 🏗️ Arquitetura
+
+- Aplicação desacoplada do backend
+- Consumo de API REST autenticada
+- Organização por componentes, páginas e hooks
+- Hooks customizados para chamadas HTTP
+- Estado global com Zustand
+- Validação de formulários com React Hook Form + Zod
+- Controle de tema e preferências do usuário
 
 ## 🧠 Regras de Negócio
 
+- Atualização imediata da UI após ações do usuário
+- Sincronização visual do progresso do usuário
 - Um quiz só é liberado quando o usuário cadastra um estudo com o mesmo nome do quiz
-- Cada tentativa de quiz registra pontuação e duração
 - Usuários podem marcar tarefas como concluídas e adicionar links de referência
-- Rotas sensíveis são protegidas por autenticação e autorização
-
 
 ## ⚠️ Desafios Técnicos
 
-- Implementação de autenticação segura utilizando cookies
+- Implementação de autenticação baseada em cookies
 - Sincronização entre estudos cadastrados e desbloqueio de quizzes
 - Organização do estado global para refletir progresso do usuário
 - Criação de dashboard com dados agregados de performance
 
-
 ## 🧪 Qualidade & Testes
 
 - **Jest**: Framework de testes unitários.
-- **Testing Library**: Testes focados no comportamento do usuário.
-- **ESLint**: Padronização e análise estática de código.
-
+- **Testing Library**: Testes focados na experiência do usuário
+- **ESLint**: Padronização e análise de código.
 
 ## Como Executar o Projeto
 
