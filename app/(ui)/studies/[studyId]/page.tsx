@@ -32,8 +32,7 @@ export default function Page() {
   const {
     mutate: deleteTask, isPending: isTaskPending, error: errorTask, isSuccess: isSuccessTask
   } = useDeleteTask(taskId);
-  console.log("studyId",studyId)
-  console.log("data?.study.id!",data?.study.id!)
+
   return (
     <div className="layoutDiv">
       <section className="flex flex-col gap-4">

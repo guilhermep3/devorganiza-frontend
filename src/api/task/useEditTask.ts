@@ -25,8 +25,10 @@ export const useEditTask = (taskId: string | null) => {
         },
         body: JSON.stringify(payload),
       });
+      console.log("payload", payload)
 
       const data = await res.json();
+      console.log("data", data)
 
       if (!res.ok) {
         throw new Error(data.error || "Erro ao editar o estudo");
@@ -56,9 +58,8 @@ export const useEditTask = (taskId: string | null) => {
 
     if (title) data.title = title;
     if (link) data.link = link;
-    if (done) data.done = done;
 
-    return mutation.mutate(data);
+    return mutation.mutate({ ...data, done });
   }
 
   return {
