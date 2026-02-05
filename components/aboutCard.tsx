@@ -16,7 +16,7 @@ export const AboutCard = ({ data, Icon }: Props) => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div
-        className={` group relative flex flex-col gap-4 p-6 md:p-8 rounded-2xl transition-all duration-300
+        className={`group relative flex flex-col gap-4 p-6 md:p-8 rounded-2xl transition-all duration-300
           shadow-md hover:shadow-xl hover:-translate-y-2 text-white
 
           ${data.id === 1 && "bg-main-30"}
@@ -25,7 +25,7 @@ export const AboutCard = ({ data, Icon }: Props) => {
         `}
       >
         <div className="flex items-center gap-5">
-          <div className=" flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 dark:bg-black/20
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 dark:bg-black/20
             transition-all duration-300 group-hover:scale-110 group-hover:rotate-12"
           >
             <Icon className="h-6 w-6" />

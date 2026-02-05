@@ -55,14 +55,14 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
             accessibilityLayer
             data={chartData}
             margin={{
-              top: 20,
+              top: 28,
             }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="estudo"
               tickLine={false}
-              tickMargin={10}
+              tickMargin={8}
               axisLine={false}
               tickFormatter={(value) => { return value.length > 7 ? value.slice(0, 6) + '...' : value }}
             />
