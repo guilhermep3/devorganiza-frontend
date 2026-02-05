@@ -39,8 +39,11 @@ export const useEditStudy = (studyId: string | null) => {
     },
 
     onSuccess() {
-      queryClient.invalidateQueries({ queryKey: ["studies"] });
-      queryClient.invalidateQueries({ queryKey: ["study", studyId] });
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["studies"] });
+        queryClient.invalidateQueries({ queryKey: ["study", studyId] });
+        mutation.reset();
+      }, 2000);
     },
   });
 

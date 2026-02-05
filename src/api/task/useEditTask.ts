@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 
 type EditTaskPayload = {
@@ -9,9 +9,10 @@ type EditTaskPayload = {
 export const useEditTask = (taskId: string | null) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload: EditTaskPayload) => {
-      if (!taskId) throw new Error("ID do estudo não informado");
+      if (!taskId) throw new Error("ID da tarefa não informado");
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const TOKEN = typeof window !== "undefined"
@@ -25,10 +26,8 @@ export const useEditTask = (taskId: string | null) => {
         },
         body: JSON.stringify(payload),
       });
-      console.log("payload", payload)
 
       const data = await res.json();
-      console.log("data", data)
 
       if (!res.ok) {
         throw new Error(data.error || "Erro ao editar o estudo");
@@ -37,9 +36,12 @@ export const useEditTask = (taskId: string | null) => {
       return data;
     },
 
-    onSuccess() {
-
-    },
+    onSuccess: () => {
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ["studies"] });
+        mutation.reset();
+      }, 2000);
+    }
   });
 
   async function handleSubmit(e: React.FormEvent, { title, link, done }: EditTaskPayload) {

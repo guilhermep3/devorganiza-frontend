@@ -22,14 +22,12 @@ export const DeleteModal = ({
 }: Props) => {
 
   useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        refetch();
-      }, 2000);
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+      refetch();
+    }, 2000);
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, [isSuccess]);
 
   return (
@@ -51,9 +49,7 @@ export const DeleteModal = ({
             Cancelar
           </ButtonCN>
           <ButtonCN className={`bg-red-600 hover:bg-red-700 text-white ${loading && 'pointer-events-none'}`}
-            onClick={() => {
-              handleAction();
-            }}
+            onClick={handleAction}
           >
             {loading && <Loader2 className="animate-spin mr-2 w-4 h-4" />}
             Excluir

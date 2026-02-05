@@ -33,14 +33,12 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
   }, [study]);
 
   useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        refetch();
-      }, 2000);
+    const timer = setTimeout(() => {
+      setIsOpen(false);
+      refetch();
+    }, 2000);
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, [isSuccess]);
 
   return (
@@ -58,7 +56,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
           }}
         >
           {error && <p className="errorMsg">{error.message}</p>}
-          {isSuccess && <p className="successMsg">Usuário atualizado com sucesso</p>}
+          {isSuccess && <p className="successMsg">Estudo atualizado com sucesso</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
             <input className="inputCustom w-full"
