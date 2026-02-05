@@ -11,7 +11,7 @@ export interface TasksByType {
 
 export interface FinishedTasksByMonth {
   month: string,
-  tarefa: number,
+  tarefa: string,
 }
 
 export interface AverageTimeFinish {

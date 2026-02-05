@@ -37,12 +37,12 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
   const chartData = months.map((month, index) => {
     const monthNumber = index + 1;
     const tasksByMonth = data.find(i =>
-      Number(i.month) === monthNumber
+      Number(i.month) === Number(monthNumber)
     )
-    
+
     return {
       mes: month,
-      tarefa: tasksByMonth?.tarefa ?? 0
+      tarefa: Number(tasksByMonth?.tarefa ?? 0)
     }
   })
 
@@ -95,7 +95,7 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
             />
             <Area
               dataKey="tarefa"
-              type="natural"
+              type="monotone"
               fill="var(--color-main-30)"
               fillOpacity={0.4}
               stroke="var(--color-main-60)"
