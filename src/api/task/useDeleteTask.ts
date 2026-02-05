@@ -1,6 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useDeleteTask = (taskId: string | null) => {
+
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async () => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -14,17 +16,16 @@ export const useDeleteTask = (taskId: string | null) => {
         },
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
-        throw new Error(data.error || "Erro ao excluir a tarefa");
+        throw new Error("Erro ao excluir a tarefa");
       }
 
-      return data;
+      return true;
     },
 
     onSuccess: () => {
       setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['studies'] });
         mutation.reset();
       }, 2000);
     }
