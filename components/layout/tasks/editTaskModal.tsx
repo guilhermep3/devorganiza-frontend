@@ -25,9 +25,9 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
     if (task) {
       setTitle(task.title ?? "");
       setLink(task.link ?? "");
-      setDone(task.done ?? "");
+      setDone(task.done ?? false);
     }
-  }, [task]);
+  }, [isOpen, task]);
 
   useEffect(() => {
     const timer = setTimeout(() => {

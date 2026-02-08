@@ -40,9 +40,13 @@ export default function Page() {
           <div>
             <h1 className="dashboardSectionTitle text-start">{data?.study?.name ?? "Estudo"}</h1>
             <p className="text-sm text-gray-60 my-2">{data?.study.description}</p>
-            <h2 className="dashboardSectionSubtitle flex items-center gap-2 mt-2">
-              <div className="p-0.5 border border-gray-30 rounded-full" onClick={() => router.push('/studies')}>
-                <ArrowLeft className="cursor-pointer w-5 h-5" />
+            <h2 className="dashboardSectionSubtitle flex items-center gap-2 mt-4 text-sm">
+              <div onClick={() => router.push("/studies")}
+                className="group inline-flex items-center justify-center p-1 rounded-full cursor-pointer
+                border border-gray-40 bg-white dark:bg-gray-10 transition hover:bg-gray-20
+                hover:border-gray-50 active:scale-95"
+              >
+                <ArrowLeft className="w-5 h-5 text-gray-70 transition" />
               </div>
               studies/{data?.study.name}
             </h2>

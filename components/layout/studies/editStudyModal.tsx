@@ -30,7 +30,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
       setLink(study.link ?? "");
       setDescription(study.description ?? "");
     }
-  }, [study]);
+  }, [isOpen, study]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
