@@ -67,7 +67,9 @@ export const StudyCard = ({ data }: props) => {
             </div>
             <div className="w-full bg-gray-20 rounded-full h-3 border border-gray-20">
               <div
-                className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                className={`h-2 rounded-full transition-all duration-300
+                  ${percentage >= 100 ? "bg-green-500" : "bg-yellow-500"}
+                `}
                 style={{ width: `${percentage}%` }}
               ></div>
             </div>
@@ -78,14 +80,14 @@ export const StudyCard = ({ data }: props) => {
                 <List className="w-4 h-4" />
                 <span className="font-bold">{total}</span>
               </div>
-              <span className="text-xs text-gray-50">Total</span>
+              <span className="text-xs text-gray-70">Total</span>
             </div>
             <div className="p-1 md:p-2 rounded bg-green-100 dark:bg-green-950">
               <div className="flex items-center justify-center gap-1 text-green-20">
                 <ListCheck className="w-4 h-4" />
                 <span className="font-bold">{completed}</span>
               </div>
-              <span className="text-xs text-gray-50">Concluídas</span>
+              <span className="text-xs text-gray-70">Concluídas</span>
             </div>
           </div>
         </div>
