@@ -32,7 +32,7 @@ export const DeleteModal = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>

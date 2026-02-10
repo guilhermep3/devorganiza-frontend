@@ -40,7 +40,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Editar tarefa</DialogTitle>
           <DialogDescription>

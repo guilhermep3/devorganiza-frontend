@@ -38,7 +38,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Criar estudo</DialogTitle>
           <DialogDescription>

@@ -66,12 +66,12 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
 
   return (
     <Dialog open={isEditing} onOpenChange={setIsOpen}>
-      <DialogContent className="sm:max-w-96 gap-6">
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Editar perfil</DialogTitle>
           <DialogDescription>Edite as informações do seu perfil</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 w-full max-w-80 mx-auto">
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 w-full mx-auto">
           {error && <p className="errorMsg">{error.message}</p>}
           {isSuccess && <p className="successMsg">Usuário atualizado com sucesso</p>}
           <div className="flex flex-col items-center gap-3 w-full">
@@ -102,23 +102,23 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
               </div>
             </label>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full">
             <Label>Nome</Label>
-            <input className="inputCustom text-base"
+            <input className="inputCustom w-full text-base"
               placeholder="Seu nome"
               {...register("name")}
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full">
             <Label>Nome de usuário</Label>
-            <input className="inputCustom text-base"
+            <input className="inputCustom w-full text-base"
               placeholder="Seu nome de usuário"
               {...register("username")}
             />
             {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 w-full">
             <Label>Senha</Label>
             <Controller
               control={control}
@@ -127,6 +127,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
                 <PasswordInput
                   value={field.value || ""}
                   onChange={field.onChange}
+                  className="w-full"
                 />
               )}
             />

@@ -4,12 +4,15 @@ import { useState } from "react";
 type props = {
   value: string,
   onChange: (newV: any) => void;
+  className?: string;
 }
-export const PasswordInput = ({ value, onChange }: props) => {
+export const PasswordInput = ({ value, onChange, className }: props) => {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <div className="inputCustom flex gap-2 focus-within:ring focus-within:ring-main-30">
+    <div className={`inputCustom flex gap-2 focus-within:ring focus-within:ring-main-30
+      ${className ?? ''}
+    `}>
       <input type={showPass ? 'text' : 'password'}
         placeholder="Senha"
         className="text-base w-full outline-none"

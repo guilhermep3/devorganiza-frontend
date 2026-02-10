@@ -22,7 +22,7 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
 
   return (
     <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
-      <DialogContent>
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Excluir conta</DialogTitle>
           <DialogDescription>

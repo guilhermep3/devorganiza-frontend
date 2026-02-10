@@ -22,7 +22,7 @@ export const LogoutModal = ({ isLogOut, setIsLogout }: Props) => {
     <Dialog open={isLogOut} onOpenChange={setIsLogout}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Excluir conta</DialogTitle>
+          <DialogTitle>Sair do login</DialogTitle>
           <DialogDescription>
             Tem certeza que deseja sair do login da sua conta?
           </DialogDescription>

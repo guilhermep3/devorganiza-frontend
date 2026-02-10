@@ -31,7 +31,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Criar tarefa</DialogTitle>
           <DialogDescription>

@@ -43,7 +43,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Editar estudo</DialogTitle>
           <DialogDescription>
@@ -57,7 +57,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
         >
           {error && <p className="errorMsg">{error.message}</p>}
           {isSuccess && <p className="successMsg">Estudo atualizado com sucesso</p>}
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Nome</label>
             <input className="inputCustom w-full"
               value={name}
