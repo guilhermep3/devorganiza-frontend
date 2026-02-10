@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { EditProfileModal } from "@/components/layout/profile/editProfileModal";
 import { DeleteProfileModal } from "@/components/layout/profile/deleteProfileModal";
 import { ProfileCardSkeleton } from "@/components/layout/profile/profileCardSkeleton";
-import { TopCard } from "@/components/layout/profile/topCard";
 import { LogoutModal } from "@/components/layout/profile/logoutModal";
+import { TopInfosCard } from "@/components/layout/dashboard/topInfosCard";
 
 export default function Page() {
   const [isEditing, setIsEditing] = useState(false);
@@ -32,18 +32,18 @@ export default function Page() {
           )}
           <div className="flex flex-col gap-4 w-full">
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3 lg:gap-4 flex-1 w-full">
-              <TopCard title="Total de estudos"
+              <TopInfosCard title="Total de estudos"
+                Icon={<BookOpenCheck className="text-main-40"/>}
                 data={data?.studiesCount ?? 0}
-                Icon={BookOpenCheck}
               />
-              <TopCard title="Total de tarefas"
+              <TopInfosCard title="Total de tarefas"
+                Icon={<ListChecks className="text-main-30"/>}
                 data={data?.tasksCount ?? 0}
-                Icon={ListChecks}
               />
-              <TopCard title="Conclusão geral"
+              <TopInfosCard title="Conclusão geral"
+                Icon={<GaugeCircle className="text-green-600"/>}
                 data={data?.studiesPercentage ?? 0}
-                Icon={GaugeCircle}
-                percentage
+                content={<span className="">%</span>}
               />
             </div>
             <div className="flex flex-col gap-8 bg-card p-4 rounded-md border border-gray-20">

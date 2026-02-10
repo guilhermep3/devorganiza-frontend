@@ -66,7 +66,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
 
   return (
     <Dialog open={isEditing} onOpenChange={setIsOpen}>
-      <DialogContent>
+      <DialogContent className="sm:max-w-96 gap-6">
         <DialogHeader>
           <DialogTitle>Editar perfil</DialogTitle>
           <DialogDescription>Edite as informações do seu perfil</DialogDescription>
@@ -74,10 +74,9 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 w-full max-w-80 mx-auto">
           {error && <p className="errorMsg">{error.message}</p>}
           {isSuccess && <p className="successMsg">Usuário atualizado com sucesso</p>}
-          <div className="flex flex-col gap-2 w-full">
-            <Label>Foto de perfil</Label>
-            <input
-              type="file"
+          <div className="flex flex-col items-center gap-3 w-full">
+            <Label className="text-sm font-medium">Foto de perfil</Label>
+            <input type="file"
               id="imageInput"
               accept="image/*"
               className="hidden"
@@ -89,34 +88,37 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
               })}
             />
             <label htmlFor="imageInput"
-              className="group relative w-24 h-24 rounded-full overflow-hidden mt-2 mx-auto border cursor-pointer"
+              className="group relative w-28 h-28 rounded-full overflow-hidden border-4 border-gray-200
+                cursor-pointer hover:border-main-30 transition-all duration-200 shadow-md hover:shadow-lg mx-auto"
               title="Atualizar foto"
             >
               <img
                 src={previewUrl}
                 alt="Preview"
-                className="w-full h-full object-cover z-10 brightness-90 group-hover:brightness-75 transition"
+                className="w-full h-full object-cover transition-all duration-200 group-hover:brightness-75"
               />
-              <Camera className="absolute z-30 left-1/2 top-1/2 -translate-1/2 stroke-3 w-7 h-7 text-black" />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
+                <Camera className="w-8 h-8 text-white drop-shadow-lg" strokeWidth={2.5} />
+              </div>
             </label>
           </div>
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-2">
             <Label>Nome</Label>
-            <input className="inputCustom w-full text-base"
+            <input className="inputCustom text-base"
               placeholder="Seu nome"
               {...register("name")}
             />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-2">
             <Label>Nome de usuário</Label>
-            <input className="inputCustom w-full text-base"
+            <input className="inputCustom text-base"
               placeholder="Seu nome de usuário"
               {...register("username")}
             />
             {errors.username && <p className="text-red-500 text-sm">{errors.username.message}</p>}
           </div>
-          <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col gap-2">
             <Label>Senha</Label>
             <Controller
               control={control}

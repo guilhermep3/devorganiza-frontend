@@ -5,8 +5,9 @@ type props = {
   title: string;
   Icon: LucideProps;
   data: string | ReactNode;
+  content?: ReactNode;
 }
-export const TopInfosCard = ({ title, Icon, data }: props) => {
+export const TopInfosCard = ({ title, Icon, data, content }: props) => {
 
   return (
     <div className="group flex flex-col gap-3 bg-card p-3 md:p-4 rounded-md border border-gray-20 hover:border-main-20 transition">
@@ -20,6 +21,7 @@ export const TopInfosCard = ({ title, Icon, data }: props) => {
       </div>
       <div className="font-bold text-2xl mt-auto">
         {data}
+        {content}
       </div>
     </div>
   )
