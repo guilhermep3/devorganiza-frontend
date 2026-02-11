@@ -21,7 +21,7 @@ export const StudyCard = ({ data }: props) => {
 
   return (
     <div className={`flex flex-col bg-card border rounded-md overflow-hidden transition
-      ${data.study.status === 'finalizado' ? "border-green-20" : "border-yellow-500"}
+      ${percentage >= 100 ? "border-green-20" : "border-yellow-500"}
     `}>
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
         <div className="mb-1">
@@ -31,16 +31,16 @@ export const StudyCard = ({ data }: props) => {
               {data.study.type || 'Sem tipo'}
             </span>
             <div className="flex items-center gap-2">
-              {data.study.status === 'finalizado'
+              {percentage >= 100
                 ? <CheckCircle className="text-green-20" />
                 : <Hourglass className="text-yellow-500" />
               }
               <div className={`hidden md:flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
-              ${data.study.status === 'finalizado'
+              ${percentage >= 100
                   ? 'finishedCustom' : 'pendentCustom'
                 }`}
               >
-                <p>{data.study.status === 'finalizado' ? "Concluída" : "Pendente"}</p>
+                <p>{percentage >= 100 ? "Concluída" : "Pendente"}</p>
               </div>
             </div>
           </div>
