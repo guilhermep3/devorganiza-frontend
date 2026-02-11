@@ -34,10 +34,10 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting, setIsLogout }: 
         <p className="font-semibold text-xl flex items-center justify-center gap-1">
           <User2 className="text-main-30" /> {data.name}
         </p>
-        <p className="font-semibold text-xs lg:text-sm text-gray-40 flex items-center justify-center gap-1">
+        <p className="font-semibold text-xs lg:text-sm text-gray-60 flex items-center justify-center gap-1">
           <AtSign className="text-main-30 w-4 h-4" /> {data.username}
         </p>
-        <p className="text-xs lg:text-sm text-gray-50 flex justify-center items-center gap-1">
+        <p className="text-xs lg:text-sm text-gray-60 flex justify-center items-center gap-1">
           <Mail className="text-main-30" /> {data.email}
         </p>
       </div>
