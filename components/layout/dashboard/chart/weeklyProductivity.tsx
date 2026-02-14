@@ -31,13 +31,13 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
+const WeeklyProductivityLogic = (data: WeeklyProductivity[]) => {
   const dataByWeekDay = Object.fromEntries(
     data.map(item => [Number(item.weekDay), item])
   );
 
   const chartData = weekDays.map((day, index) => {
-    const tasksOfDay = dataByWeekDay[index] ?? [];
+    const tasksOfDay = dataByWeekDay[index];
 
     return {
       semana: day,
@@ -53,14 +53,22 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
   const yesterdayData = chartData[yesterdayIndex];
 
   const createdDifference = calculateDifference(
-    todayData.criado,
-    yesterdayData.criado
+    todayData.criado, yesterdayData.criado
   )
 
   const finishedDifference = calculateDifference(
-    Number(todayData.finalizado),
-    Number(yesterdayData.finalizado)
+    todayData.finalizado, yesterdayData.finalizado
   )
+
+  return {
+    chartData,
+    createdDifference,
+    finishedDifference,
+  }
+}
+
+export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
+  const { chartData, createdDifference, finishedDifference } = WeeklyProductivityLogic(data);
 
   return (
     <Card>
@@ -68,7 +76,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
         <CardTitle className="chartTitleCustom">
           Tarefas criadas e finalizadas
         </CardTitle>
-        <CardDescription>Ordenado por semana</CardDescription>
+        <CardDescription>Ordenado por dias da semana</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
