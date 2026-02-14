@@ -33,8 +33,7 @@ const colors = [
   "var(--color-main-20)",
 ]
 
-export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
-
+const quizAverageScoreLogic = (data: AverageScore[]) => {
   const chartData = [...data].map((i) => ({
     quiz: i.quizTitle,
     score: Number(i.averageScore) ?? 0
@@ -56,6 +55,14 @@ export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
   const differenceBottom =
     penultimate && penultimate.score > 0
       ? ((penultimate.score - last.score) / penultimate.score) * 100 : 0;
+
+  return { chartData, first, second, last, penultimate, differenceTop, differenceBottom }
+}
+
+export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
+  const {
+    chartData, first, second, last, penultimate, differenceTop, differenceBottom
+  } = quizAverageScoreLogic(data);
 
   return (
     <Card className="flex flex-col">

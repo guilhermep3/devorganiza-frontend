@@ -1,5 +1,4 @@
 "use client"
-import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
 import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
@@ -22,7 +21,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
+const quizFasterAttemptsLogic = (data: FasterAttempts[]) => {
   const chartData = data.map((i) => {
     const seconds = i.duracao;
     return {
@@ -41,6 +40,11 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
 
   const percentage = Math.abs(difference).toFixed(2);
 
+  return { chartData, fastest, slowest, percentage }
+}
+
+export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
+  const { chartData, fastest, slowest, percentage } = quizFasterAttemptsLogic(data);
 
   return (
     <Card>

@@ -1,5 +1,4 @@
 "use client"
-import { TrendingUp } from "lucide-react"
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
 
 import {
@@ -23,7 +22,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[] }) {
+const AverageTimeFinishTaskLogic = (data: AverageTimeFinish[]) => {
   const chartData = data.map((i) => ({
     ...i,
     media: (i.media ?? 0) / 60,
@@ -40,8 +39,14 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
       100
   }
 
-  const first = chartData[0]
-  const second = chartData[1]
+  const first = chartData[0];
+  const second = chartData[1];
+
+  return { chartData, difference, first, second };
+}
+
+export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[] }) {
+  const { chartData, difference, first, second } = AverageTimeFinishTaskLogic(data);
 
   return (
     <Card>

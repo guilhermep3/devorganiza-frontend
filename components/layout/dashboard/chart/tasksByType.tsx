@@ -18,9 +18,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-
-export function TasksByType({ data }: { data: TasksByType[] }) {
-
+const TasksByTypeLogic = (data: TasksByType[]) => {
   const formatSetor = (type: SetorType) => {
     const map: Record<SetorType, string> = {
       frontend: "Front-end",
@@ -50,10 +48,15 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
   const [first, second] = chartData;
 
   const firstPercentage = totalTasks > 0 ? (first.tarefas / totalTasks) * 100 : 0;
-
   const secondPercentage = totalTasks > 0 ? (second.tarefas / totalTasks) * 100 : 0;
 
   const difference = firstPercentage - secondPercentage;
+
+  return { chartData, first, second, firstPercentage, secondPercentage, difference, }
+}
+
+export function TasksByType({ data }: { data: TasksByType[] }) {
+  const { chartData, first, second, firstPercentage, difference } = TasksByTypeLogic(data);
 
   return (
     <Card>

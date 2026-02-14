@@ -33,7 +33,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 
-export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth[] }) {
+const finishedTasksByMonthLogic = (data: FinishedTasksByMonth[]) => {
   const chartData = months.map((month, index) => {
     const monthNumber = index + 1;
     const tasksByMonth = data.find(i =>
@@ -62,6 +62,12 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
   );
 
   const year = new Date().getFullYear()
+
+  return { chartData, finishedDifference, year }
+}
+
+export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth[] }) {
+  const { chartData, finishedDifference, year } = finishedTasksByMonthLogic(data);
 
   return (
     <Card>
