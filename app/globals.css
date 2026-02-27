@@ -207,7 +207,7 @@ body {
     @apply text-xl md:text-2xl font-bold text-start
   }
   .dashboardSectionSubtitle {
-    @apply text-sm md:text-base text-gray-50 mb-5 text-start
+    @apply text-sm md:text-base text-gray-60 mb-5 text-start
   }
   .chartTitleCustom {
     @apply text-xl font-semibold

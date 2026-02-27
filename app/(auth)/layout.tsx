@@ -7,7 +7,7 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <div className="containerCustom justify-center items-center min-h-screen pt-24">
       <Header noNav />
-      <div className="flex md:flex-row justify-center items-center gap-10 p-3 md:p-6 rounded-lg bg-card
+      <div className="flex md:flex-row justify-center items-center gap-10 p-5 md:p-6 rounded-lg bg-card
         shadow-md shadow-gray-20 border border-gray-30"
       >
         {children}

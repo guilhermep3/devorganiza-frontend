@@ -3,7 +3,7 @@ import { BookOpenCheck, ListChecks, GaugeCircle, CircleQuestionMark, Loader2 } f
 import { useUser } from "@/src/api/user/useUser";
 import { ProfileAttemptTable } from "@/components/layout/profile/profileAttemptTable";
 import { ProfileCard } from "@/components/layout/profile/profileCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EditProfileModal } from "@/components/layout/profile/editProfileModal";
 import { DeleteProfileModal } from "@/components/layout/profile/deleteProfileModal";
 import { ProfileCardSkeleton } from "@/components/layout/profile/profileCardSkeleton";

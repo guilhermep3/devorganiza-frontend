@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignin } from "@/src/api/useSignin";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Page() {
   const [email, setEmail] = useState("");
