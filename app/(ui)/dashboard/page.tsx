@@ -19,9 +19,10 @@ import { ChartLoading } from "@/components/layout/dashboard/chart/chartLoading";
 import { TopInfosSkeleton } from "@/components/layout/dashboard/topInfosSkeleton";
 import { useUser } from "@/src/api/user/useUser";
 import { EmptyChart } from "@/components/layout/dashboard/chart/emptyChart";
+import { useMe } from "@/src/api/useMe";
 
 export default function Page() {
-
+  const me = useMe();
   const weeklyProductivity = useWeeklyProductivity();
   const tasksByType = useTasksByType();
   const finishedTasks = useFinishedTasksByMonth();
