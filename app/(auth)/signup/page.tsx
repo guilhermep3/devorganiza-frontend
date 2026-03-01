@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/button";
+import { GoogleOauthButton } from "@/components/googleOauthButton";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignup } from "@/src/api/useSignup";
 import Link from "next/link";
@@ -15,8 +16,9 @@ export default function Page() {
   return (
     <div>
       <h1 className="text-2xl font-bold text-center mb-2">Crie sua conta</h1>
-      <h2 className="text-sm text-center">Preencha o formulário abaixo</h2>
-      <form className="my-10 space-y-4"
+      <h2 className="text-sm text-center mb-5">Preencha o formulário abaixo</h2>
+      <GoogleOauthButton />
+      <form className="my-8 space-y-3"
         onSubmit={(e) => handleSubmit(e, { name, username, email, password })}
       >
         <div className="flex flex-col gap-0">
@@ -86,7 +88,7 @@ export default function Page() {
         Já tem uma conta?{" "}
         <Link
           href={`/signin`}
-          className="text-main-60 font-semibold hover:underline"
+          className="text-main-60 font-semibold hover:underline ml-1"
         >
           Fazer login
         </Link>

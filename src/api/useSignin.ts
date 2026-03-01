@@ -25,16 +25,22 @@ export const useSignin = () => {
         body: JSON.stringify(credentials)
       });
 
-      const data = await res.json();
+      let data;
+
+      try {
+        data = await res.json();
+      } catch (error) {
+        data = null;
+      }
 
       if (!res.ok) {
-        throw new Error(data.error || "Erro ao fazer login");
+        throw new Error(data?.error ?? "Email ou senha inválidos");
       }
 
       return data;
     },
     onSuccess: (data) => {
-      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 2 days
+      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 3 days
       window.location.href = '/dashboard';
     },
   });
