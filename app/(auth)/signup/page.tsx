@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/button";
+import { DividerOu } from "@/components/dividerOu";
 import { GoogleOauthButton } from "@/components/googleOauthButton";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignup } from "@/src/api/useSignup";
@@ -14,14 +15,24 @@ export default function Page() {
   const { handleSubmit, isPending, error, errors, clearErrors } = useSignup();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-center mb-2">Crie sua conta</h1>
-      <h2 className="text-sm text-center mb-5">Preencha o formulário abaixo</h2>
-      <GoogleOauthButton />
-      <form className="my-8 space-y-3"
+    <div className="w-full max-w-80">
+      <div className="text-center mb-5">
+        <h1 className="text-2xl font-bold">Crie sua conta</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Preencha os campos abaixo para criar sua conta
+        </p>
+      </div>
+      <div>
+        <GoogleOauthButton />
+        <DividerOu />
+      </div>
+      <form className="mt-2 space-y-4 w-full"
         onSubmit={(e) => handleSubmit(e, { name, username, email, password })}
       >
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 w-full">
+          <label className="text-sm font-medium">
+            Nome
+          </label>
           <input
             type="text"
             className="inputCustom text-base"
@@ -36,7 +47,10 @@ export default function Page() {
             <p className="errorMsg">{errors.name}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 w-full">
+          <label className="text-sm font-medium">
+            Nome de usuário
+          </label>
           <input
             type="text"
             className="inputCustom text-base"
@@ -51,11 +65,13 @@ export default function Page() {
             <p className="errorMsg">{errors.username}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0">
-          <input
-            type="email"
+        <div className="flex flex-col gap-0 w-full">
+          <label className="text-sm font-medium">
+            Email
+          </label>
+          <input type="email"
             className="inputCustom text-base"
-            placeholder="Email"
+            placeholder="seuemail@email.com"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -66,7 +82,10 @@ export default function Page() {
             <p className="errorMsg">{errors.email}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 w-full">
+          <label className="text-sm font-medium">
+            Senha
+          </label>
           <PasswordInput value={password}
             onChange={(e) => {
               setPassword(e);
@@ -84,7 +103,7 @@ export default function Page() {
           {isPending ? "Criando..." : "Criar Conta"}
         </Button>
       </form>
-      <p className="text-center text-sm">
+      <p className="text-center text-sm mt-5">
         Já tem uma conta?{" "}
         <Link
           href={`/signin`}

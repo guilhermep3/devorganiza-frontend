@@ -1,5 +1,6 @@
 "use client";
 import { Button } from "@/components/button";
+import { DividerOu } from "@/components/dividerOu";
 import { GoogleOauthButton } from "@/components/googleOauthButton";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignin } from "@/src/api/useSignin";
@@ -12,17 +13,27 @@ export default function Page() {
   const { handleSubmit, isPending, error, errors, clearErrors } = useSignin();
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold text-center mb-2">Faça login</h1>
-      <h2 className="text-sm text-center mb-5">Preencha o formulário abaixo</h2>
-      <GoogleOauthButton />
-      <form className="my-8 space-y-3"
+    <div className="w-full max-w-80">
+      <div className="text-center mb-5">
+        <h1 className="text-2xl font-bold">Faça login</h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Entre com sua conta para continuar
+        </p>
+      </div>
+      <div>
+        <GoogleOauthButton />
+        <DividerOu />
+      </div>
+      <form className="mt-2 space-y-4 w-full"
         onSubmit={(e) => handleSubmit(e, { email, password })}
       >
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 w-full">
+          <label className="text-sm font-medium">
+            Email
+          </label>
           <input type="email"
             className="inputCustom text-base"
-            placeholder="Email"
+            placeholder="seuemail@email.com"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -33,7 +44,10 @@ export default function Page() {
             <p className="errorMsg">{errors.email}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0">
+        <div className="flex flex-col gap-0 w-full">
+          <label className="text-sm font-medium">
+            Senha
+          </label>
           <PasswordInput value={password}
             onChange={(e) => {
               setPassword(e);
@@ -48,11 +62,13 @@ export default function Page() {
           <p className="errorMsg">{errors.submit}</p>
         )}
         {error && <p className="errorMsg">{error.message}</p>}
-        <Button submit className={`w-full ${isPending ? 'pointer-events-none opacity-75' : ''}`}>
+        <Button submit
+          className={`w-full ${isPending ? 'pointer-events-none opacity-75' : ''}`}
+        >
           {isPending ? "Entrando..." : "Entrar"}
         </Button>
       </form>
-      <p className="text-center text-sm">
+      <p className="text-center text-sm mt-5">
         Não tem uma conta?{" "}
         <Link
           href={`/signup`}
