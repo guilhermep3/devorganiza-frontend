@@ -10,10 +10,10 @@ export default function Page() {
     const token = params.get("token");
 
     if (token) {
-      localStorage.setItem("token", token);
-      router.push("/dashboard");
+      document.cookie = `token=${token}; path=/; max-age=${86400 * 3}`; // 3 days
+      router.replace("/dashboard");
     } else {
-      router.push("/signin");
+      router.replace("/signin");
     }
   }, []);
 
