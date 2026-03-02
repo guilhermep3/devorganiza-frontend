@@ -21,8 +21,6 @@ export const useEditUser = () => {
       const changed: Record<string, any> = {};
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-      const TOKEN = typeof window !== "undefined"
-        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       if (data.name !== defaults.name) changed.name = data.name;
       if (data.username !== defaults.username) changed.username = data.username;
@@ -38,9 +36,6 @@ export const useEditUser = () => {
 
         const resImage = await fetch(`${API_URL}/users/image`, {
           method: "PUT",
-          headers: {
-            "Authorization": `Bearer ${TOKEN}`,
-          },
           body: formData
         });
 
@@ -58,8 +53,8 @@ export const useEditUser = () => {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${TOKEN}`,
           },
+          credentials: "include",
           body: JSON.stringify(changed)
         });
 

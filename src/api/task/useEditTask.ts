@@ -15,15 +15,13 @@ export const useEditTask = (taskId: string | null) => {
       if (!taskId) throw new Error("ID da tarefa não informado");
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const TOKEN = typeof window !== "undefined"
-        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/tasks/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${TOKEN}`,
         },
+        credentials: "include",
         body: JSON.stringify(payload),
       });
 

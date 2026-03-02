@@ -6,15 +6,13 @@ export const useAllQuizzes = () => {
     queryKey: ['allQuizzes'],
     queryFn: async () => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-      const TOKEN = typeof window !== 'undefined'
-        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/quizzes/all`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${TOKEN}`
-        }
+        },
+        credentials: "include"
       });
 
       const data = await res.json();

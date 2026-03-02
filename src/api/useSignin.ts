@@ -1,3 +1,4 @@
+"use client"
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 
@@ -41,7 +42,7 @@ export const useSignin = () => {
       return data;
     },
     onSuccess: (data) => {
-      document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 3 days
+      // document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 3 days
       window.location.href = '/dashboard';
     },
   });

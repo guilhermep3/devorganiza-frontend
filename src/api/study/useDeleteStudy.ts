@@ -6,14 +6,10 @@ export const useDeleteStudy = (studyId: string) => {
   const mutation = useMutation({
     mutationFn: async () => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const TOKEN = typeof window !== 'undefined'
-        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
         method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${TOKEN}`
-        }
+        credentials: "include"
       });
 
       if (!res.ok) {

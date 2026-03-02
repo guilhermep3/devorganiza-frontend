@@ -17,15 +17,13 @@ export const useEditStudy = (studyId: string | null) => {
       if (!studyId) throw new Error("ID do estudo não informado");
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const TOKEN = typeof window !== "undefined"
-        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/studies/${studyId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${TOKEN}`,
         },
+        credentials: "include",
         body: JSON.stringify(payload),
       });
 

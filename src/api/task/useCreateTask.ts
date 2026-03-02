@@ -12,15 +12,13 @@ export const useCreateTask = (taskId: string | null) => {
   const mutation = useMutation({
     mutationFn: async (credentials: CreateTask) => {
       const API_URL = process.env.NEXT_PUBLIC_API_URL;
-      const TOKEN = typeof window !== "undefined"
-        ? document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1] : null;
 
       const res = await fetch(`${API_URL}/tasks/${taskId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${TOKEN}`,
         },
+        credentials: "include",
         body: JSON.stringify(credentials)
       });
 

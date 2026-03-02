@@ -34,6 +34,7 @@ export default function Page() {
   const { data: studiesData } = useStudies();
   const { data: quizzesData } = useQuizzes();
   const { data: quizzesLockData } = useQuizzesLocked();
+  console.log("me", me)
 
   const hasTopInfosData = !!userData && !!studiesData &&
     !!quizzesData && !!quizzesLockData;
