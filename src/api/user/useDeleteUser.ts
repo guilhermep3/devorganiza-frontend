@@ -6,7 +6,7 @@ export const useDeleteUser = () => {
 
       const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
-      const res = await fetch(`${API_URL}/users/delete`, {
+      const res = await fetch(`${API_URL}/users`, {
         method: "DELETE",
         credentials: "include"
       });
