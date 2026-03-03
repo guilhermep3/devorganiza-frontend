@@ -11,7 +11,15 @@ export const useDeleteUser = () => {
         credentials: "include"
       });
 
-      const data = await res.json();
+      const contentType = res.headers.get("Content-Type");
+
+      let data;
+
+      if (!contentType || !contentType.includes("application/json")) {
+        data = await res.text();
+      } else {
+        data = await res.json();
+      }
 
       if (!res.ok) {
         throw new Error(data.error || "Não foi possível excluir a conta");
