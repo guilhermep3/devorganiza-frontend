@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { apiFetch } from "../apiFetch";
 
 type EditTaskPayload = {
   title?: string;
@@ -14,24 +15,10 @@ export const useEditTask = (taskId: string | null) => {
     mutationFn: async (payload: EditTaskPayload) => {
       if (!taskId) throw new Error("ID da tarefa não informado");
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await fetch(`${API_URL}/tasks/${taskId}`, {
+      return apiFetch(`/tasks/${taskId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
         body: JSON.stringify(payload),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Erro ao editar o estudo");
-      }
-
-      return data;
     },
 
     onSuccess: () => {

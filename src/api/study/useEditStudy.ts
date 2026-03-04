@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
+import { apiFetch } from "../apiFetch";
 
 type EditStudyPayload = {
   name?: string;
@@ -8,32 +9,16 @@ type EditStudyPayload = {
   description?: string;
 };
 
-export const useEditStudy = (studyId: string | null) => {
+export const useEditStudy = (studyId: string) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload: EditStudyPayload) => {
-      if (!studyId) throw new Error("ID do estudo não informado");
-
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await fetch(`${API_URL}/studies/${studyId}`, {
+      return apiFetch(`/studies/${studyId}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
         body: JSON.stringify(payload),
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Erro ao editar o estudo");
-      }
-
-      return data;
     },
 
     onSuccess() {

@@ -1,22 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { apiFetch } from "../apiFetch";
 
 export const useDeleteStudy = (studyId: string) => {
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async () => {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await fetch(`${API_URL}/studies/${studyId}`, {
-        method: "DELETE",
-        credentials: "include"
-      });
-
-      if (!res.ok) {
-        throw new Error("Erro ao excluir a tarefa");
-      }
-
-      return true;
+      return apiFetch(`/studies/${studyId}`, { method: "DELETE" });
     },
 
     onSuccess: () => {

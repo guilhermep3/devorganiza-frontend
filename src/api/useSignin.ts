@@ -1,6 +1,7 @@
 "use client"
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { apiFetch } from "./apiFetch";
 
 interface SigninData {
   email: string;
@@ -14,32 +15,13 @@ interface SigninResponse {
 
 export const useSignin = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
   const mutation = useMutation<SigninResponse, Error, SigninData>({
     mutationFn: async (credentials: SigninData) => {
-      const res = await fetch(`${API_URL}/auth/signin`, {
+      return apiFetch(`/auth/signin`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
         body: JSON.stringify(credentials)
-      });
-
-      let data;
-
-      try {
-        data = await res.json();
-      } catch (error) {
-        data = null;
-      }
-
-      if (!res.ok) {
-        throw new Error(data?.error ?? "Email ou senha inválidos");
-      }
-
-      return data;
+      })
     },
     onSuccess: (data) => {
       document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 3 days

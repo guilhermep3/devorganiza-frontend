@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query"
 import { useState } from "react";
+import { apiFetch } from "../apiFetch";
 
 interface StudyData {
   name: string;
@@ -13,23 +14,10 @@ export const useCreateStudy = () => {
 
   const mutation = useMutation<any, Error, StudyData>({
     mutationFn: async (credentials: StudyData) => {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await fetch(`${API_URL}/studies`, {
+      return apiFetch(`/studies`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
         body: JSON.stringify(credentials)
       });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Erro ao criar um estudo");
-      }
-      return data;
     },
     onSuccess: () => {
       setTimeout(() => {

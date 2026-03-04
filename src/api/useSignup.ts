@@ -1,6 +1,7 @@
 "use client"
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
+import { apiFetch } from "./apiFetch";
 
 interface SignupData {
   name: string;
@@ -15,31 +16,13 @@ interface SignupResponse {
 
 export function useSignup() {
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
   const mutation = useMutation<SignupResponse, Error, SignupData>({
     mutationFn: async (credentials: SignupData) => {
-      const res = await fetch(`${API_URL}/auth/signup`, {
+      return apiFetch(`/auth/signup`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(credentials)
+        body: JSON.stringify(credentials),
       });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error);
-      }
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error || "Erro ao criar conta");
-      }
-
-      return data;
     },
     onSuccess: () => {
       window.location.href = '/signin';

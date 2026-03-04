@@ -1,25 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-
+import { apiFetch } from "./apiFetch";
 
 export function useStartAPI() {
   return useQuery({
     queryKey: ['startAPI'],
     queryFn: async () => {
-
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await fetch(`${API_URL}/health`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include"
-      });
-
-      if (!res.ok) {
-        throw new Error(`Error: status ${res.status}`)
-      }
-      return res.json();
+      return apiFetch(`/health`, { method: "GET" });
     },
     retry: 3,
     retryDelay: 5000,

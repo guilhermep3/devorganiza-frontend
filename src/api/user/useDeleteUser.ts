@@ -1,15 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
+import { apiFetch } from "../apiFetch";
 
 export const useDeleteUser = () => {
   const mutation = useMutation({
     mutationFn: async () => {
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-
-      const res = await fetch(`${API_URL}/users`, {
-        method: "DELETE",
-        credentials: "include"
-      });
+      const res = await apiFetch(`/users`, { method: "DELETE", });
 
       const contentType = res.headers.get("Content-Type");
 

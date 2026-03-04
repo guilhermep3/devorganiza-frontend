@@ -1,24 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFetch } from "../apiFetch";
 
 export const useDeleteTask = (taskId: string | null) => {
 
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async () => {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
-
-      const res = await fetch(`${API_URL}/tasks/${taskId}`, {
-        method: "DELETE",
-        credentials: "include"
-      });
-
-      if (!res.ok) {
-        throw new Error("Erro ao excluir a tarefa");
-      }
-
-      return true;
+      return apiFetch(`/tasks/${taskId}`, { method: "DELETE" });
     },
-
     onSuccess: () => {
       setTimeout(() => {
         queryClient.invalidateQueries({ queryKey: ['studies'] });

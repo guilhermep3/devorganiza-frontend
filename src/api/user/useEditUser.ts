@@ -1,5 +1,6 @@
 import { EditProfileForm } from "@/src/schema/profile";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { apiFetch } from "../apiFetch";
 
 interface UserDefaultValues {
   name: string;
@@ -20,8 +21,6 @@ export const useEditUser = () => {
     mutationFn: async ({ data, defaults, imageFile }: UpdateProfileParams) => {
       const changed: Record<string, any> = {};
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL!;
-
       if (data.name !== defaults.name) changed.name = data.name;
       if (data.username !== defaults.username) changed.username = data.username;
       if (data.password && data.password.trim() !== "") changed.password = data.password;
@@ -34,7 +33,7 @@ export const useEditUser = () => {
         const formData = new FormData();
         formData.append("image", imageFile);
 
-        const resImage = await fetch(`${API_URL}/users/image`, {
+        const resImage = await apiFetch(`/users/image`, {
           method: "PUT",
           body: formData
         });
@@ -49,12 +48,8 @@ export const useEditUser = () => {
       }
 
       if (Object.keys(changed).length > 0) {
-        const res = await fetch(`${API_URL}/users`, {
+        const res = await apiFetch(`/users`, {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
           body: JSON.stringify(changed)
         });
 
