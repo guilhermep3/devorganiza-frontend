@@ -61,7 +61,7 @@ export default function Page() {
           </div>
         </div>
         <div className="flex justify-start">
-          <Button size={1} className="flex gap-2" onClick={() => setIsCreatingTask(true)}>
+          <Button size={1} onClick={() => setIsCreatingTask(true)}>
             <Plus size={18} />
             Nova tarefa
           </Button>

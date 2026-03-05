@@ -61,9 +61,7 @@ const WeeklyProductivityLogic = (data: WeeklyProductivity[]) => {
   )
 
   return {
-    chartData,
-    createdDifference,
-    finishedDifference,
+    chartData, createdDifference, finishedDifference,
   }
 }
 

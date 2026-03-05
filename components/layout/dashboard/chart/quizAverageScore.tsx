@@ -56,12 +56,15 @@ const quizAverageScoreLogic = (data: AverageScore[]) => {
     penultimate && penultimate.score > 0
       ? ((penultimate.score - last.score) / penultimate.score) * 100 : 0;
 
-  return { chartData, first, second, last, penultimate, differenceTop, differenceBottom }
+  const topText = `${first.quiz} tem ${differenceTop.toFixed(0)}% a mais de média de pontuação que ${second.quiz}`;
+  const bottomText = `${last.quiz} tem ${differenceBottom.toFixed(0)}% a menos de média de pontuação que ${penultimate.quiz}`;
+
+  return { chartData, topText, bottomText }
 }
 
 export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
   const {
-    chartData, first, second, last, penultimate, differenceTop, differenceBottom
+    chartData, topText, bottomText
   } = quizAverageScoreLogic(data);
 
   return (
@@ -92,20 +95,12 @@ export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 leading-none font-medium">
+        <div className="chartFooter">
           <TrendingUp className="h-4 w-4 text-green-20" />
-          {first.quiz} tem{" "}
-          <span className="font-bold">
-            {differenceTop.toFixed(0)}%
-          </span>{" "}
-          a mais de média de pontuação que {second.quiz}
+          {topText}
         </div>
-        <div className="text-muted-foreground leading-none">
-          {last.quiz} tem{" "}
-          <span className="font-bold">
-            {differenceBottom.toFixed(0)}%
-          </span>{" "}
-          a menos de média de pontuação que {penultimate.quiz}
+        <div className="chartFooter text-muted-foreground leading-none">
+          {bottomText}
         </div>
       </CardFooter>
     </Card>

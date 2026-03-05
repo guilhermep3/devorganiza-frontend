@@ -33,7 +33,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="h-px bg-main-20/50" />
-        <div className="text-xs text-main-40 flex flex-col sm:flex-row justify-between gap-2">
+        <div className="text-xs sm:text-sm text-gray-70 flex flex-col sm:flex-row justify-center items-center gap-8">
           <span>© {new Date().getFullYear()} DevOrganiza</span>
           <span>
             Desenvolvido por{" "}

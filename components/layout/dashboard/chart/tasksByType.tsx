@@ -52,11 +52,17 @@ const TasksByTypeLogic = (data: TasksByType[]) => {
 
   const difference = firstPercentage - secondPercentage;
 
-  return { chartData, first, second, firstPercentage, secondPercentage, difference, }
+  const topText = `${first.setor} concentra ${formatPercentage(firstPercentage)}% de todas as tarefas.`;
+
+  const bottomText = `${first.setor} tem ${formatPercentage(difference)}% a mais de tarefas que ${second.setor}.`;
+
+  return {
+    chartData, first, second, firstPercentage, secondPercentage, difference, topText, bottomText
+  }
 }
 
 export function TasksByType({ data }: { data: TasksByType[] }) {
-  const { chartData, first, second, firstPercentage, difference } = TasksByTypeLogic(data);
+  const { chartData, firstPercentage, topText, bottomText } = TasksByTypeLogic(data);
 
   return (
     <Card>
@@ -90,11 +96,7 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
           ) : (
             <TrendingDown className="h-4 w-4 text-red-500" />
           )}
-          <span className="font-bold">{first.setor}</span> concentra{" "}
-          <span className="font-bold">
-            {formatPercentage(firstPercentage)}%
-          </span>{" "}
-          de todas as tarefas
+          {topText}
         </div>
         <div className="chartFooter text-gray-50">
           {firstPercentage >= 0 ? (
@@ -102,11 +104,7 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
           ) : (
             <TrendingDown className="h-4 w-4 text-red-500" />
           )}
-          {first.setor} tem{" "}
-          <span className="font-bold">
-            {formatPercentage(difference)}%
-          </span>{" "}
-          a mais de tarefas que {second.setor}
+          {bottomText}
         </div>
       </CardFooter>
     </Card>

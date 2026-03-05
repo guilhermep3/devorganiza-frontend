@@ -60,7 +60,6 @@ export default function Page() {
         <h2 className="dashboardSectionSubtitle">
           Acompanhe seu desempenho e evolução
         </h2>
-
         {!hasStudiesData ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[...Array(4)].map((_, index) => (

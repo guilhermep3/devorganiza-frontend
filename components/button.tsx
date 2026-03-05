@@ -46,7 +46,7 @@ export const Button = ({
         className={baseClasses}
         onClick={onClick}
       >
-        <span className="relative z-10">{children}</span>
+        <span className="flex gap-2 relative z-10">{children}</span>
         {glow}
       </a>
     );
@@ -58,7 +58,7 @@ export const Button = ({
       className={baseClasses}
       onClick={onClick}
     >
-      <span className="relative z-10">{children}</span>
+      <span className="flex gap-2 relative z-10">{children}</span>
       {glow}
     </button>
   );

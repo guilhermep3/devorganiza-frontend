@@ -42,7 +42,7 @@ export default function Page() {
               />
               <TopInfosCard title="Conclusão geral"
                 Icon={<GaugeCircle className="text-green-600"/>}
-                data={data?.studiesPercentage ?? 0}
+                data={data?.studiesPercentage?.toFixed(2) ?? 0}
                 content={<span className="">%</span>}
               />
             </div>

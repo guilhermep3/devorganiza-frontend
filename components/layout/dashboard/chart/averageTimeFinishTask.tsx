@@ -42,11 +42,16 @@ const AverageTimeFinishTaskLogic = (data: AverageTimeFinish[]) => {
   const first = chartData[0];
   const second = chartData[1];
 
-  return { chartData, difference, first, second };
+  const topText = second ? `${first.estudo} é finalizado aproximadamente ${formatPercentage(difference)}% mais rápido que ${second.estudo}.`
+    : `Dados insuficientes para comparação.`;
+
+  return {
+    chartData, difference, first, second, topText
+  };
 }
 
 export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[] }) {
-  const { chartData, difference, first, second } = AverageTimeFinishTaskLogic(data);
+  const { chartData, topText } = AverageTimeFinishTaskLogic(data);
 
   return (
     <Card>
@@ -88,12 +93,10 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
-          {second &&
-            `${second.estudo} é finalizado aproximadamente ${formatPercentage(difference)}% mais rápido que ${first.estudo}.`
-          }
+        <div className="chartFooter">
+          {topText}
         </div>
-        <div className="text-muted-foreground leading-none">
+        <div className="chartFooter text-muted-foreground leading-none">
           Comparação baseada no tempo médio de conclusão das tarefas.
         </div>
       </CardFooter>

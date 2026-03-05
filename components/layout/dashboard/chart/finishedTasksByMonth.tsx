@@ -61,13 +61,19 @@ const finishedTasksByMonthLogic = (data: FinishedTasksByMonth[]) => {
     previousFinished
   );
 
-  const year = new Date().getFullYear()
+  const year = new Date().getFullYear();
 
-  return { chartData, finishedDifference, year }
+  const topText = finishedDifference >= 0
+    ? `Aumento de ${formatPercentage(finishedDifference)}% de tarefas finalizadas no último mês.`
+    : `Diminuição de ${formatPercentage(finishedDifference)}% de tarefas finalizadas no último mês.`;
+
+  return {
+    chartData, finishedDifference, year, topText
+  }
 }
 
 export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth[] }) {
-  const { chartData, finishedDifference, year } = finishedTasksByMonthLogic(data);
+  const { chartData, finishedDifference, year, topText } = finishedTasksByMonthLogic(data);
 
   return (
     <Card>
@@ -118,11 +124,7 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
               ) : (
                 <TrendingDown className="h-4 w-4 text-red-500" />
               )}
-              {finishedDifference >= 0 ? "Aumento" : "Diminuição"} de{" "}
-              <span className="font-bold">
-                {formatPercentage(finishedDifference)}%
-              </span>{" "}
-              de tarefas finalizadas no último mês
+              {topText}
             </div>
             <div className="chartFooter text-gray-50">
               Janeiro - Dezembro {year}

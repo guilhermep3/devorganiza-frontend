@@ -22,6 +22,8 @@ const chartConfig = {
 } satisfies ChartConfig
 
 const quizFasterAttemptsLogic = (data: FasterAttempts[]) => {
+  const isMobile = window.innerWidth < 640;
+
   const chartData = data.map((i) => {
     const seconds = i.duracao;
     return {
@@ -30,7 +32,7 @@ const quizFasterAttemptsLogic = (data: FasterAttempts[]) => {
     }
   }).sort(
     (a, b) => a.duracao - b.duracao
-  ).slice(0, 10);
+  ).slice(0, isMobile ? 5 : 8);
 
   const fastest = chartData[0];
   const slowest = chartData[chartData.length - 1];
@@ -40,7 +42,9 @@ const quizFasterAttemptsLogic = (data: FasterAttempts[]) => {
 
   const percentage = Math.abs(difference).toFixed(2);
 
-  return { chartData, fastest, slowest, percentage }
+  return {
+    chartData, fastest, slowest, percentage
+  }
 }
 
 export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
@@ -86,11 +90,11 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 leading-none font-medium">
+        <div className="chartFooter">
           Quiz de {fastest.quiz} foi finalizado aproximadamente {percentage}% mais rápido
           que o de {slowest.quiz}.
         </div>
-        <div className="text-muted-foreground leading-none">
+        <div className="chartFooter text-muted-foreground leading-none">
           Baseada no menor tempo registrado para conclusão dos quizzes.
         </div>
       </CardFooter>
