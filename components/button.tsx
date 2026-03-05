@@ -9,58 +9,57 @@ type Props = {
   href?: string;
   submit?: boolean;
 };
-export const Button = ({ whiteBg, size = 2, className, onClick, children, href, submit
+export const Button = ({
+  whiteBg, size = 2, className, onClick, children, href, submit
 }: Props) => {
-  const commonClasses = `group relative z-10 flex justify-center items-center text-white text-center font-bold rounded-md transition-all
-    overflow-hidden w-fit cursor-pointer hover:shadow-md shadow-main-50 hover:shadow-main-40/50
-    ${whiteBg ? 'bg-main-10 hover:bg-main-10' : 'bg-main-30 hover:bg-main-30'}
-    ${size === 1 && "px-4 py-1 text-sm"}
-    ${size === 2 && "px-6 py-2 text-base"}
-    ${size === 3 && "px-10 py-3 text-base"}
+
+  const sizes = {
+    1: "px-4 py-1 text-sm",
+    2: "px-6 py-2 text-base",
+    3: "px-10 py-3 text-lg",
+  };
+
+  const baseClasses = `
+    group relative inline-flex items-center justify-center font-semibold rounded-lg
+    transition-all duration-300 ease-out overflow-hidden cursor-pointer shadow-md hover:shadow-lg
+    focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-main-40
+    hover:-translate-y-[1px] active:translate-y-[1px]
+    ${sizes[size]}
+    ${whiteBg
+      ? "bg-main-10 text-foreground hover:bg-main-20"
+      : "bg-main-30 text-white hover:bg-main-50"
+    }
     ${className}
   `;
 
+  const glow = (
+    <span className={`absolute inset-x-0 bottom-0 h-6 bg-linear-to-r from-transparent to-transparent
+        opacity-60 blur-md transition-all duration-300 group-hover:h-8 group-hover:opacity-80
+        ${whiteBg ? "via-main-20" : "via-main-50 group-hover:via-main-30"}
+      `}
+    ></span>
+  );
+
   if (href) {
     return (
-      <a
-        role="link"
-        href={href}
-        className={commonClasses}
+      <a href={href} role="link"
+        className={baseClasses}
         onClick={onClick}
       >
-        {children}
-        <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-linear-to-r from-transparent -z-10
-          ${whiteBg ? 'via-main-10' : 'via-main-40'}
-          to-transparent w-full h-5 blur-xs transition-all group-hover:h-6
-        `}>
-        </span>
-        <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-linear-to-r from-transparent -z-10
-          ${whiteBg ? 'via-main-10' : 'via-main-40'}
-          to-transparent w-2/4 h-2 blur-sm transition-all group-hover:h-3
-        `}>
-        </span>
+        <span className="relative z-10">{children}</span>
+        {glow}
       </a>
     );
   }
 
   return (
-    <button
-      role="button"
-      className={commonClasses}
+    <button role="button"
+      type={submit ? "submit" : "button"}
+      className={baseClasses}
       onClick={onClick}
-      type={submit ? 'submit' : 'button'}
     >
-      {children}
-      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-linear-to-r from-transparent -z-10
-        ${whiteBg ? 'via-main-10' : 'via-main-40'}
-        to-transparent w-full h-5 blur-xs transition-all group-hover:h-6
-      `}>
-      </span>
-      <span className={`absolute bottom-0 left-1/2 -translate-x-1/2 bg-linear-to-r from-transparent -z-10
-        ${whiteBg ? 'via-main-10' : 'via-main-40'}
-        to-transparent w-2/4 h-2 blur-sm transition-all group-hover:h-3
-      `}>
-      </span>
+      <span className="relative z-10">{children}</span>
+      {glow}
     </button>
   );
 };

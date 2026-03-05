@@ -2,7 +2,7 @@
 import { AboutCard } from "@/components/aboutCard";
 import { BackBtn } from "@/components/backBtn";
 import { Button } from "@/components/button";
-import { AuroraBackgroundDemo } from "@/components/layout/auroraBg";
+import { HeroAuroraBackground } from "@/components/layout/auroraBg";
 import { Faq } from "@/components/layout/faq";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
@@ -18,7 +18,7 @@ export default function Home() {
   return (
     <div className="relative">
       <Header />
-      <AuroraBackgroundDemo />
+      <HeroAuroraBackground />
       <div className="relative mt-20">
         <DottedBg />
         <div className="containerCustom justify-center items-center p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20">
@@ -120,7 +120,7 @@ export default function Home() {
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut", }}
           >
-            <Button href="/signup">Criar conta</Button>
+            <Button href="/signup" size={3}>Criar conta</Button>
           </motion.button>
         </div>
       </section>

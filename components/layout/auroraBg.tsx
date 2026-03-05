@@ -3,7 +3,7 @@ import { AuroraBackground } from "@/src/components/ui/aurora-background";
 import { motion } from "motion/react";
 import { Button } from "../button";
 
-export function AuroraBackgroundDemo() {
+export function HeroAuroraBackground() {
   return (
     <AuroraBackground>
       <motion.div
@@ -22,13 +22,16 @@ export function AuroraBackgroundDemo() {
               Organize <span className="highlight_underline"></span></p> seus <p className="inline-block text-main-30 relative">estudos <span className="highlight_underline"></span>
             </p> na <span className="text-transparent bg-linear-to-r from-main-70 to-main-60 bg-clip-text">programação</span>
           </h1>
-          <h2 className="h2Custom font-semibold md:text-lg mb-8!">O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.</h2>
+          <h2 className="h2Custom font-semibold md:text-lg mb-8!">
+            Organize e facilite seus estudos de desenvolvedor,
+            torne mais visível as suas metas e encurta o tempo de alcançá-las.
+          </h2>
           <motion.button
             initial={{ scale: 0.2 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut", }}
           >
-            <Button href="/signup" size={3}>Criar conta</Button>
+            <Button href="/signup" size={3} >Criar conta</Button>
           </motion.button>
         </div>
       </motion.div>
