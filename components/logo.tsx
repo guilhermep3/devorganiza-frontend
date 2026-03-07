@@ -12,7 +12,7 @@ export const Logo = ({ width, height }: Props) => {
   return (
     <Link href={'/'} style={{ width: `${width}px`, height: logoHeight }}>
       <Image
-        src={"/devorganiza-logo.png"} alt="devorganiza-logo"
+        src={"/devorganiza-v2.png"} alt="devorganiza-v2"
         width={width} height={0}
         style={{ height: 'auto', width: '100%' }}
       />
