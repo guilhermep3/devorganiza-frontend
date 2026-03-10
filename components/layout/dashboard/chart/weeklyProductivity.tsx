@@ -41,8 +41,8 @@ const WeeklyProductivityLogic = (data: WeeklyProductivity[]) => {
 
     return {
       semana: day,
-      criado: tasksOfDay.criado ?? 0,
-      finalizado: tasksOfDay.finalizado ?? 0,
+      criado: tasksOfDay?.criado ?? 0,
+      finalizado: tasksOfDay?.finalizado ?? 0,
     }
   })
 
