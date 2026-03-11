@@ -19,14 +19,16 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
   const [link, setLink] = useState('');
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-      refetch();
-      setTitle("")
-      setLink("")
-    }, 2000);
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        refetch();
+        setTitle("")
+        setLink("")
+      }, 2000);
 
-    return () => clearTimeout(timer)
+      return () => clearTimeout(timer)
+    }
   }, [isSuccess])
 
   return (

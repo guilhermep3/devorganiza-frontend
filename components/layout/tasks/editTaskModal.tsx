@@ -30,12 +30,14 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
   }, [isOpen, task]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-      refetch();
-    }, 2000);
-
-    return () => clearTimeout(timer);
+    if(isSuccess){
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        refetch();
+      }, 2000);
+      
+      return () => clearTimeout(timer);
+    }
   }, [isSuccess]);
 
   return (

@@ -22,12 +22,14 @@ export const DeleteModal = ({
 }: Props) => {
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-      refetch();
-    }, 2000);
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        refetch();
+      }, 2000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [isSuccess]);
 
   return (
