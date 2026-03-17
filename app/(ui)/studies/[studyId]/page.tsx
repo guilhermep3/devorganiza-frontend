@@ -10,7 +10,7 @@ import { EditStudyModal } from "@/components/layout/studies/editStudyModal";
 import { TaskCard } from "@/components/layout/tasks/taskCard";
 import { CreateTaskModal } from "@/components/layout/tasks/createTaskModal";
 import { useDeleteStudy } from "@/src/api/study/useDeleteStudy";
-import { DeleteModal } from "@/components/layout/dashboard/deleteModal";
+import { DeleteModal } from "@/components/layout/deleteModal";
 import { useDeleteTask } from "@/src/api/task/useDeleteTask";
 import { EditTaskModal } from "@/components/layout/tasks/editTaskModal";
 import { TaskCardSkeleton } from "@/components/layout/tasks/taskCardSkeleton";
@@ -27,10 +27,12 @@ export default function Page() {
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [isDeletingTask, setIsDeletingTask] = useState(false);
   const {
-    mutate: deleteStudy, isPending: isStudyPending, error: errorStudy, isSuccess: isSuccessStudy
+    mutate: deleteStudy, isPending: isStudyPending, isSuccess: isSuccessStudy,
+    error: errorStudy, reset: resetDeleteStudy
   } = useDeleteStudy(studyId!);
   const {
-    mutate: deleteTask, isPending: isTaskPending, error: errorTask, isSuccess: isSuccessTask
+    mutate: deleteTask, isPending: isTaskPending, isSuccess: isSuccessTask,
+    error: errorTask, reset: resetDeleteTask
   } = useDeleteTask(taskId);
 
   return (
@@ -91,8 +93,9 @@ export default function Page() {
       <DeleteModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
         handleAction={deleteStudy} refetch={refetch}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
-        loading={isStudyPending} error={errorStudy?.message}
-        isSuccess={isSuccessStudy} successMsg="Estudo excluído com sucesso"
+        loading={isStudyPending} isSuccess={isSuccessStudy}
+        error={errorStudy?.message} reset={resetDeleteStudy}
+        successMsg="Estudo excluído com sucesso"
       />
       <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
         task={data?.tasks.find((i) => i.id === taskId)} refetch={refetch}
@@ -100,8 +103,9 @@ export default function Page() {
       <DeleteModal isOpen={isDeletingTask} setIsOpen={setIsDeletingTask}
         handleAction={deleteTask} refetch={refetch}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
-        loading={isTaskPending} error={errorTask?.message}
-        isSuccess={isSuccessTask} successMsg="Tarefa excluída com sucesso"
+        loading={isTaskPending} isSuccess={isSuccessTask}
+        error={errorTask?.message} reset={resetDeleteTask}
+        successMsg="Tarefa excluída com sucesso"
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
         studyId={studyId!} refetch={refetch}

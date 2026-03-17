@@ -16,7 +16,7 @@ type Props = {
 };
 
 export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => {
-  const { handleSubmit, isPending, isSuccess, error, errors } = useEditStudy(study?.id);
+  const { handleSubmit, isPending, isSuccess, error, errors, reset } = useEditStudy(study?.id);
 
   const [name, setName] = useState("");
   const [type, setType] = useState("");
@@ -33,12 +33,15 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
   }, [isOpen, study]);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-      refetch();
-    }, 2000);
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        refetch();
+        reset();
+      }, 2000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [isSuccess]);
 
   return (

@@ -14,11 +14,13 @@ type Props = {
   loading?: boolean;
   error?: string;
   isSuccess?: boolean;
+  reset: () => void;
   successMsg: string;
 };
 
 export const DeleteModal = ({
-  isOpen, setIsOpen, title, description, handleAction, refetch, loading, error, isSuccess, successMsg
+  isOpen, setIsOpen, title, description, handleAction, refetch, loading,
+  error, isSuccess, reset, successMsg
 }: Props) => {
 
   useEffect(() => {
@@ -26,6 +28,7 @@ export const DeleteModal = ({
       const timer = setTimeout(() => {
         setIsOpen(false);
         refetch();
+        reset();
       }, 2000);
 
       return () => clearTimeout(timer);

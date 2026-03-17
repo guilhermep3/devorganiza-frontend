@@ -23,7 +23,7 @@ type Props = {
 };
 export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValues }: Props) => {
   const [previewUrl, setPreviewUrl] = useState(defaultValues?.profileImage || "/no-profile.webp");
-  const { updateProfile, isPending, isSuccess, error } = useEditUser();
+  const { updateProfile, isPending, isSuccess, error, reset } = useEditUser();
 
   const { register, handleSubmit, formState: { errors }, control } = useForm({
     resolver: zodResolver(editProfileSchema),
@@ -51,11 +51,14 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(false);
-      fetchUser();
-    }, 2000);
-    return () => clearTimeout(timer);
+    if(isSuccess){
+      const timer = setTimeout(() => {
+        setIsOpen(false);
+        fetchUser();
+        reset();
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
   }, [isSuccess])
 
   function handleImagePreview(file?: File) {

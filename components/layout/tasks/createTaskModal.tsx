@@ -13,7 +13,7 @@ type Props = {
   refetch: () => void;
 };
 export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) => {
-  const { handleSubmit, isPending, isSuccess, error, errors } = useCreateTask(studyId);
+  const { handleSubmit, isPending, isSuccess, error, errors, reset } = useCreateTask(studyId);
 
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
@@ -25,6 +25,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
         refetch();
         setTitle("")
         setLink("")
+        reset();
       }, 2000);
 
       return () => clearTimeout(timer)

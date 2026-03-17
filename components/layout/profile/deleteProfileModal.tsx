@@ -10,14 +10,17 @@ type Props = {
   setIsDeleting: (value: boolean) => void;
 };
 export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
-  const { mutate, isPending, error, isSuccess } = useDeleteUser();
+  const { mutate, isPending, error, isSuccess, reset } = useDeleteUser();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsDeleting(false);
-    }, 2000);
+    if (isSuccess) {
+      const timer = setTimeout(() => {
+        setIsDeleting(false);
+        reset();
+      }, 2000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, [isSuccess])
 
   return (
