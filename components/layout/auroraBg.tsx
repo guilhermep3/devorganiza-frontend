@@ -31,7 +31,7 @@ export function HeroAuroraBackground() {
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut", }}
           >
-            <Button href="/signup" size={3} >Criar conta</Button>
+            <Button href="/dashboard" size={3}>Entrar</Button>
           </motion.button>
         </div>
       </motion.div>
