@@ -70,6 +70,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
+            {errors.link && <p className="errorMsg">{errors.link}</p>}
           </div>
           <div className="flex items-center gap-2">
             <input id="finished"

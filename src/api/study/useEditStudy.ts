@@ -37,6 +37,7 @@ export const useEditStudy = (studyId: string) => {
 
     if (!name) newErrors.name = 'Nome é obrigatório';
     if (!type) newErrors.type = 'O tipo é obrigatório';
+    if (link && !/^https?:\/\/\S+$/.test(link)) newErrors.link = 'Link deve ser uma URL válida';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);

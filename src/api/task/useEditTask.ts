@@ -35,6 +35,7 @@ export const useEditTask = (taskId: string | null) => {
     const newErrors: Record<string, string> = {};
 
     if (!title) newErrors.title = 'Nome é obrigatório';
+    if (link && !/^https?:\/\/\S+$/.test(link)) newErrors.link = 'Link deve ser uma URL válida';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
