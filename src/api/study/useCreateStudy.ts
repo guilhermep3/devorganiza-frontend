@@ -32,6 +32,7 @@ export const useCreateStudy = () => {
     const newErrors: Record<string, string> = {};
 
     if (!name) newErrors.name = 'Nome é obrigatório';
+    if (link && !/^https?:\/\/\S+$/.test(link)) newErrors.link = 'Link deve ser uma URL válida';
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);

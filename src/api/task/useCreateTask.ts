@@ -30,6 +30,7 @@ export const useCreateTask = (taskId: string | null) => {
     const newErrors: Record<string, string> = {};
 
     if (!title) newErrors.title = 'Título é obrigatório';
+    if (link && !/^https?:\/\/\S+$/.test(link)) newErrors.link = 'Link deve ser uma URL válida';
 
     const data: any = {}
 
