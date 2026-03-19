@@ -20,7 +20,7 @@ export default function Page() {
             <h1 className="dashboardSectionTitle">Estudos</h1>
             <h2 className="dashboardSectionSubtitle">Veja seus estudos e progresso</h2>
           </div>
-          <Button size={1} className="flex items-center gap-2 h-fit px-1! md:px-4! text-white"
+          <Button size={1}
             onClick={() => setIsCreating(true)}
           >
             <Plus />

@@ -51,7 +51,6 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
         <form className="flex flex-col gap-4 pt-2"
           onSubmit={(e) => handleSubmit(e, { name, type, link, description })}
         >
-          {error && <p className="errorMsg">{error.message}</p>}
           {isSuccess && <p className="successMsg">Estudo criado com sucesso</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
