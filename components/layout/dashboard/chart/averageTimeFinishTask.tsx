@@ -1,6 +1,5 @@
 "use client"
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts"
-
 import {
   Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle,
 } from "@/components/ui/card"
@@ -46,7 +45,7 @@ const AverageTimeFinishTaskLogic = (data: AverageTimeFinish[]) => {
     : `Dados insuficientes para comparação.`;
 
   return {
-    chartData, difference, first, second, topText
+    data, chartData, difference, first, second, topText
   };
 }
 

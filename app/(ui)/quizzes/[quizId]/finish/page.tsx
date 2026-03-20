@@ -63,7 +63,7 @@ export default function Page() {
             <p className="text-base md:text-lg font-bold -mb-1 text-main-60">DevOrganiza</p>
           </div>
           <p className="text-lg md:text-xl">Parabéns, {userData.user.name}!</p>
-          <p className="text-gray-50">Você completou o quiz de {quizData.title}</p>
+          <p className="text-gray-40">Você completou o quiz de {quizData.title}</p>
           <div className="flex justify-center items-center my-6 w-28 h-28 border-12 border-main-30 rounded-full text-4xl font-bold">
             {data.score}
           </div>
