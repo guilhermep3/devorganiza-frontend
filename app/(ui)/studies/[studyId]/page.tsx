@@ -28,12 +28,16 @@ export default function Page() {
   const [isDeletingTask, setIsDeletingTask] = useState(false);
   const {
     mutate: deleteStudy, isPending: isStudyPending, isSuccess: isSuccessStudy, error: errorStudy,
-  } = useDeleteStudy(studyId!);
+  } = useDeleteStudy(studyId!, {
+    onSuccess: () => {
+      setIsDeletingStudy(false);
+      router.push("/studies");
+    }
+  });
   const {
     mutate: deleteTask, isPending: isTaskPending, isSuccess: isSuccessTask, error: errorTask,
   } = useDeleteTask(taskId, {
     onSuccess: () => {
-      setIsDeletingStudy(false);
       setIsDeletingTask(false);
       refetch();
     }

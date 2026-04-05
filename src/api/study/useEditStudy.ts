@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { apiFetch } from "../apiFetch";
 
@@ -9,10 +9,8 @@ type EditStudyPayload = {
   description?: string;
 };
 
-export const useEditStudy = (studyId: string) => {
+export const useEditStudy = (studyId: string, options?: { onSuccess?: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload: EditStudyPayload) => {
       return apiFetch(`/studies/${studyId}`, {
@@ -23,8 +21,7 @@ export const useEditStudy = (studyId: string) => {
 
     onSuccess() {
       setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ["studies"] });
-        queryClient.invalidateQueries({ queryKey: ["study", studyId] });
+        if (options?.onSuccess) options.onSuccess();
         mutation.reset();
       }, 2000);
     },

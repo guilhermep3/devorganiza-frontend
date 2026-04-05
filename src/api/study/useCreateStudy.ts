@@ -9,7 +9,7 @@ interface StudyData {
   description: string;
 }
 
-export const useCreateStudy = () => {
+export const useCreateStudy = (options?: { onSuccess?: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const mutation = useMutation<any, Error, StudyData>({
@@ -21,6 +21,7 @@ export const useCreateStudy = () => {
     },
     onSuccess: () => {
       setTimeout(() => {
+        if (options?.onSuccess) options.onSuccess();
         mutation.reset();
       }, 2000);
     }

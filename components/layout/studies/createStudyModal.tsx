@@ -17,19 +17,19 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
   const [type, setType] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
-  const { handleSubmit, isSuccess, error, errors, isPending, reset } = useCreateStudy();
+  
   const { data } = useAllQuizzes();
-
-  useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
+  const { handleSubmit, isSuccess, errors, isPending } =
+    useCreateStudy({
+      onSuccess: () => {
         setIsOpen(false);
+        setName("");
+        setType("");
+        setLink("");
+        setDescription("");
         refetch();
-        reset();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess])
+      }
+    });
 
   useEffect(() => {
     if (!data) return;

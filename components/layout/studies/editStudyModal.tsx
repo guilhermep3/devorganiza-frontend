@@ -16,12 +16,18 @@ type Props = {
 };
 
 export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => {
-  const { handleSubmit, isPending, isSuccess, error, errors, reset } = useEditStudy(study?.id);
-
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
+
+  const { handleSubmit, isPending, isSuccess, error, errors } =
+    useEditStudy(study?.id, {
+      onSuccess: () => {
+        setIsOpen(false);
+        refetch();
+      }
+    });
 
   useEffect(() => {
     if (study) {
@@ -31,18 +37,6 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
       setDescription(study.description ?? "");
     }
   }, [isOpen, study]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        refetch();
-        reset();
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
