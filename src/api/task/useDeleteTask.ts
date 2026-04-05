@@ -1,16 +1,15 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "../apiFetch";
 
-export const useDeleteTask = (taskId: string | null) => {
+export const useDeleteTask = (taskId: string | null, options?: { onSuccess?: () => void }) => {
 
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async () => {
       return apiFetch(`/tasks/${taskId}`, { method: "DELETE" });
     },
     onSuccess: () => {
       setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ['studies'] });
+        if (options?.onSuccess) options?.onSuccess();
         mutation.reset();
       }, 2000);
     }

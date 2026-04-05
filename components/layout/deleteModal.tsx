@@ -2,7 +2,6 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { useEffect } from "react";
 
 type Props = {
   isOpen: boolean;
@@ -10,30 +9,16 @@ type Props = {
   title: string;
   description: string;
   handleAction: () => void;
-  refetch: () => void;
   loading?: boolean;
   error?: string;
   isSuccess?: boolean;
-  reset: () => void;
   successMsg: string;
 };
 
 export const DeleteModal = ({
-  isOpen, setIsOpen, title, description, handleAction, refetch, loading,
-  error, isSuccess, reset, successMsg
+  isOpen, setIsOpen, title, description, handleAction, loading,
+  error, isSuccess, successMsg
 }: Props) => {
-
-  useEffect(() => {
-    if (isSuccess) {
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        refetch();
-        reset();
-      }, 2000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

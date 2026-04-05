@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { apiFetch } from "../apiFetch";
 
@@ -7,10 +7,9 @@ type EditTaskPayload = {
   link?: string;
   done?: boolean;
 };
-export const useEditTask = (taskId: string | null) => {
+export const useEditTask = (taskId: string | null, options?: { onSuccess?: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: async (payload: EditTaskPayload) => {
       if (!taskId) throw new Error("ID da tarefa não informado");
@@ -23,7 +22,7 @@ export const useEditTask = (taskId: string | null) => {
 
     onSuccess: () => {
       setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ["studies"] });
+        if (options?.onSuccess) options.onSuccess();
         mutation.reset();
       }, 2000);
     }

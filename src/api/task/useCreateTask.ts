@@ -7,7 +7,7 @@ interface CreateTask {
   link: string;
 }
 
-export const useCreateTask = (taskId: string | null) => {
+export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const mutation = useMutation({
@@ -19,31 +19,39 @@ export const useCreateTask = (taskId: string | null) => {
     },
     onSuccess: () => {
       setTimeout(() => {
+        if (options?.onSuccess) options.onSuccess();
         mutation.reset();
       }, 2000);
     }
   })
 
-  async function handleSubmit(e: React.FormEvent, { title, link }: CreateTask) {
+  async function handleSubmit(e: React.FormEvent, data: CreateTask) {
     e.preventDefault();
 
     const newErrors: Record<string, string> = {};
 
-    if (!title) newErrors.title = 'Título é obrigatório';
-    if (link && !/^https?:\/\/\S+$/.test(link)) newErrors.link = 'Link deve ser uma URL válida';
+    if (!data.title) newErrors.title = "Título é obrigatório";
+    if (data.link && !/^https?:\/\/\S+$/.test(data.link)) {
+      newErrors.link = "Link deve ser uma URL válida";
+    }
 
-    const data: any = {}
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
 
-    if (title) data.title = title;
-    if (link) data.link = link;
+    const newData: any = {}
 
-    return mutation.mutate(data);
+    if (data.title) newData.title = data.title;
+    if (data.link) newData.link = data.link;
+
+    setErrors({});
+    mutation.mutate(newData);
   }
 
   return {
     ...mutation,
     handleSubmit,
     errors,
-    setErrors
   };
 }

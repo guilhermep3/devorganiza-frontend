@@ -13,13 +13,18 @@ type Props = {
   task: Task | null | undefined;
   refetch: () => void;
 };
-
 export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
-  const { handleSubmit, isPending, isSuccess, errors, reset } = useEditTask(task?.id ?? null);
-
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [done, setDone] = useState(false);
+
+  const { handleSubmit, isPending, isSuccess, errors } =
+    useEditTask(task?.id ?? null, {
+      onSuccess: () => {
+        setIsOpen(false);
+        refetch();
+      }
+    });
 
   useEffect(() => {
     if (task) {
@@ -28,18 +33,6 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
       setDone(task.done ?? false);
     }
   }, [isOpen, task]);
-
-  useEffect(() => {
-    if(isSuccess){
-      const timer = setTimeout(() => {
-        setIsOpen(false);
-        refetch();
-        reset();
-      }, 2000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [isSuccess]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>

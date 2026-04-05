@@ -27,13 +27,17 @@ export default function Page() {
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [isDeletingTask, setIsDeletingTask] = useState(false);
   const {
-    mutate: deleteStudy, isPending: isStudyPending, isSuccess: isSuccessStudy,
-    error: errorStudy, reset: resetDeleteStudy
+    mutate: deleteStudy, isPending: isStudyPending, isSuccess: isSuccessStudy, error: errorStudy,
   } = useDeleteStudy(studyId!);
   const {
-    mutate: deleteTask, isPending: isTaskPending, isSuccess: isSuccessTask,
-    error: errorTask, reset: resetDeleteTask
-  } = useDeleteTask(taskId);
+    mutate: deleteTask, isPending: isTaskPending, isSuccess: isSuccessTask, error: errorTask,
+  } = useDeleteTask(taskId, {
+    onSuccess: () => {
+      setIsDeletingStudy(false);
+      setIsDeletingTask(false);
+      refetch();
+    }
+  });
 
   return (
     <div className="layoutDiv">
@@ -91,21 +95,19 @@ export default function Page() {
         study={data?.study!} refetch={refetch}
       />
       <DeleteModal isOpen={isDeletingStudy} setIsOpen={setIsDeletingStudy}
-        handleAction={deleteStudy} refetch={refetch}
+        handleAction={deleteStudy}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
         loading={isStudyPending} isSuccess={isSuccessStudy}
-        error={errorStudy?.message} reset={resetDeleteStudy}
-        successMsg="Estudo excluído com sucesso"
+        error={errorStudy?.message} successMsg="Estudo excluído com sucesso"
       />
       <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
         task={data?.tasks.find((i) => i.id === taskId)} refetch={refetch}
       />
       <DeleteModal isOpen={isDeletingTask} setIsOpen={setIsDeletingTask}
-        handleAction={deleteTask} refetch={refetch}
+        handleAction={deleteTask}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
         loading={isTaskPending} isSuccess={isSuccessTask}
-        error={errorTask?.message} reset={resetDeleteTask}
-        successMsg="Tarefa excluída com sucesso"
+        error={errorTask?.message} successMsg="Tarefa excluída com sucesso"
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
         studyId={studyId!} refetch={refetch}

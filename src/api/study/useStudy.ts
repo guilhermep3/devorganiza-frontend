@@ -4,7 +4,7 @@ import { apiFetch } from "../apiFetch";
 
 export const useStudy = (studyId: string) => {
   return useQuery({
-    queryKey: ['study'],
+    queryKey: ['study', studyId],
     queryFn: async () => {
       const res = await apiFetch(`/studies/${studyId}`, { method: "GET" });
       return res as StudyTask;
