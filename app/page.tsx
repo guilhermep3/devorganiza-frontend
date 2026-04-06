@@ -21,11 +21,18 @@ export default function Home() {
       <HeroAuroraBackground />
       <div className="relative mt-20">
         <DottedBg />
-        <div className="containerCustom justify-center items-center p-2 rounded-lg overflow-hidden shadow-lg shadow-main-20">
-          <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
-            width={2400} height={2400}
-            className="w-full rounded-lg"
-          />
+        <div className="containerCustom">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+            className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 backdrop-blur-md shadow-xl"
+          >
+            <Image src={`/dashboard-devorganiza.png`} alt="dashboard"
+              width={2400} height={2400}
+              className="w-full transition-transform duration-500 hover:scale-[1.02]"
+            />
+          </motion.div>
         </div>
       </div>
       <section id="about" className="relative">
@@ -45,7 +52,7 @@ export default function Home() {
           >
             Veja os principais benefícios que nós oferecemos
           </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {aboutData.map((i) => {
               const Icon = i.icon;
 
@@ -99,29 +106,36 @@ export default function Home() {
           <Faq />
         </div>
       </section>
-      <section id="start" className="overflow-hidden bg-background">
-        <div className="containerCustom justify-center items-center">
-          <motion.h1 className="h1Custom text-center max-w-2xl"
-            initial={{ scale: 0.4, y: -40 }}
-            whileInView={{ scale: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
-          >
-            Faça da organização e consistência suas maiores qualidades
-          </motion.h1>
-          <motion.h2 className="h2Custom text-foreground"
-            initial={{ scale: 0.4, y: -40 }}
-            whileInView={{ scale: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
-          >
-            Dê o primeiro passo para melhorar seus estudos na programação e progredir de maneira mais eficaz
-          </motion.h2>
-          <motion.button
-            initial={{ scale: 0.2 }}
-            whileInView={{ scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut", }}
-          >
-            <Button href="/dashboard" size={3}>Entrar</Button>
-          </motion.button>
+      <section id="start" className="relative overflow-hidden bg-background">
+        <div className="containerCustom items-center">
+          <div className="w-full max-w-3xl text-center p-8 md:p-12 rounded-2xl 
+            bg-linear-to-br from-main-20 via-main-10 to-main-20
+            border border-gray-30 backdrop-blur-md shadow-lg">
+            <motion.h1 className="h1Custom mt-0"
+              initial={{ opacity: 0, y: -30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              Faça da organização e consistência suas maiores qualidades
+            </motion.h1>
+            <motion.h2 className="h2Custom text-foreground mb-8"
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.6 }}
+            >
+              Dê o primeiro passo para melhorar seus estudos na programação
+            </motion.h2>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="flex justify-center"
+            >
+              <Button href="/dashboard" size={3}>
+                Entrar
+              </Button>
+            </motion.div>
+          </div>
         </div>
       </section>
       <Footer />

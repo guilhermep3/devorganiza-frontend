@@ -1,21 +1,27 @@
-import Image from "next/image"
-import Link from "next/link"
+import Image from "next/image";
+import Link from "next/link";
 
 type Props = {
-  width: number;
+  width?: number;
   height?: number;
-}
-
-export const Logo = ({ width, height }: Props) => {
-  const logoHeight = height ? `${height}px` : 'auto';
-
+};
+export const Logo = ({ width = 140, height }: Props) => {
   return (
-    <Link href={'/'} style={{ width: `${width}px`, height: logoHeight }}>
+    <Link href="/"
+      style={{
+        width: `${width}px`,
+        height: height ? `${height}px` : "auto",
+        aspectRatio: height ? undefined : "3 / 2"
+      }}
+      className="relative block"
+    >
       <Image
-        src={"/devorganiza-v2.png"} alt="devorganiza-v2"
-        width={width} height={0}
-        style={{ height: 'auto', width: '100%' }}
+        src="/devorganiza-v2.png"
+        alt="devorganiza"
+        fill
+        className="object-contain"
+        sizes={`${width}px`}
       />
     </Link>
-  )
-}
+  );
+};

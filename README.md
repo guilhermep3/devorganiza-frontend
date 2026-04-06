@@ -99,12 +99,21 @@ export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () 
   })
 ```
 
-### Outros desafios
+### Recomendar nomes dos Quizzes ao adicionar tarefa
 
-- Implementação de autenticação baseada em cookies
-- Sincronização entre estudos cadastrados e desbloqueio de quizzes
-- Organização do estado global para refletir progresso do usuário
-- Criação de dashboard com dados agregados de performance
+**Problema:**
+No modal de criação de estudo, era necessário que o nome do estudo fosse compatível com o do quiz, para evitar inconsistências e desbloquear o quiz.
+
+**Solução adotada:**
+Foi utilizada a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com base nos dados retornados da API, implementando assim o autocomplete com os nomes dos quizzes.
+
+```typescript
+<datalist id="study">
+  {data?.map((q, i) => (
+    <option key={q.id} value={q.title}></option>
+  ))}
+</datalist>
+```
 
 ## 🧪 Qualidade & Testes
 
