@@ -18,7 +18,7 @@ export function HeroAuroraBackground() {
         className="relative flex flex-col gap-4 items-center justify-center px-4 text-foreground"
       >
         <div id="hero" className="containerCustom justify-center items-center gap-6 mt-4">
-          <div className="flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/60
+          <div className="flex items-center gap-3 px-6 py-2.5 rounded-full bg-gray-10/60
             backdrop-blur-md border border-gray-30 shadow-md"
           >
             <Logo width={32} />
@@ -32,8 +32,8 @@ export function HeroAuroraBackground() {
             </p> na <span className="text-transparent bg-linear-to-r from-main-70 to-main-60 bg-clip-text">programação</span>
           </h1>
           <h2 className="h2Custom font-semibold md:text-lg mb-8!">
-            Organize e facilite seus estudos de desenvolvedor,
-            torne mais visível as suas metas e encurta o tempo de alcançá-las.
+            Transforme sua rotina de estudos em um sistema eficiente.
+            Tenha mais clareza, consistência e evolução real na programação.
           </h2>
           <motion.button
             initial={{ scale: 0.2 }}

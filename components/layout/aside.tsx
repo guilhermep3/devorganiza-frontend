@@ -15,7 +15,7 @@ export const AsideDashboard = () => {
   return (
     <>
       <aside className={`bg-card w-72 p-3 space-y-6 transition-all duration-300 min-h-full z-30 pt-24
-      fixed ${asideCtx?.isOpen ? 'ml-0' : '-ml-[100%] lg:ml-0'}
+      fixed border-r border-gray-20 ${asideCtx?.isOpen ? 'ml-0' : '-ml-[100%] lg:ml-0'}
       `}
       >
         <div className="flex justify-center items-center gap-2">

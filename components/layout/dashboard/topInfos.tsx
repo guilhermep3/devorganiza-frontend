@@ -28,22 +28,22 @@ export const TopInfos = ({ userData, studiesData, quizzesData, quizzesLockData }
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
         <TopInfosCard
           title="Total de tarefas"
-          Icon={<ListChecks className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-main-30" />}
+          Icon={<ListChecks className="min-w-fit! w-4 h-4 md:w-7 md:h-7 text-main-30" />}
           data={totalTasks ?? 0}
         />
         <TopInfosCard
           title="Tarefas finalizadas"
-          Icon={<ListCheck className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-green-600" />}
+          Icon={<ListCheck className="min-w-fit! w-4 h-4 md:w-7 md:h-7 text-green-600" />}
           data={totalFinished ?? 0}
         />
         <TopInfosCard
           title="Tarefas pendentes"
-          Icon={<ListX className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-red-600" />}
+          Icon={<ListX className="min-w-fit! w-4 h-4 md:w-7 md:h-7 text-red-600" />}
           data={totalPendent ?? 0}
         />
         <TopInfosCard
           title="Quizzes desbloqueados"
-          Icon={<CircleQuestionMark className="min-w-fit! w-5 h-5 md:w-7 md:h-7 text-main-30" />}
+          Icon={<CircleQuestionMark className="min-w-fit! w-4 h-4 md:w-7 md:h-7 text-main-30" />}
           data={
             totalQuizzes && totalQuizzesLock
               ? `${totalQuizzes} de ${totalQuizzesLock}`

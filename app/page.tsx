@@ -19,7 +19,7 @@ export default function Home() {
     <div className="relative">
       <Header />
       <HeroAuroraBackground />
-      <div className="relative mt-20">
+      <div className="relative">
         <DottedBg />
         <div className="containerCustom">
           <motion.div
