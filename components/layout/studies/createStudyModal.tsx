@@ -5,7 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useCreateStudy } from "@/src/api/study/useCreateStudy";
 import { useEffect, useState } from "react";
-import { useAllQuizzes } from "@/src/api/quiz/useAllQuizzes";
+import { useQuizzesNames } from "@/src/api/quiz/useQuizzesNames";
 
 type Props = {
   isOpen: boolean;
@@ -17,8 +17,8 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
   const [type, setType] = useState("");
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
-  
-  const { data } = useAllQuizzes();
+
+  const { data } = useQuizzesNames();
   const { handleSubmit, isSuccess, errors, isPending } =
     useCreateStudy({
       onSuccess: () => {
@@ -36,6 +36,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
     if (data.find(i => i.title === name)) {
       const dataChoosed = data.find(i => i.title === name);
       setType(dataChoosed?.type!)
+      console.log("data", data)
     }
   }, [name])
 
@@ -61,7 +62,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
             />
             <datalist id="study">
               {data?.map((q, i) => (
-                <option key={q.id} value={q.title}></option>
+                <option key={q.title} value={q.title}></option>
               ))}
             </datalist>
             {errors.name && (
