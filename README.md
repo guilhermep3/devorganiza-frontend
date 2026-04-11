@@ -11,6 +11,7 @@ Acesse aqui: <a href="https://devorganiza.vercel.app/" target="_blank">Link do p
 
 Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e TailwindCSS, com foco em experiência do usuário, organização de estado, consumo de APIs e visualização de dados.
 
+
 ## 🎯 Objetivo do projeto
 
 - Demonstrar domínio em Next.js e TailwindCSS
@@ -19,6 +20,7 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 - Aplicar boas práticas de organização de código e UI
 - Implementar autenticação e autorização com JWT
 - Trabalhar com estado global e formulários complexos
+
 
 ## 🚀 Funcionalidades Principais
 
@@ -29,6 +31,7 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 - Sistema de quizzes desbloqueáveis conforme os estudos cadastrados
 - Dashboard com visualização de desempenho através de gráficos
 
+
 ## 🏗️ Arquitetura
 
 - Aplicação desacoplada do backend
@@ -38,6 +41,7 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 - Estado global com Zustand
 - Validação de formulários com React Hook Form + Zod
 - Controle de tema e preferências do usuário
+
 
 ## 🧩 Tecnologias Utilizadas
 
@@ -55,6 +59,7 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 - **Zod**: Validação de dados
 - **Zustand**: Gerenciamento de estado global
 
+
 ## 🧠 Regras de Negócio
 
 - Um quiz só é desbloqueado quando existe um estudo com o mesmo tema cadastrado pelo usuário
@@ -62,6 +67,7 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 - Tarefas podem ser marcadas como concluídas e atualizam o progresso em tempo real
 - Cada estudo pode conter múltiplas tarefas associadas
 - Links externos podem ser adicionados às tarefas como material de apoio
+
 
 ## ⚠️ Desafios Técnicos
 
@@ -105,7 +111,7 @@ export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () 
 No modal de criação de estudo, era necessário que o nome do estudo fosse compatível com o do quiz, para evitar inconsistências e desbloquear o quiz.
 
 **Solução adotada:**
-Foi utilizada a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com base nos dados retornados da API, implementando assim o autocomplete com os nomes dos quizzes.
+Utilizei a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com base nos dados retornados da API, implementando assim o autocomplete com os nomes dos quizzes.
 
 ```typescript
 <datalist id="study">
@@ -115,11 +121,42 @@ Foi utilizada a tag nativa `datalist` do HTML para fornecer sugestões dinâmica
 </datalist>
 ```
 
+### Cookie HTTP Only
+
+**Problema:**
+Durante a implementação da autenticação, foi adotado o uso de cookies para armazenar o token JWT.
+Inicialmente, o token era manipulado tanto no backend quanto no frontend, onde o frontend criava manualmente o cookie utilizando document.cookie.
+
+Isso gerava inconsistências, principalmente no fluxo de login com Google OAuth, como:
+- Falha na criação ou envio do cookie em navegadores mais restritivos (ex: Brave)
+- Conflito entre cookies com o mesmo nome (token)
+- Token não sendo enviado corretamente nas requisições → erro 401 (não autorizado)
+- Comportamento inconsistente entre navegadores
+
+Esses problemas ocorrem porque cookies criados no frontend não possuem as mesmas flags de segurança (httpOnly, sameSite, secure)
+
+**Solução adotada:**
+Padronizei o fluxo de autenticação para utilizar apenas cookies HTTP Only gerados pelo backend, removendo completamente a manipulação de cookies no frontend, e utilizando credentials include nas requisições.
+
+```typescript
+const cookieOptions = {
+  httpOnly: true,
+  secure: isProduction,
+  sameSite: isProduction ? "none" as const : "lax" as const,
+  path: "/",
+  maxAge: 86400 * 3 * 1000,
+};
+
+res.cookie("token", token, cookieOptions);
+```
+
+
 ## 🧪 Qualidade & Testes
 
 - **Jest**: Framework de testes unitários.
 - **Testing Library**: Testes focados na experiência do usuário
 - **ESLint**: Padronização e análise de código.
+
 
 ## Como Executar o Projeto
 

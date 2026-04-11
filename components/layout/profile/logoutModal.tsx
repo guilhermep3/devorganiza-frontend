@@ -12,7 +12,6 @@ export const LogoutModal = ({ isLogOut, setIsLogout }: Props) => {
 
   function handleLogout() {
     if (isLogOut) {
-      document.cookie = "token=; path=/; max-age=0;";
       setIsLogout(false);
       router.replace('/');
     }

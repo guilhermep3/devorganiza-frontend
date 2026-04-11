@@ -11,10 +11,9 @@ export default function CallbackContent() {
     const token = searchParams.get("token");
 
     if (token) {
-      document.cookie = `token=${token}; path=/; max-age=${86400 * 3};`;
+      router.replace("/dashboard");
     }
 
-    router.replace("/dashboard");
   }, [searchParams, router]);
 
   return null;
