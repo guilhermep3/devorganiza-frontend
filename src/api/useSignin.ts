@@ -2,6 +2,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { apiFetch } from "./apiFetch";
+import { createCookie } from "../utils/createCookie";
 
 interface SigninData {
   email: string;
@@ -24,7 +25,7 @@ export const useSignin = () => {
       })
     },
     onSuccess: (data) => {
-      // document.cookie = `token=${data.token}; path=/; max-age=${86400 * 3}`; // 3 days
+      document.cookie = createCookie(data.token);
       window.location.href = '/dashboard';
     },
   });

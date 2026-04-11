@@ -124,30 +124,26 @@ Utilizei a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com
 ### Cookie HTTP Only
 
 **Problema:**
-Durante a implementação da autenticação, foi adotado o uso de cookies para armazenar o token JWT.
-Inicialmente, o token era manipulado tanto no backend quanto no frontend, onde o frontend criava manualmente o cookie utilizando document.cookie.
+Durante a implementação da autenticação, foi adotado inicialmente o uso de cookies HTTP Only para armazenar o token JWT no backend, no entanto, a aplicação utiliza:
+Frontend hospedado na Vercel
+Backend hospedado na Railway
 
-Isso gerava inconsistências, principalmente no fluxo de login com Google OAuth, como:
-- Falha na criação ou envio do cookie em navegadores mais restritivos (ex: Brave)
-- Conflito entre cookies com o mesmo nome (token)
-- Token não sendo enviado corretamente nas requisições → erro 401 (não autorizado)
+Isso caracteriza um cenário cross-domain, onde cookies são tratados como third-party cookies.
+Como consequência, surgiram diversos problemas:
+- Cookies não eram salvos ou enviados nas requisições
+- Falhas no login com Google OAuth (redirecionamento não persistia sessão)
+- Erros 401 (Unauthorized) mesmo após autentação bem-sucedida
 - Comportamento inconsistente entre navegadores
 
-Esses problemas ocorrem porque cookies criados no frontend não possuem as mesmas flags de segurança (httpOnly, sameSite, secure)
+Esses problemas ocorrem devido a políticas modernas de segurança que bloqueiam cookies cross-site por padrão, mesmo quando configurados com sameSite: "none" e secure.
 
 **Solução adotada:**
-Padronizei o fluxo de autenticação para utilizar apenas cookies HTTP Only gerados pelo backend, removendo completamente a manipulação de cookies no frontend, e utilizando credentials include nas requisições.
+Foi realizada uma mudança na estratégia de autenticação, migrando de cookies para o uso de JWT via Authorization Header.
 
 ```typescript
-const cookieOptions = {
-  httpOnly: true,
-  secure: isProduction,
-  sameSite: isProduction ? "none" as const : "lax" as const,
-  path: "/",
-  maxAge: 86400 * 3 * 1000,
-};
-
-res.cookie("token", token, cookieOptions);
+headers: {
+  Authorization: `Bearer ${token}`
+}
 ```
 
 
