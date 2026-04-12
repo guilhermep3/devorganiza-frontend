@@ -121,29 +121,39 @@ Utilizei a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com
 </datalist>
 ```
 
-### Cookie HTTP Only
+### Autenticação Cross-Domain: Cookie vs JWT Bearer
 
 **Problema:**
-Durante a implementação da autenticação, foi adotado inicialmente o uso de cookies HTTP Only para armazenar o token JWT no backend, no entanto, a aplicação utiliza:
-Frontend hospedado na Vercel
-Backend hospedado na Railway
+Durante a implementação da autenticação, foi adotado inicialmente o uso de cookies HTTP Only para armazenar o token JWT.
+No entanto, a aplicação possui frontend na Vercel e backend na Render, caracterizando um cenário cross-domain onde cookies são tratados como third-party cookies.
 
-Isso caracteriza um cenário cross-domain, onde cookies são tratados como third-party cookies.
-Como consequência, surgiram diversos problemas:
-- Cookies não eram salvos ou enviados nas requisições
-- Falhas no login com Google OAuth (redirecionamento não persistia sessão)
-- Erros 401 (Unauthorized) mesmo após autentação bem-sucedida
-- Comportamento inconsistente entre navegadores
+Além disso, ocorreu uma mistura de abordagens conflitantes:
 
-Esses problemas ocorrem devido a políticas modernas de segurança que bloqueiam cookies cross-site por padrão, mesmo quando configurados com sameSite: "none" e secure.
+- Cookie sendo criado no frontend via document.cookie (não HTTP Only)
+- Uso de credentials: "include" no fetch
+- Middleware tentando ler token do Authorization header
+- Backend configurado para setar cookies HTTP Only
+
+Isso gerava falhas ao salvar o cookie, erros de login com Google OAuth e Erros 401 (Unauthorized) mesmo após autenticação bem-sucedida.
 
 **Solução adotada:**
-Foi realizada uma mudança na estratégia de autenticação, migrando de cookies para o uso de JWT via Authorization Header.
+Padronização do JWT via Authorization Header em todas as camadas da aplicação:
 
 ```typescript
-headers: {
-  Authorization: `Bearer ${token}`
-}
+const token = document.cookie.split('; ')
+  .find(row => row.startsWith('token='))?
+  .split('=')[1];
+
+const res = await fetch(`${API_URL}${path}`, {
+    // código...
+    headers: {
+      ...(token && { Authorization: `Bearer ${token}` }),
+      // código...
+    },
+  });
+
+// middleware do backend lê o token
+const token = req.headers.authorization?.split(' ')[1];
 ```
 
 

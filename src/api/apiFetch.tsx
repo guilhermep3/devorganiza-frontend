@@ -3,7 +3,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 type FetchOptions = Omit<RequestInit, "credentials">;
 
 export async function apiFetch(path: string, options: FetchOptions = {}) {
-  const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1]
+  const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
 
   const res = await fetch(`${API_URL}${path}`, {
     ...options,
