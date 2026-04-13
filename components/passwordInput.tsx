@@ -25,8 +25,8 @@ export const PasswordInput = ({ value, onChange, className }: props) => {
         }}
       >
         {showPass
-          ? <Eye className="cursor-pointer" />
-          : <EyeOff className="cursor-pointer" />
+          ? <Eye className="w-5 h-5 cursor-pointer" />
+          : <EyeOff className="w-5 h-5 cursor-pointer" />
         }
       </div>
     </div>

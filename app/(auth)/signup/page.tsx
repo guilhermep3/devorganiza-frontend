@@ -29,7 +29,7 @@ export default function Page() {
       <form className="mt-2 space-y-4 w-full"
         onSubmit={(e) => handleSubmit(e, { name, username, email, password })}
       >
-        <div className="flex flex-col gap-0 w-full">
+        <div className="labelInputDivStyle">
           <label className="text-sm font-medium">
             Nome
           </label>
@@ -47,7 +47,7 @@ export default function Page() {
             <p className="errorMsg">{errors.name}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0 w-full">
+        <div className="labelInputDivStyle">
           <label className="text-sm font-medium">
             Nome de usuário
           </label>
@@ -65,7 +65,7 @@ export default function Page() {
             <p className="errorMsg">{errors.username}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0 w-full">
+        <div className="labelInputDivStyle">
           <label className="text-sm font-medium">
             Email
           </label>
@@ -82,7 +82,7 @@ export default function Page() {
             <p className="errorMsg">{errors.email}</p>
           )}
         </div>
-        <div className="flex flex-col gap-0 w-full">
+        <div className="labelInputDivStyle">
           <label className="text-sm font-medium">
             Senha
           </label>
@@ -103,7 +103,7 @@ export default function Page() {
           {isPending ? "Criando..." : "Criar Conta"}
         </Button>
       </form>
-      <p className="text-center text-sm mt-5">
+      <p className="text-center text-sm mt-6">
         Já tem uma conta?{" "}
         <Link
           href={`/signin`}
