@@ -230,6 +230,12 @@ body {
   .dialogContentStyle {
     @apply sm:max-w-lg! gap-6!
   }
+  .bgLinearBrStyle {
+    @apply bg-linear-to-br from-main-40/10 via-transparent to-main-40/10
+  }
+  .cardIconStyle {
+    @apply p-3 rounded-xl transition-all group-hover:scale-110 group-hover:rotate-12
+  }
 }
 
 .highlight_underline{

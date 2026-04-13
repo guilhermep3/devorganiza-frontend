@@ -1,12 +1,11 @@
 "use client"
-import { AboutCard } from "@/components/aboutCard";
 import { BackBtn } from "@/components/backBtn";
 import { Button } from "@/components/button";
 import { HeroAuroraBackground } from "@/components/layout/auroraBg";
 import { Faq } from "@/components/layout/faq";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
-import { ServicesCard } from "@/components/servicesCard";
+import { HomeCard } from "@/components/homeCard";
 import { DottedBg } from "@/components/svg/dottedBG";
 import { aboutData } from "@/src/data/about";
 import { servicesData } from "@/src/data/services";
@@ -56,7 +55,17 @@ export default function Home() {
             {aboutData.map((i) => {
               const Icon = i.icon;
 
-              return (<AboutCard data={i} key={i.id} Icon={Icon} />)
+              return (
+                <motion.div key={i.id}
+                  initial={{ scale: 0.4, y: -40, filter: 'blur(10px)' }}
+                  whileInView={{ scale: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
+                >
+                  <HomeCard variant={i.id % 2 === 0 ? "primary" : "secondary"}
+                    data={i} Icon={Icon}
+                  />
+                </motion.div>
+              )
             })}
           </div>
         </div>
@@ -81,7 +90,15 @@ export default function Home() {
             {servicesData.map((i) => {
               const Icon = i.icon;
 
-              return (<ServicesCard data={i} key={i.id} Icon={Icon} />)
+              return (
+                <motion.div key={i.id}
+                  initial={{ scale: 0.4, y: -40, filter: 'blur(10px)' }}
+                  whileInView={{ scale: 1, y: 0, filter: 'blur(0px)' }}
+                  transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
+                >
+                  <HomeCard variant="primary" data={i} Icon={Icon} />
+                </motion.div>
+              )
             })}
           </div>
         </div>
@@ -109,7 +126,7 @@ export default function Home() {
       <section id="start" className="relative overflow-hidden bg-background">
         <div className="containerCustom items-center">
           <div className="w-full max-w-3xl text-center p-8 md:p-12 rounded-2xl 
-            bg-linear-to-br from-main-20 via-main-10 to-main-20
+            bg-linear-to-br from-main-10 via-background to-main-20
             border border-gray-30 backdrop-blur-md shadow-lg">
             <motion.h1 className="h1Custom mt-0"
               initial={{ opacity: 0, y: -30 }}

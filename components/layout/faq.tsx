@@ -31,12 +31,15 @@ export const Faq = () => {
     <div className="flex flex-col gap-7 w-full max-w-xl">
       {faqData.map((i, index) => (
         <div key={index} className="w-full flex">
-          <div className="flex flex-col items-center gap-1 w-full bg-card rounded-md shadow-md border">
+          <div className="flex flex-col items-center gap-1 w-full bg-card rounded-md shadow-md border border-main-10">
             <div className="flex justify-between items-center gap-5 p-3 w-full cursor-pointer"
               onClick={() => toggleQuestion(index)}
             >
-              <div className={`p-2 border border-gray-20 rounded-sm mb-auto transition-all
-                ${openIndex === index ? 'text-main-30' : 'text-gray-70'}
+              <div className={`cardIconStyle border border-gray-20 mb-auto
+                ${openIndex === index
+                  ? 'bg-main-40/10 group-hover:bg-main-40/20 text-main-30'
+                  : 'text-gray-70'
+                }
               `}>
                 {i.icon}
               </div>
