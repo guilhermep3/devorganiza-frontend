@@ -2,6 +2,7 @@
 import { Button } from "@/components/button";
 import { DividerOu } from "@/components/dividerOu";
 import { GoogleOauthButton } from "@/components/googleOauthButton";
+import { Logo } from "@/components/logo";
 import { PasswordInput } from "@/components/passwordInput";
 import { useSignup } from "@/src/api/useSignup";
 import Link from "next/link";
@@ -16,6 +17,9 @@ export default function Page() {
 
   return (
     <div className="w-full max-w-80">
+      <div className="flex justify-center items-center my-5">
+        <Logo width={64} />
+      </div>
       <div className="text-center mb-5">
         <h1 className="text-2xl font-bold">Crie sua conta</h1>
         <p className="text-sm text-muted-foreground mt-1">

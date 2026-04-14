@@ -3,7 +3,7 @@ import { Button } from "@/components/button";
 import { LoadingPage } from "@/components/layout/loadingPage";
 import { Logo } from "@/components/logo";
 import { useQuiz } from "@/src/api/quiz/useQuiz"
-import { useQuizStore } from "@/src/store/quiz-store";
+import { useQuizStore } from "@/src/store/quizStore";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation"

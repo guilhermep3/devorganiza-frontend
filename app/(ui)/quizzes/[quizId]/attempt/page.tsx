@@ -5,7 +5,7 @@ import { useDeleteAttempt } from "@/src/api/quiz/useDeleteAttempt";
 import { useFinishAttempt } from "@/src/api/quiz/useFinishAttempt";
 import { useQuiz } from "@/src/api/quiz/useQuiz";
 import { useStartAttempt } from "@/src/api/quiz/useStartAttempt";
-import { useQuizStore } from "@/src/store/quiz-store"
+import { useQuizStore } from "@/src/store/quizStore"
 import { AttemptAnswer, QuestionAlternatives } from "@/src/types/quiz";
 import { CheckCircle } from "lucide-react";
 import Image from "next/image";

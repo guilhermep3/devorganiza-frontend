@@ -1,7 +1,6 @@
 "use client"
 import { AuthFeatureCard } from "@/components/authFeatureCard";
 import { Footer } from "@/components/layout/footer";
-import { Header } from "@/components/layout/header";
 import { aboutData } from "@/src/data/about";
 import { ReactNode } from "react";
 import { motion } from "motion/react"
@@ -10,7 +9,6 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen flex flex-col bg-background pt-16">
-      <Header noNav />
       <main className="flex flex-1 items-center justify-center p-4 md:p-10">
         <div className="w-full max-w-5xl grid md:grid-cols-2 rounded-2xl bg-card border border-border shadow-2xl overflow-hidden min-h-[700px]">
           <div className="flex items-center justify-center p-7 lg:p-10">
