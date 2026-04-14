@@ -1,3 +1,4 @@
+"use client"
 import { AsideDashboard } from "@/components/layout/aside";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
