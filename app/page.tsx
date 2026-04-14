@@ -16,7 +16,7 @@ export default function Home() {
 
   return (
     <div className="relative">
-      <Header />
+      <Header noUser />
       <HeroAuroraBackground />
       <div className="relative">
         <DottedBg />

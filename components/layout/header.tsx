@@ -9,14 +9,14 @@ import { Menu } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useStartAPI } from "@/src/api/useStartAPI";
 import Image from "next/image";
-import { Button } from "../ui/button";
 import { useUser } from "@/src/api/user/useUser";
 
 type props = {
   noNav?: boolean;
   noAnimate?: boolean;
+  noUser?: boolean;
 }
-export const Header = ({ noNav, noAnimate }: props) => {
+export const Header = ({ noNav, noAnimate, noUser }: props) => {
   const [active, setActive] = useState(false);
   const asideCtx = useContext(AsideContext);
   const haveMenu = ["dashboard", "studies", "quizzes", "profile"];
@@ -70,19 +70,22 @@ export const Header = ({ noNav, noAnimate }: props) => {
               <Menu />
             </div>
           }
-          <Link href={'/profile'}
-            className="relative inline-block w-10 h-10 bg-card border-2 border-gray-20 rounded-full overflow-hidden">
-            {userData?.user && userData.user.profileImage ? (
-              <Image src={`${userData?.user.profileImage}`} alt="/" title={userData.user.username}
-                fill
-              />
-            ) : (
-              <Image src={`/no-profile.webp`} alt="foto de usuário"
-                fill
-              />
-            )
-            }
-          </Link>
+          {!noUser && (
+
+            <Link href={'/profile'}
+              className="relative inline-block w-10 h-10 bg-card border-2 border-gray-20 rounded-full overflow-hidden">
+              {userData?.user && userData.user.profileImage ? (
+                <Image src={`${userData?.user.profileImage}`} alt="/" title={userData.user.username}
+                  fill
+                />
+              ) : (
+                <Image src={`/no-profile.webp`} alt="foto de usuário"
+                  fill
+                />
+              )
+              }
+            </Link>
+          )}
         </div>
       </div>
     </header>
