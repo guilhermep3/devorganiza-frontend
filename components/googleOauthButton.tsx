@@ -1,9 +1,12 @@
+import { useRouter } from "next/navigation";
+
 export const GoogleOauthButton = () => {
+  const router = useRouter();
 
   const GOOGLE_AUTH_URL = process.env.NEXT_PUBLIC_GOOGLE_AUTH_URL!
 
   function handleLogin() {
-    window.location.href = GOOGLE_AUTH_URL;
+    router.push(GOOGLE_AUTH_URL);
   }
 
   return (

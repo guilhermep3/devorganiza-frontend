@@ -2,6 +2,7 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { removeToken } from "@/src/utils/token";
 
 type Props = {
   isLogOut: boolean;
@@ -13,7 +14,7 @@ export const LogoutModal = ({ isLogOut, setIsLogout }: Props) => {
   function handleLogout() {
     if (isLogOut) {
       setIsLogout(false);
-      document.cookie = "token=; path=/; max-age=0; secure; samesite=strict";
+      removeToken();
       router.replace('/');
     }
   }

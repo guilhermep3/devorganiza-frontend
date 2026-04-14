@@ -2,6 +2,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { apiFetch } from "./apiFetch";
+import { useRouter } from "next/navigation";
 
 interface SignupData {
   name: string;
@@ -16,6 +17,7 @@ interface SignupResponse {
 
 export function useSignup() {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const router  = useRouter();
 
   const mutation = useMutation<SignupResponse, Error, SignupData>({
     mutationFn: async (credentials: SignupData) => {
@@ -25,7 +27,7 @@ export function useSignup() {
       });
     },
     onSuccess: () => {
-      window.location.href = '/signin';
+      router.push('/signin');
     }
   });
 

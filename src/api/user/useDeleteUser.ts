@@ -1,5 +1,7 @@
+"use client"
 import { useMutation } from "@tanstack/react-query";
 import { apiFetch } from "../apiFetch";
+import { removeToken } from "@/src/utils/token";
 
 export const useDeleteUser = () => {
   const mutation = useMutation({
@@ -25,7 +27,7 @@ export const useDeleteUser = () => {
     },
 
     onSuccess: () => {
-      document.cookie = "token=; path=/; max-age=0; secure; samesite=strict";
+      removeToken();
       window.location.href = "/signin";
       setTimeout(() => {
         mutation.reset();

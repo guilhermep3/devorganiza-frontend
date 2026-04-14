@@ -1,13 +1,21 @@
+"use client"
+
+import { getToken } from "../utils/token";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 type FetchOptions = Omit<RequestInit, "credentials">;
 
 export async function apiFetch(path: string, options: FetchOptions = {}) {
-  const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+  let token = null;
+
+  if (typeof window !== "undefined") {
+    token = getToken();
+  }
+  console.log("TOKEN:", token);
 
   const res = await fetch(`${API_URL}${path}`, {
     ...options,
-    credentials: "include",
     headers: {
       ...(token && { Authorization: `Bearer ${token}` }),
       ...(options.body && !(options.body instanceof FormData)

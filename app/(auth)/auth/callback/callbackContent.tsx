@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createCookie } from "@/src/utils/createCookie";
+import { setToken } from "@/src/utils/token";
 
 export default function CallbackContent() {
   const router = useRouter();
@@ -11,7 +11,7 @@ export default function CallbackContent() {
     const token = searchParams.get("token");
 
     if (token) {
-      document.cookie = createCookie(token);
+      setToken(token);
       router.replace("/dashboard");
     }
 

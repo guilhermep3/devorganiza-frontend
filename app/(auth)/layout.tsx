@@ -2,10 +2,21 @@
 import { AuthFeatureCard } from "@/components/authFeatureCard";
 import { Footer } from "@/components/layout/footer";
 import { aboutData } from "@/src/data/about";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { motion } from "motion/react"
+import { getToken } from "@/src/utils/token";
+import { useRouter } from "next/navigation";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = getToken();
+
+    if (!token) {
+      router.replace("/signin");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background pt-16">
@@ -30,12 +41,12 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
               </div>
               <div className="grid gap-4">
                 {aboutData.map((i) => (
-                  <motion.div
+                  <motion.div key={i.id}
                     initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
                     whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                     transition={{ duration: 0.7 }}
                   >
-                    <AuthFeatureCard key={i.id}
+                    <AuthFeatureCard
                       Icon={i.icon}
                       title={i.title}
                       description={i.description}

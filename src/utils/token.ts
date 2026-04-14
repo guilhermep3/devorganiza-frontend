@@ -1,0 +1,14 @@
+export function setToken(token: string) {
+  if (typeof window === "undefined") return null;
+  return localStorage.setItem("token", token);
+}
+
+export function getToken() {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+};
+
+export function removeToken() {
+  if (typeof window === "undefined") return null;
+  return localStorage.removeItem("token");
+}

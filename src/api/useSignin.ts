@@ -2,7 +2,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { apiFetch } from "./apiFetch";
-import { createCookie } from "../utils/createCookie";
+import { setToken } from "../utils/token";
+import { useRouter } from "next/navigation";
 
 interface SigninData {
   email: string;
@@ -16,6 +17,7 @@ interface SigninResponse {
 
 export const useSignin = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const router = useRouter();
 
   const mutation = useMutation<SigninResponse, Error, SigninData>({
     mutationFn: async (credentials: SigninData) => {
@@ -25,8 +27,8 @@ export const useSignin = () => {
       })
     },
     onSuccess: (data) => {
-      document.cookie = createCookie(data.token);
-      window.location.href = '/dashboard';
+      setToken(data.token);
+      router.push('/dashboard');
     },
   });
 
