@@ -2,21 +2,10 @@
 import { AuthFeatureCard } from "@/components/authFeatureCard";
 import { Footer } from "@/components/layout/footer";
 import { aboutData } from "@/src/data/about";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
 import { motion } from "motion/react"
-import { getToken } from "@/src/utils/token";
-import { useRouter } from "next/navigation";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = getToken();
-
-    if (!token) {
-      router.replace("/signin");
-    }
-  }, []);
 
   return (
     <div className="min-h-screen flex flex-col bg-background pt-16">

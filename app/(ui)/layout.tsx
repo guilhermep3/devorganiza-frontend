@@ -2,12 +2,23 @@ import { AsideDashboard } from "@/components/layout/aside";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { AsideProvider } from "@/src/context/asideContext";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
+import { getToken } from "@/src/utils/token";
+import { useRouter } from "next/navigation";
 
 type props = {
   children: ReactNode;
 }
 export default function Layout({ children }: props) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const token = getToken();
+
+    if (!token) {
+      router.replace("/signin");
+    }
+  }, []);
 
   return (
     <AsideProvider>
