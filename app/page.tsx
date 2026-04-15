@@ -11,6 +11,7 @@ import { aboutData } from "@/src/data/about";
 import { servicesData } from "@/src/data/services";
 import { motion } from "motion/react";
 import Image from "next/image";
+import { handleEntrar } from "@/src/utils/entrar";
 
 export default function Home() {
 
@@ -148,7 +149,7 @@ export default function Home() {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="flex justify-center"
             >
-              <Button href="/dashboard" size={3}>
+              <Button onClick={handleEntrar} size={3}>
                 Entrar
               </Button>
             </motion.div>

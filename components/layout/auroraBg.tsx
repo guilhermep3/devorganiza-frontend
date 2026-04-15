@@ -3,8 +3,10 @@ import { AuroraBackground } from "@/src/components/ui/aurora-background";
 import { motion } from "motion/react";
 import { Button } from "../button";
 import { Logo } from "../logo";
+import { handleEntrar } from "@/src/utils/entrar";
 
 export function HeroAuroraBackground() {
+
   return (
     <AuroraBackground>
       <motion.div
@@ -40,7 +42,7 @@ export function HeroAuroraBackground() {
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut", }}
           >
-            <Button href="/dashboard" size={3}>Entrar</Button>
+            <Button onClick={handleEntrar} size={3}>Entrar</Button>
           </motion.button>
         </div>
       </motion.div>

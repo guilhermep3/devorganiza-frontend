@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import { Menubar, MenubarContent, MenubarItem, MenubarMenu, MenubarShortcut, MenubarTrigger } from "@/components/ui/menubar";
 import { User } from "@/src/types/user";
-import { AtSign, EllipsisVertical, LogOut, Mail, User2 } from "lucide-react"
+import { AtSign, CircleX, EllipsisVertical, Mail, User2 } from "lucide-react"
 
 type props = {
   data: User;
@@ -14,8 +14,7 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting, setIsLogout }: 
   return (
     <div className="relative flex flex-col items-center gap-4 w-full lg:w-1/3 p-4 bg-card border border-gray-20 rounded-md">
       <div className="w-32 h-32 rounded-full overflow-hidden">
-        <img
-          src={`${data.profileImage || '/no-profile.webp'}`}
+        <img src={`${data.profileImage || '/no-profile.webp'}`}
           alt="Foto de perfil"
           className="object-cover w-full h-full"
         />
@@ -24,13 +23,17 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting, setIsLogout }: 
         <MenubarMenu>
           <MenubarTrigger className="px-1"><EllipsisVertical className="w-4" /></MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => setIsLogout(true)}>
-              Sair do login <MenubarShortcut><LogOut /></MenubarShortcut>
+            <MenubarItem variant="destructive"
+              onClick={() => setIsDeleting(true)}
+              className="cursor-pointer"
+            >
+              Excluir conta
+              <MenubarShortcut><CircleX className="text-red-500 dark:text-red-400" /></MenubarShortcut>
             </MenubarItem>
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
-      <div className="w-full flex flex-col gap-2 text-center">
+      <div className="w-full flex flex-col gap-3 text-center">
         <p className="font-semibold text-xl flex items-center justify-center gap-1">
           <User2 className="text-main-30" /> {data.name}
         </p>
@@ -47,10 +50,10 @@ export const ProfileCard = ({ data, setIsEditing, setIsDeleting, setIsLogout }: 
         >
           Editar
         </Button>
-        <Button className="flex-1 bg-red-600 text-white p-2 rounded-md hover:bg-red-700 transition"
-          onClick={() => setIsDeleting(true)}
+        <Button className="flex-1 bg-red-500 text-white p-2 rounded-md hover:bg-red-600 transition"
+          onClick={() => setIsLogout(true)}
         >
-          Excluir
+          Sair do login
         </Button>
       </div>
     </div>
