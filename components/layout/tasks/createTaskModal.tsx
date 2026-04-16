@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/button";
 import { useCreateTask } from "@/src/api/task/useCreateTask";
 import { useState } from "react";
+import { useModalHandlers } from "@/src/hooks/useModalHandlers";
 
 type Props = {
   isOpen: boolean;
@@ -16,7 +17,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
 
-  const { handleSubmit, isPending, isSuccess, error, errors } =
+  const { handleSubmit, isPending, isSuccess, error, errors, setErrors } =
     useCreateTask(studyId, {
       onSuccess: () => {
         setIsOpen(false);
@@ -26,8 +27,17 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
       },
     });
 
+  const { handleOpenChange, handleCancel } = useModalHandlers({ setIsOpen, setErrors, refetch });
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        handleOpenChange(open);
+        setTitle('');
+        setLink('');
+      }}
+    >
       <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Criar tarefa</DialogTitle>
@@ -54,11 +64,14 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
+            {errors.link && <p className="errorMsg">{errors.link}</p>}
           </div>
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN variant="outline" type="button"
               onClick={() => {
-                setIsOpen(false);
+                handleCancel();
+                setTitle('');
+                setLink('');
               }}
               className="bg-gray-20 hover:bg-gray-30"
             >

@@ -6,7 +6,6 @@ interface CreateTask {
   title: string;
   link: string;
 }
-
 export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
@@ -53,5 +52,6 @@ export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () 
     ...mutation,
     handleSubmit,
     errors,
+    setErrors
   };
 }

@@ -7,6 +7,7 @@ import { Study } from "@/src/types/study";
 import { useEffect, useState } from "react";
 import { useEditStudy } from "@/src/api/study/useEditStudy";
 import { setorTypes } from "@/src/types/setor";
+import { useModalHandlers } from "@/src/hooks/useModalHandlers";
 
 type Props = {
   isOpen: boolean;
@@ -21,7 +22,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
   const [link, setLink] = useState("");
   const [description, setDescription] = useState("");
 
-  const { handleSubmit, isPending, isSuccess, error, errors } =
+  const { handleSubmit, isPending, isSuccess, error, errors, setErrors } =
     useEditStudy(study?.id, {
       onSuccess: () => {
         setIsOpen(false);
@@ -38,8 +39,13 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
     }
   }, [isOpen, study]);
 
+  const { handleOpenChange, handleCancel } = useModalHandlers({ setIsOpen, setErrors, refetch });
+
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={handleOpenChange}
+    >
       <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Editar estudo</DialogTitle>
@@ -77,6 +83,9 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
                 </option>
               ))}
             </select>
+            {errors.type && (
+              <p className="errorMsg">{errors.type}</p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Link</label>
@@ -84,6 +93,9 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
+            {errors.link && (
+              <p className="errorMsg">{errors.link}</p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Descrição</label>
@@ -94,10 +106,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
           </div>
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN variant="outline" type="button"
-              onClick={() => {
-                setIsOpen(false);
-                refetch();
-              }}
+              onClick={handleCancel}
             >
               Cancelar
             </ButtonCN>

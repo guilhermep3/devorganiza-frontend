@@ -11,6 +11,7 @@ type EditStudyPayload = {
 
 export const useEditStudy = (studyId: string, options?: { onSuccess?: () => void }) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
+
   const mutation = useMutation({
     mutationFn: async (payload: EditStudyPayload) => {
       return apiFetch(`/studies/${studyId}`, {

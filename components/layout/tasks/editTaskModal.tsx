@@ -6,6 +6,7 @@ import { Button } from "@/components/button";
 import { Task } from "@/src/types/study";
 import { useEditTask } from "@/src/api/task/useEditTask";
 import { useEffect, useState } from "react";
+import { useModalHandlers } from "@/src/hooks/useModalHandlers";
 
 type Props = {
   isOpen: boolean;
@@ -18,13 +19,15 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
   const [link, setLink] = useState("");
   const [done, setDone] = useState(false);
 
-  const { handleSubmit, isPending, isSuccess, errors } =
+  const { handleSubmit, isPending, isSuccess, errors, setErrors } =
     useEditTask(task?.id ?? null, {
       onSuccess: () => {
         setIsOpen(false);
         refetch();
       }
     });
+
+  const { handleOpenChange, handleCancel } = useModalHandlers({ setIsOpen, setErrors, refetch });
 
   useEffect(() => {
     if (task) {
@@ -35,7 +38,10 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
   }, [isOpen, task]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={handleOpenChange}
+    >
       <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Editar tarefa</DialogTitle>
@@ -76,10 +82,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
           </div>
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN variant="outline" type="button"
-              onClick={() => {
-                setIsOpen(false);
-                refetch();
-              }}
+              onClick={handleCancel}
               className="bg-gray-20 hover:bg-gray-30"
             >
               Cancelar

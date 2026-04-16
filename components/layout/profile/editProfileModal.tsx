@@ -51,7 +51,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
   }
 
   useEffect(() => {
-    if(isSuccess){
+    if (isSuccess) {
       const timer = setTimeout(() => {
         setIsOpen(false);
         fetchUser();

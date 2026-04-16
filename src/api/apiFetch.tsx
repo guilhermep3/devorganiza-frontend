@@ -12,7 +12,6 @@ export async function apiFetch(path: string, options: FetchOptions = {}) {
   if (typeof window !== "undefined") {
     token = getToken();
   }
-  console.log("TOKEN:", token);
 
   const res = await fetch(`${API_URL}${path}`, {
     ...options,

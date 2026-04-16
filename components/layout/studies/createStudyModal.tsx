@@ -6,6 +6,7 @@ import { Button } from "@/components/button";
 import { useCreateStudy } from "@/src/api/study/useCreateStudy";
 import { useEffect, useState } from "react";
 import { useQuizzesNames } from "@/src/api/quiz/useQuizzesNames";
+import { useModalHandlers } from "@/src/hooks/useModalHandlers";
 
 type Props = {
   isOpen: boolean;
@@ -19,7 +20,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
   const [description, setDescription] = useState("");
 
   const { data } = useQuizzesNames();
-  const { handleSubmit, isSuccess, errors, isPending } =
+  const { handleSubmit, isSuccess, errors, setErrors, isPending } =
     useCreateStudy({
       onSuccess: () => {
         setIsOpen(false);
@@ -31,17 +32,26 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
       }
     });
 
+  const { handleOpenChange, handleCancel } = useModalHandlers({ setIsOpen, setErrors, refetch });
+
   useEffect(() => {
     if (!data) return;
     if (data.find(i => i.title === name)) {
       const dataChoosed = data.find(i => i.title === name);
       setType(dataChoosed?.type!)
-      console.log("data", data)
     }
   }, [name])
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog
+      open={isOpen} onOpenChange={(open) => {
+        handleOpenChange(open);
+        setName("");
+        setType("");
+        setLink("");
+        setDescription("");
+      }}
+    >
       <DialogContent className="dialogContentStyle">
         <DialogHeader>
           <DialogTitle>Criar estudo</DialogTitle>
@@ -109,7 +119,13 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
           </div>
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN variant="outline" type="button"
-              onClick={() => setIsOpen(false)}
+              onClick={() => {
+                handleCancel();
+                setName("");
+                setType("");
+                setLink("");
+                setDescription("");
+              }}
               className="bg-gray-20 hover:bg-gray-30"
             >
               Cancelar
