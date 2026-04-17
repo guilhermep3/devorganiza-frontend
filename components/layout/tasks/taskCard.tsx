@@ -18,7 +18,7 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
 
   return (
     <div className={`bg-card p-4 rounded-lg flex flex-col justify-between gap-3 border
-      ${task.done ? "border-green-20" : "border-yellow-500"}`}
+      ${task.done ? "border-secondary-20" : "border-yellow-500"}`}
     >
       <div className="mb-1">
         <h3 className="text-foreground font-semibold mb-1">{task.title}</h3>
@@ -35,7 +35,7 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2">
           {task.done
-            ? <CheckCircle className=" text-green-900 dark:text-green-200" />
+            ? <CheckCircle className=" text-green-900 dark:text-secondary-200" />
             : <Hourglass className="text-yellow-900 dark:text-yellow-200" />
           }
           <div className={`hidden md:flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20

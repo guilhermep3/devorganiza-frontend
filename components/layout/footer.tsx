@@ -21,12 +21,12 @@ export const Footer = () => {
           </nav>
           <div className="flex gap-3">
             <Link href="https://www.linkedin.com/in/guilherme-pereira3/" target="_blank"
-              className="p-2 rounded-md border border-main-20 text-main-40 hover:text-main-80 hover:border-main-40 transition"
+              className="p-2 rounded-md border border-main-30 text-main-40 hover:text-main-80 hover:border-main-40 transition"
             >
               <Linkedin size={18} />
             </Link>
             <Link href="https://github.com/guilhermep3" target="_blank"
-              className="p-2 rounded-md border border-main-20 text-main-40 hover:text-main-80 hover:border-main-40 transition"
+              className="p-2 rounded-md border border-main-30 text-main-40 hover:text-main-80 hover:border-main-40 transition"
             >
               <Github size={18} />
             </Link>

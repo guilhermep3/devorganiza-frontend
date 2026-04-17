@@ -99,7 +99,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="chartFooter font-medium">
           {createdDifference >= 0 ? (
-            <TrendingUp className="h-4 w-4 text-green-20" />
+            <TrendingUp className="h-4 w-4 text-secondary-20" />
           ) : (
             <TrendingDown className="h-4 w-4 text-red-500" />
           )}
@@ -111,7 +111,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
         </div>
         <div className="chartFooter text-gray-50">
           {finishedDifference >= 0 ? (
-            <TrendingUp className="h-4 w-4 text-green-20" />
+            <TrendingUp className="h-4 w-4 text-secondary-20" />
           ) : (
             <TrendingDown className="h-4 w-4 text-red-500" />
           )}

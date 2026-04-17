@@ -12,7 +12,7 @@ import { AverageScore } from "@/src/types/chart"
 const chartConfig = {
   // HTML: {
   //   label: "HTML",
-  //   color: "var(--color-green-20)",
+  //   color: "var(--color-secondary-20)",
   // },
   // CSS: {
   //   label: "CSS",
@@ -22,12 +22,12 @@ const chartConfig = {
 
 const colors = [
   "var(--color-main-30)",
-  "var(--color-green-20)",
+  "var(--color-secondary-20)",
   "var(--color-main-50)",
   "var(--color-main-40)",
   "var(--color-main-20)",
   "var(--color-main-30)",
-  "var(--color-green-20)",
+  "var(--color-secondary-20)",
   "var(--color-main-50)",
   "var(--color-main-40)",
   "var(--color-main-20)",
@@ -96,7 +96,7 @@ export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="chartFooter">
-          <TrendingUp className="h-4 w-4 text-green-20" />
+          <TrendingUp className="h-4 w-4 text-secondary-20" />
           {topText}
         </div>
         <div className="chartFooter text-muted-foreground leading-none">

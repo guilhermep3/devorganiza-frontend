@@ -20,8 +20,8 @@ export const HomeCard = ({ data, Icon, variant }: Props) => {
         rounded-lg transition duration-200 border
         hover:-translate-y-2 hover:shadow-gray-30 dark:hover:shadow-gray-10
         ${variant === "primary"
-            ? "border-main-20/50 hover:border-main-40/50 hover:shadow-[0_12px_40px_-4px_rgba(0,183,255,0.3)]"
-            : "border-green-20/50 hover:border-green-20/50 hover:shadow-[0_12px_40px_-4px_rgba(5,175,90,0.35)]"
+            ? "border-main-30/50 hover:border-main-40/50 hover:shadow-[0_12px_40px_-4px_rgba(0,183,255,0.3)]"
+            : "border-secondary-10/50 hover:border-secondary-20/50 hover:shadow-[0_12px_40px_-4px_rgba(5,175,90,0.35)]"
           }`}
       >
         <div
@@ -29,7 +29,7 @@ export const HomeCard = ({ data, Icon, variant }: Props) => {
           pointer-events-none
           ${variant === "primary"
               ? "bg-linear-to-br from-main-40/10 via-main-40/5 to-transparent"
-              : "bg-linear-to-br from-green-20/10 via-green-20/5 to-transparent"
+              : "bg-linear-to-br from-secondary-20/10 via-secondary-20/5 to-transparent"
             }`}
         />
         <div
@@ -41,7 +41,7 @@ export const HomeCard = ({ data, Icon, variant }: Props) => {
             className={`cardIconStyle
             ${variant === "primary"
                 ? "bg-main-40/10 group-hover:bg-main-40/20 text-main-30"
-                : "bg-green-20/10 group-hover:bg-green-20/20 text-green-20"
+                : "bg-secondary-20/10 group-hover:bg-secondary-20/20 text-secondary-20"
               }`}
           >
             <Icon />

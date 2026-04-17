@@ -21,7 +21,7 @@ export const StudyCard = ({ data }: props) => {
 
   return (
     <div className={`flex flex-col bg-card border rounded-md overflow-hidden transition
-      ${percentage === 100 ? "border-green-20" : "border-yellow-500"}
+      ${percentage === 100 ? "border-secondary-20" : "border-yellow-500"}
     `}>
       <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
         <div className="mb-1">
@@ -32,7 +32,7 @@ export const StudyCard = ({ data }: props) => {
             </span>
             <div className="flex items-center gap-2">
               {percentage === 100
-                ? <CheckCircle className="text-green-20" />
+                ? <CheckCircle className="text-secondary-20" />
                 : <Hourglass className="text-yellow-500" />
               }
               <div className={`hidden md:flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
@@ -83,7 +83,7 @@ export const StudyCard = ({ data }: props) => {
               <span className="text-xs text-gray-70">Total</span>
             </div>
             <div className="p-1 md:p-2 rounded bg-green-100 dark:bg-green-950">
-              <div className="flex items-center justify-center gap-1 text-green-20">
+              <div className="flex items-center justify-center gap-1 text-secondary-20">
                 <ListCheck className="w-4 h-4" />
                 <span className="font-bold">{completed}</span>
               </div>

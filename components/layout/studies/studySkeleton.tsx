@@ -17,7 +17,7 @@ export const StudySkeleton = () => {
             <div className="h-5 bg-gray-20 rounded w-6"></div>
           </div>
           <div
-            className="flex-1 flex justify-center items-center gap-1 font-bold text-sm md:text-lg text-green-20 border-x border-gray-20"
+            className="flex-1 flex justify-center items-center gap-1 font-bold text-sm md:text-lg text-secondary-20 border-x border-gray-20"
             title="Tarefas finalizadas"
           >
             <div className="h-5 w-5 bg-gray-20 rounded-full"></div>

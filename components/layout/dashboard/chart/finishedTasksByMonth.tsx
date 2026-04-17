@@ -120,7 +120,7 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
           <div className="grid gap-2">
             <div className="chartFooter">
               {finishedDifference >= 0 ? (
-                <TrendingUp className="h-4 w-4 text-green-20" />
+                <TrendingUp className="h-4 w-4 text-secondary-20" />
               ) : (
                 <TrendingDown className="h-4 w-4 text-red-500" />
               )}
