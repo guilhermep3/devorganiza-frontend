@@ -131,20 +131,27 @@ Além disso, ocorreu uma mistura de abordagens conflitantes:
 
 - Cookie sendo criado no frontend via document.cookie (não HTTP Only)
 - Uso de credentials: "include" no fetch
-- Middleware tentando ler token do Authorization header
+- Backend com middleware verificando token no authorization header
 - Backend configurado para setar cookies HTTP Only
 
 Isso gerava falhas ao salvar o cookie, erros de login com Google OAuth e Erros 401 (Unauthorized) mesmo após autenticação bem-sucedida.
 
 **Solução adotada:**
-Padronização do JWT via Authorization Header em todas as camadas da aplicação:
+Armazenei o token no localStorage e utilizei o JWT nas rotas via bearer token. Além de o backend parar de gerar cookies.
 
 ```typescript
-const token = document.cookie.split('; ')
-  .find(row => row.startsWith('token='))?
-  .split('=')[1];
+export function getToken() {
+  if (typeof window === "undefined") return null;
+  return localStorage.getItem("token");
+};
 
-const res = await fetch(`${API_URL}${path}`, {
+  let token = null;
+
+  if (typeof window !== "undefined") {
+    token = getToken();
+  }
+
+  const res = await fetch(`${API_URL}${path}`, {
     // código...
     headers: {
       ...(token && { Authorization: `Bearer ${token}` }),
