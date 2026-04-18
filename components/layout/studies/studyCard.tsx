@@ -14,87 +14,79 @@ export const StudyCard = ({ data }: props) => {
     const total = data.tasks.length;
     const completed = data.tasks.filter((t) => t.done === true).length;
     const percentage = total === 0 ? 0 : (Math.floor((completed / total) * 100));
+    const isDone = percentage === 100;
 
-    return { total, completed, percentage }
+    return { total, completed, percentage, isDone }
   }
-  const { total, completed, percentage } = getTasksStats();
+
+  const { total, completed, percentage, isDone } = getTasksStats();
 
   return (
-    <div className={`flex flex-col bg-card border rounded-md overflow-hidden transition
-      ${percentage === 100 ? "border-secondary-20" : "border-yellow-500"}
-    `}>
-      <div className="flex flex-col gap-3 h-full border-t border-gray-30 p-2 md:p-3">
-        <div className="mb-1">
-          <h3 className="font-semibold text-lg truncate">{data.study.name}</h3>
-          <div className="flex items-center justify-between gap-1 lg:gap-2 mt-1">
-            <span className="text-xs px-2 py-1 bg-main-10 text-main-60 border border-main-20 rounded-sm">
-              {data.study.type || 'Sem tipo'}
-            </span>
-            <div className="flex items-center gap-2">
-              {percentage === 100
-                ? <CheckCircle className="text-secondary-20" />
-                : <Hourglass className="text-yellow-500" />
-              }
-              <div className={`hidden md:flex items-center gap-2 text-xs px-2 py-1 rounded-sm border border-gray-20
-              ${percentage === 100
-                  ? 'finishedCustom' : 'pendentCustom'
-                }`}
-              >
-                <p>{percentage === 100 ? "Concluída" : "Pendente"}</p>
-              </div>
-            </div>
-          </div>
-          {data.study.description && (
-            <p className="text-xs lg:text-sm text-gray-60 mt-2 line-clamp-2">
-              {data.study.description}
-            </p>
-          )}
-          {data.study.link && (
-            <a
-              href={data.study.link}
-              target="_blank"
-              className="linkCustom"
-            >
-              {data.study.link.length > 100 ? data.study.link.slice(0, 100) + "..." : data.study.link}
-            </a>
-          )}
+    <div className={`flex flex-col bg-card rounded-lg overflow-hidden border transition-colors
+      ${isDone ? "border-secondary-20/50" : "border-amber-400/75 dark:border-amber-400/50"}`}
+    >
+      <div className="px-5 pt-4 pb-0">
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <h3 className="font-medium text-base truncate max-w-[70%]">
+            {data.study.name}
+          </h3>
+          <span className={`flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full whitespace-nowrap
+              ${isDone
+              ? "bg-secondary-10/50 text-secondary-30"
+              : "bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300"
+            }`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full
+                ${isDone ? "bg-secondary-20" : "bg-amber-400"}
+              `}
+            />
+            {isDone ? "Concluída" : "Pendente"}
+          </span>
         </div>
+        <span className="inline-block text-xs text-muted-foreground bg-muted border border-border rounded px-2 py-0.5 mb-2">
+          {data.study.type || "Sem tipo"}
+        </span>
+        {data.study.description && (
+          <p className="text-xs text-muted-foreground line-clamp-2 leading-relaxed mb-2">
+            {data.study.description}
+          </p>
+        )}
+        {data.study.link && (
+          <a href={data.study.link} target="_blank"
+            className="linkCustom"
+          >
+            {data.study.link.length > 100 ? data.study.link.slice(0, 100) + "..." : data.study.link}
+          </a>
+        )}
+      </div>
+      <div className="px-5 pb-4 pt-3 flex flex-col gap-3 border-t border-border mt-2 flex-1">
         <div className="mt-auto">
-          <div className="mb-2">
-            <div className="flex justify-between items-center mb-1">
-              <span className="text-sm font-medium text-gray-60">Progresso</span>
-              <span className="text-sm font-bold">{percentage}%</span>
-            </div>
-            <div className="w-full bg-gray-20 rounded-full h-3 border border-gray-20">
-              <div
-                className={`h-2 rounded-full transition-all duration-300
-                  ${percentage >= 100 ? "bg-green-500" : "bg-yellow-500"}
-                `}
-                style={{ width: `${percentage}%` }}
-              ></div>
-            </div>
+          <div className="flex justify-between items-center mb-1.5">
+            <span className="text-xs text-muted-foreground">Progresso</span>
+            <span className="text-xs font-medium">{percentage}%</span>
           </div>
-          <div className="grid grid-cols-2 gap-1 md:gap-2 text-center">
-            <div className="p-1 md:p-2 rounded bg-gray-20">
-              <div className="flex items-center justify-center gap-1 text-foreground">
-                <List className="w-4 h-4" />
-                <span className="font-bold">{total}</span>
-              </div>
-              <span className="text-xs text-gray-70">Total</span>
-            </div>
-            <div className="p-1 md:p-2 rounded bg-green-100 dark:bg-green-950">
-              <div className="flex items-center justify-center gap-1 text-secondary-20">
-                <ListCheck className="w-4 h-4" />
-                <span className="font-bold">{completed}</span>
-              </div>
-              <span className="text-xs text-gray-70">Concluídas</span>
-            </div>
+          <div className="h-2 bg-muted rounded-full overflow-hidden border border-border">
+            <div
+              className={`h-full rounded-full transition-all duration-300
+                ${isDone ? "bg-secondary-20" : "bg-amber-400"}
+              `}
+              style={{ width: `${percentage}%` }}
+            />
           </div>
         </div>
-        <Button
-          className="w-full text-sm md:text-base py-1.5!"
-          href={`/studies/${data.study.id}`}
-        >
+        <div className="grid grid-cols-2 gap-2">
+          <div className="bg-muted rounded-md p-2 flex flex-col items-center gap-0.5">
+            <span className="text-lg font-medium leading-none">{total}</span>
+            <span className="text-xs text-muted-foreground">Total</span>
+          </div>
+          <div className="bg-muted rounded-md p-2 flex flex-col items-center gap-0.5">
+            <span className="text-lg font-medium leading-none text-teal-600 dark:text-teal-400">
+              {completed}
+            </span>
+            <span className="text-xs text-muted-foreground">Concluídas</span>
+          </div>
+        </div>
+        <Button className="w-full text-sm py-1.5!" href={`/studies/${data.study.id}`}>
           Ver Estudo
         </Button>
       </div>
