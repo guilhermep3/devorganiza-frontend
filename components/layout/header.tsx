@@ -22,7 +22,8 @@ export const Header = ({ noNav, noAnimate, noUser }: props) => {
   const haveMenu = ["dashboard", "studies", "quizzes", "profile"];
   const pathname = usePathname();
   const { } = useStartAPI();
-  const { data: userData } = useUser();
+  const userQuey = !noUser ? useUser() : null;
+  const userData = userQuey?.data;
 
   useEffect(() => {
     function handleScroll() {

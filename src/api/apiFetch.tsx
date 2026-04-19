@@ -1,6 +1,6 @@
 "use client"
 
-import { getToken } from "../utils/token";
+import { getToken, removeToken } from "../utils/token";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
@@ -27,6 +27,13 @@ export async function apiFetch(path: string, options: FetchOptions = {}) {
   const data = await res.json().catch(() => null);
 
   if (!res.ok) {
+    if (res.status === 401) {
+      removeToken();
+
+      if (typeof window !== "undefined") {
+        window.location.href = "/signin";
+      }
+    }
     throw new Error(data?.error ?? "Erro na requisição");
   }
 
