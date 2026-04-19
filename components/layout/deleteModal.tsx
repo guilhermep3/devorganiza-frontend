@@ -12,25 +12,25 @@ type Props = {
   loading?: boolean;
   error?: string;
   isSuccess?: boolean;
-  successMsg: string;
+  errorMsg: string;
 };
 
 export const DeleteModal = ({
   isOpen, setIsOpen, title, description, handleAction, loading,
-  error, isSuccess, successMsg
+  error, isSuccess, errorMsg
 }: Props) => {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
             {description}
           </DialogDescription>
         </DialogHeader>
-        {error && <p className="errorMsg">{error}</p>}
-        {isSuccess && <p className="successMsg">{successMsg}</p>}
+        {error && <p className="ds-message-error">{error}</p>}
+        {isSuccess && <p className="ds-message-success">{errorMsg}</p>}
         <div className="flex justify-center gap-3 pt-6">
           <ButtonCN variant="outline" type="button"
             onClick={() => setIsOpen(false)}

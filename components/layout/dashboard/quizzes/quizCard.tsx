@@ -14,7 +14,7 @@ export const QuizCard = ({ quiz, locked }: { quiz: Quiz, locked?: boolean }) => 
         filter: locked ? "brightness(0.75)" : "brightness(1)"
       }}
     >
-      <p className="text-center text-lg md:text-xl font-bold">{quiz.title}</p>
+      <p className="text-center ds-text-xl font-bold">{quiz.title}</p>
       <div className="flex justify-center items-center max-w-56 max-h-56 w-full aspect-square my-auto">
         <Image
           src={`${quiz.imageUrl}`} alt={quiz.title}

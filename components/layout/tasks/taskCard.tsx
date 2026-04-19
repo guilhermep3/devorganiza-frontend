@@ -40,7 +40,7 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
           </span>
         </div>
         {task.link && (
-          <a href={task.link} target="_blank" className="linkCustom mt-1">
+          <a href={task.link} target="_blank" className="ds-link mt-1">
             {task.link.length > 60 ? task.link.slice(0, 60) + "..." : task.link}
           </a>
         )}

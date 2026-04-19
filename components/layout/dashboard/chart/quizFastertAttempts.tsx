@@ -90,11 +90,11 @@ export function QuizFasterAttemptsChart({ data }: { data: FasterAttempts[] }) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="chartFooter">
+        <div className="ds-text-footer">
           Quiz de {fastest.quiz} foi finalizado aproximadamente {percentage}% mais rápido
           que o de {slowest.quiz}.
         </div>
-        <div className="chartFooter text-muted-foreground leading-none">
+        <div className="ds-text-footer text-muted-foreground leading-none">
           Baseada no menor tempo registrado para conclusão dos quizzes.
         </div>
       </CardFooter>

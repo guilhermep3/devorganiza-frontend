@@ -17,7 +17,7 @@ export default function Page() {
   const hasTopInfosData = !!userData && !!studiesData && !!quizzesData && !!quizzesLockData;
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       {!hasTopInfosData ? (
         <TopInfosSkeleton />
       ) : (

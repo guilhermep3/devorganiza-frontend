@@ -17,10 +17,10 @@ export default function Page() {
   const { data, isLoading, refetch } = useUser();
 
   return (
-    <div className="layoutDiv flex flex-col gap-10">
+    <div className="ds-layout-container flex flex-col gap-10">
       <section className="flex flex-col">
-        <h1 className="dashboardSectionTitle">Perfil</h1>
-        <h2 className="dashboardSectionSubtitle">Veja e gerencie seus dados pessoais</h2>
+        <h1 className="ds-text-2xl-bold">Perfil</h1>
+        <h2 className="ds-text-subtitle">Veja e gerencie seus dados pessoais</h2>
         <div className="flex flex-col lg:flex-row items-start gap-4">
           {isLoading || !data?.user ? (
             <ProfileCardSkeleton />

@@ -25,7 +25,7 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
 
   return (
     <Dialog open={isDeleting} onOpenChange={setIsDeleting}>
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>Excluir conta</DialogTitle>
           <DialogDescription>
@@ -33,8 +33,8 @@ export const DeleteProfileModal = ({ isDeleting, setIsDeleting }: Props) => {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col items-center gap-6 pt-4">
-          {error && <p className="errorMsg">{error.message}</p>}
-          {isSuccess && <p className="successMsg">Conta excluída com sucesso</p>}
+          {error && <p className="ds-message-error">{error.message}</p>}
+          {isSuccess && <p className="ds-message-success">Conta excluída com sucesso</p>}
           <div className="flex items-center gap-3">
             <ButtonCN variant="outline" type="button"
               className="bg-gray-200 hover:bg-gray-300"

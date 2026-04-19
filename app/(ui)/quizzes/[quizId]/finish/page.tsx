@@ -53,16 +53,16 @@ export default function Page() {
   }
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       {isLoading || quizLoading || userLoading || !userData || !quizData || !data ? (
         <LoadingPage />
       ) : (
         <div className="flex flex-col items-center gap-2">
           <div className="flex justify-center items-center gap-2">
             <Logo width={40} />
-            <p className="text-base md:text-lg font-bold -mb-1 text-main-60">DevOrganiza</p>
+            <p className="ds-text-lg font-bold -mb-1 text-main-60">DevOrganiza</p>
           </div>
-          <p className="text-lg md:text-xl">Parabéns, {userData.user.name}!</p>
+          <p className="ds-text-xl">Parabéns, {userData.user.name}!</p>
           <p className="text-gray-40">Você completou o quiz de {quizData.title}</p>
           <div className="flex justify-center items-center my-6 w-28 h-28 border-12 border-main-30 rounded-full text-4xl font-bold">
             {data.score}

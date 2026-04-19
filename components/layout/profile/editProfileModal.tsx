@@ -69,14 +69,14 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
 
   return (
     <Dialog open={isEditing} onOpenChange={setIsOpen}>
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>Editar perfil</DialogTitle>
           <DialogDescription>Edite as informações do seu perfil</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col items-center gap-6 w-full mx-auto">
-          {error && <p className="errorMsg">{error.message}</p>}
-          {isSuccess && <p className="successMsg">Usuário atualizado com sucesso</p>}
+          {error && <p className="ds-message-error">{error.message}</p>}
+          {isSuccess && <p className="ds-message-success">Usuário atualizado com sucesso</p>}
           <div className="flex flex-col items-center gap-3 w-full">
             <Label className="text-sm font-medium">Foto de perfil</Label>
             <input type="file"
@@ -107,7 +107,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Label>Nome</Label>
-            <input className="inputCustom w-full text-base"
+            <input className="ds-input w-full text-base"
               placeholder="Seu nome"
               {...register("name")}
             />
@@ -115,7 +115,7 @@ export const EditProfileModal = ({ isEditing, setIsOpen, fetchUser, defaultValue
           </div>
           <div className="flex flex-col gap-2 w-full">
             <Label>Nome de usuário</Label>
-            <input className="inputCustom w-full text-base"
+            <input className="ds-input w-full text-base"
               placeholder="Seu nome de usuário"
               {...register("username")}
             />

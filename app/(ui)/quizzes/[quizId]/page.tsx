@@ -21,7 +21,7 @@ export default function Page() {
   }
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       {isLoading || !data ? (
         <LoadingPage />
       ) : (
@@ -41,7 +41,7 @@ export default function Page() {
               className="h-60 object-contain"
             />
           }
-          <div className="flex flex-col items-center gap-2 text-xs md:text-sm">
+          <div className="ds-text-sm flex flex-col items-center gap-2">
             <h1 className="text-2xl md:text-3xl font-extrabold">Quiz {data.title}</h1>
             <div className="flex items-center justify-between gap-5 text-gray-50">
               <p>5 - 30 min </p>

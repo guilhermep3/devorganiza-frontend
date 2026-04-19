@@ -92,10 +92,10 @@ export function AverageTimeFinishTaskChart({ data }: { data: AverageTimeFinish[]
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="chartFooter">
+        <div className="ds-text-footer">
           {topText}
         </div>
-        <div className="chartFooter text-muted-foreground leading-none">
+        <div className="ds-text-footer text-muted-foreground leading-none">
           Comparação baseada no tempo médio de conclusão das tarefas.
         </div>
       </CardFooter>

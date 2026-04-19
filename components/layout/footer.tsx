@@ -6,7 +6,7 @@ export const Footer = () => {
   
   return (
     <footer className="bg-card border-t border-main-20">
-      <div className="containerCustom py-10 flex flex-col gap-10">
+      <div className="ds-container py-10 flex flex-col gap-10">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
           <div className="flex items-center gap-3">
             <Logo width={56} />

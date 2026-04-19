@@ -52,7 +52,7 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
         setDescription("");
       }}
     >
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>Criar estudo</DialogTitle>
           <DialogDescription>
@@ -62,10 +62,10 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
         <form className="flex flex-col gap-4 pt-2"
           onSubmit={(e) => handleSubmit(e, { name, type, link, description })}
         >
-          {isSuccess && <p className="successMsg">Estudo criado com sucesso</p>}
+          {isSuccess && <p className="ds-message-success">Estudo criado com sucesso</p>}
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Nome</label>
-            <input list="study" className="inputCustom w-full"
+            <input list="study" className="ds-input w-full"
               placeholder="Ex: Criar modal com React"
               value={name}
               onChange={(e: any) => setName(e.target.value)}
@@ -76,13 +76,13 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
               ))}
             </datalist>
             {errors.name && (
-              <p className="errorMsg">{errors.name}</p>
+              <p className="ds-message-error">{errors.name}</p>
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Tipo</label>
             <select
-              className="border rounded-md px-3 py-2 inputCustom w-full"
+              className="border rounded-md px-3 py-2 ds-input w-full"
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
@@ -92,29 +92,29 @@ export const CreateStudyModal = ({ isOpen, setIsOpen, refetch }: Props) => {
               <option value="outro">Outro</option>
             </select>
             {errors.type && (
-              <p className="errorMsg">{errors.type}</p>
+              <p className="ds-message-error">{errors.type}</p>
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Link (opcional)</label>
-            <input className="inputCustom w-full"
+            <input className="ds-input w-full"
               placeholder="https://..."
               value={link}
               onChange={(e: any) => setLink(e.target.value)}
             />
             {errors.link && (
-              <p className="errorMsg">{errors.link}</p>
+              <p className="ds-message-error">{errors.link}</p>
             )}
           </div>
           <div className="flex flex-col gap-2 w-full">
             <label className="text-sm font-medium">Descrição (opcional)</label>
-            <textarea className="inputCustom w-full h-24 resize-none"
+            <textarea className="ds-input w-full h-24 resize-none"
               placeholder="Detalhes da tarefa..."
               value={description}
               onChange={(e: any) => setDescription(e.target.value)}
             />
             {errors.description && (
-              <p className="errorMsg">{errors.description}</p>
+              <p className="ds-message-error">{errors.description}</p>
             )}
           </div>
           <div className="flex justify-center gap-3 pt-4">

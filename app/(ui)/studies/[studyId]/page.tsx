@@ -44,13 +44,13 @@ export default function Page() {
   });
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       <section className="flex flex-col gap-4">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="dashboardSectionTitle text-start">{data?.study?.name ?? "Estudo"}</h1>
+            <h1 className="ds-text-2xl-bold text-start">{data?.study?.name ?? "Estudo"}</h1>
             <p className="text-sm text-gray-60 my-2">{data?.study.description}</p>
-            <h2 className="dashboardSectionSubtitle flex items-center gap-2 mt-4 text-sm">
+            <h2 className="ds-text-subtitle flex items-center gap-2 mt-4 text-sm">
               <div onClick={() => router.push("/studies")}
                 className="group inline-flex items-center justify-center p-1 rounded-full cursor-pointer
                 border border-gray-40 bg-white dark:bg-gray-10 transition hover:bg-gray-20
@@ -102,7 +102,7 @@ export default function Page() {
         handleAction={deleteStudy}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
         loading={isStudyPending} isSuccess={isSuccessStudy}
-        error={errorStudy?.message} successMsg="Estudo excluído com sucesso"
+        error={errorStudy?.message} ds-message-success="Estudo excluído com sucesso"
       />
       <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
         task={data?.tasks.find((i) => i.id === taskId)} refetch={refetch}
@@ -111,7 +111,7 @@ export default function Page() {
         handleAction={deleteTask}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
         loading={isTaskPending} isSuccess={isSuccessTask}
-        error={errorTask?.message} successMsg="Tarefa excluída com sucesso"
+        error={errorTask?.message} ds-message-success="Tarefa excluída com sucesso"
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
         studyId={studyId!} refetch={refetch}

@@ -99,7 +99,7 @@ export default function Page() {
   }
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       {isLoading ? (
         <LoadingPage />
       ) : data ? (
@@ -118,12 +118,12 @@ export default function Page() {
           </div>
           <div className="flex flex-col gap-3 w-full max-w-2xl mx-auto h-full">
             <p className="text-2xl md:text-3xl font-extrabold">Questão {questionIndex + 1}</p>
-            <p className="text-base md:text-lg text-foreground/90">{currentQuestion?.question}</p>
+            <p className="ds-text-lg text-foreground/90">{currentQuestion?.question}</p>
             <div className="flex flex-col gap-3 mt-6">
               {shuffledAlternatives.map((a) => (
                 <div key={a.id}
-                  className={`flex items-center justify-between p-4 bg-card hover:bg-gray-20/25
-                    transition rounded-md text-sm md:text-base cursor-pointer border 
+                  className={`ds-text-md flex items-center justify-between p-4 bg-card hover:bg-gray-20/25
+                    transition rounded-md cursor-pointer border 
                     ${selected === a.id ? 'border-main-30' : 'border-transparent'}`}
                   onClick={() => setSelected(a.id)}
                 >

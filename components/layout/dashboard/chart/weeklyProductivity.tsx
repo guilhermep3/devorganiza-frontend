@@ -71,7 +71,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="chartTitleCustom">
+        <CardTitle className="ds-text-xl">
           Tarefas criadas e finalizadas
         </CardTitle>
         <CardDescription>Ordenado por dias da semana</CardDescription>
@@ -97,7 +97,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="chartFooter font-medium">
+        <div className="ds-text-footer font-medium">
           {createdDifference >= 0 ? (
             <TrendingUp className="h-4 w-4 text-secondary-20" />
           ) : (
@@ -109,7 +109,7 @@ export function WeeklyProductivity({ data }: { data: WeeklyProductivity[] }) {
           </span>{" "}
           de tarefas criadas de hoje pra ontem
         </div>
-        <div className="chartFooter text-gray-50">
+        <div className="ds-text-footer text-gray-50">
           {finishedDifference >= 0 ? (
             <TrendingUp className="h-4 w-4 text-secondary-20" />
           ) : (

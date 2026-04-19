@@ -13,12 +13,12 @@ export default function Page() {
   const [isCreating, setIsCreating] = useState(false);
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       <section className="flex flex-col">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="dashboardSectionTitle">Estudos</h1>
-            <h2 className="dashboardSectionSubtitle">Veja seus estudos e progresso</h2>
+            <h1 className="ds-text-2xl-bold">Estudos</h1>
+            <h2 className="ds-text-subtitle">Veja seus estudos e progresso</h2>
           </div>
           <Button size={1}
             onClick={() => setIsCreating(true)}

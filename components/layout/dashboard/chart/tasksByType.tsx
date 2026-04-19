@@ -90,7 +90,7 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="chartFooter font-medium">
+        <div className="ds-text-footer font-medium">
           {firstPercentage >= 0 ? (
             <TrendingUp className="h-4 w-4 text-secondary-20" />
           ) : (
@@ -98,7 +98,7 @@ export function TasksByType({ data }: { data: TasksByType[] }) {
           )}
           {topText}
         </div>
-        <div className="chartFooter text-gray-50">
+        <div className="ds-text-footer text-gray-50">
           {firstPercentage >= 0 ? (
             <TrendingUp className="h-4 w-4 text-secondary-20" />
           ) : (

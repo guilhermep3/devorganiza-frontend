@@ -11,11 +11,11 @@ export default function Page() {
   const hasData = (data && data.length > 0) || (lockData && lockData.length > 0);
 
   return (
-    <div className="layoutDiv">
+    <div className="ds-layout-container">
       <section className="flex flex-col">
         <div>
-          <h1 className="dashboardSectionTitle">Quizzes</h1>
-          <h2 className="dashboardSectionSubtitle">Pratique com seus quizzes desbloqueados</h2>
+          <h1 className="ds-text-2xl-bold">Quizzes</h1>
+          <h2 className="ds-text-subtitle">Pratique com seus quizzes desbloqueados</h2>
         </div>
         <div>
           {isLoading || isLockLoading ? (

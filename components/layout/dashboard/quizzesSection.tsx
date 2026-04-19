@@ -13,8 +13,8 @@ export const DashboardQuizzesSection = () => {
 
   return (
     <section className="flex flex-col">
-      <h1 className="dashboardSectionTitle">Dados dos quizzes</h1>
-      <h2 className="dashboardSectionSubtitle">
+      <h1 className="ds-text-2xl-bold">Dados dos quizzes</h1>
+      <h2 className="ds-text-subtitle">
         Acompanhe seu desempenho em tentativas dos quizzes
       </h2>
       {!hasQuizzesData ? (

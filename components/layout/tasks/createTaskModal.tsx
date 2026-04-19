@@ -38,7 +38,7 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
         setLink('');
       }}
     >
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>Criar tarefa</DialogTitle>
           <DialogDescription>
@@ -48,23 +48,23 @@ export const CreateTaskModal = ({ isOpen, setIsOpen, studyId, refetch }: Props) 
         <form className="flex flex-col gap-4 pt-2"
           onSubmit={(e) => handleSubmit(e, { title, link })}
         >
-          {error && <p className="errorMsg">{error.message}</p>}
-          {isSuccess && <p className="successMsg">Tarefa criada com sucesso</p>}
+          {error && <p className="ds-message-error">{error.message}</p>}
+          {isSuccess && <p className="ds-message-success">Tarefa criada com sucesso</p>}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Título</label>
-            <input className="inputCustom w-full"
+            <input className="ds-input w-full"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            {errors.title && <p className="errorMsg">{errors.title}</p>}
+            {errors.title && <p className="ds-message-error">{errors.title}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Link <span className="text-xs text-gray-50 ml-1">(opcional)</span></label>
-            <input className="inputCustom w-full"
+            <input className="ds-input w-full"
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
-            {errors.link && <p className="errorMsg">{errors.link}</p>}
+            {errors.link && <p className="ds-message-error">{errors.link}</p>}
           </div>
           <div className="flex justify-center gap-3 pt-4">
             <ButtonCN variant="outline" type="button"

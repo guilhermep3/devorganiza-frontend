@@ -21,7 +21,7 @@ export default function Home() {
       <HeroAuroraBackground />
       <div className="relative">
         <DottedBg />
-        <div className="containerCustom">
+        <div className="ds-container">
           <motion.div
             initial={{ opacity: 0, y: 40, filter: 'blur(10px)' }}
             whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -37,15 +37,15 @@ export default function Home() {
       </div>
       <section id="about" className="relative">
         <DottedBg />
-        <div className="containerCustom justify-center items-center">
-          <motion.h1 className="h1Custom"
+        <div className="ds-container justify-center items-center">
+          <motion.h1 className="ds-heading-xl"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
           >
             O que o DevOrganiza proporciona?
           </motion.h1>
-          <motion.h2 className="h2Custom"
+          <motion.h2 className="ds-heading-subtitle"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
@@ -72,15 +72,15 @@ export default function Home() {
         </div>
       </section>
       <section id="services" className="bg-background">
-        <div className="containerCustom justify-center items-center">
-          <motion.h1 className="h1Custom"
+        <div className="ds-container justify-center items-center">
+          <motion.h1 className="ds-heading-xl"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
           >
             Nossas ferramentas
           </motion.h1>
-          <motion.h2 className="h2Custom"
+          <motion.h2 className="ds-heading-subtitle"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
@@ -106,15 +106,15 @@ export default function Home() {
       </section>
       <section id="faq" className="relative">
         <DottedBg />
-        <div className="containerCustom flex flex-col justify-center items-center">
-          <motion.h1 className="h1Custom"
+        <div className="ds-container flex flex-col justify-center items-center">
+          <motion.h1 className="ds-heading-xl"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
           >
             Perguntas Frequentes
           </motion.h1>
-          <motion.h2 className="h2Custom text-center"
+          <motion.h2 className="ds-heading-subtitle text-center"
             initial={{ scale: 0.4, y: -40 }}
             whileInView={{ scale: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 0.8, ease: "easeInOut", }}
@@ -125,18 +125,18 @@ export default function Home() {
         </div>
       </section>
       <section id="start" className="relative overflow-hidden bg-background">
-        <div className="containerCustom items-center">
+        <div className="ds-container items-center">
           <div className="w-full max-w-3xl text-center p-8 md:p-12 rounded-2xl 
             bg-linear-to-br from-main-10 via-background to-main-20
             border border-gray-30 backdrop-blur-md shadow-lg">
-            <motion.h1 className="h1Custom mt-0"
+            <motion.h1 className="ds-heading-xl mt-0!"
               initial={{ opacity: 0, y: -30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
             >
               Faça da organização e consistência suas maiores qualidades
             </motion.h1>
-            <motion.h2 className="h2Custom text-foreground mb-8"
+            <motion.h2 className="ds-heading-subtitle text-foreground mb-8"
               initial={{ opacity: 0, y: -20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, duration: 0.6 }}

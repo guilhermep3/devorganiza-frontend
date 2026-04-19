@@ -78,7 +78,7 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
   return (
     <Card>
       <CardHeader>
-        <CardTitle className="chartTitleCustom">Tarefas finalizadas por mês</CardTitle>
+        <CardTitle className="ds-text-xl">Tarefas finalizadas por mês</CardTitle>
         <CardDescription>
           Média por mês
         </CardDescription>
@@ -118,7 +118,7 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
-            <div className="chartFooter">
+            <div className="ds-text-footer">
               {finishedDifference >= 0 ? (
                 <TrendingUp className="h-4 w-4 text-secondary-20" />
               ) : (
@@ -126,7 +126,7 @@ export function FinishedTasksByMonthChart({ data }: { data: FinishedTasksByMonth
               )}
               {topText}
             </div>
-            <div className="chartFooter text-gray-50">
+            <div className="ds-text-footer text-gray-50">
               Janeiro - Dezembro {year}
             </div>
           </div>

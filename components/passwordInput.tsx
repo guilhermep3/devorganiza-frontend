@@ -10,7 +10,7 @@ export const PasswordInput = ({ value, onChange, className }: props) => {
   const [showPass, setShowPass] = useState(false);
 
   return (
-    <div className={`inputCustom flex gap-2 focus-within:ring focus-within:ring-main-30
+    <div className={`ds-input flex gap-2 focus-within:ring focus-within:ring-main-30
       ${className ?? ''}
     `}>
       <input type={showPass ? 'text' : 'password'}

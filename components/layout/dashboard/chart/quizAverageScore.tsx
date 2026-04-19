@@ -95,11 +95,11 @@ export function QuizAverageScoreChart({ data }: { data: AverageScore[] }) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="chartFooter">
+        <div className="ds-text-footer">
           <TrendingUp className="h-4 w-4 text-secondary-20" />
           {topText}
         </div>
-        <div className="chartFooter text-muted-foreground leading-none">
+        <div className="ds-text-footer text-muted-foreground leading-none">
           {bottomText}
         </div>
       </CardFooter>

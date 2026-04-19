@@ -42,7 +42,7 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
       open={isOpen}
       onOpenChange={handleOpenChange}
     >
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>Editar tarefa</DialogTitle>
           <DialogDescription>
@@ -52,24 +52,24 @@ export const EditTaskModal = ({ isOpen, setIsOpen, task, refetch }: Props) => {
         <form className="flex flex-col gap-4 pt-2 w-full"
           onSubmit={(e) => handleSubmit(e, { title, link, done })}
         >
-          {isSuccess && <p className="successMsg">Tarefa atualizada com sucesso</p>}
+          {isSuccess && <p className="ds-message-success">Tarefa atualizada com sucesso</p>}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Título</label>
             <input
-              className="inputCustom w-full"
+              className="ds-input w-full"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            {errors.title && <p className="errorMsg">{errors.title}</p>}
+            {errors.title && <p className="ds-message-error">{errors.title}</p>}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Link</label>
             <input
-              className="inputCustom w-full"
+              className="ds-input w-full"
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
-            {errors.link && <p className="errorMsg">{errors.link}</p>}
+            {errors.link && <p className="ds-message-error">{errors.link}</p>}
           </div>
           <div className="flex items-center gap-2">
             <input id="finished"

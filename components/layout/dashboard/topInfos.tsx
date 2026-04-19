@@ -21,10 +21,10 @@ export const TopInfos = ({ userData, studiesData, quizzesData, quizzesLockData }
 
   return (
     <section className="flex flex-col">
-      <h1 className="dashboardSectionTitle">
+      <h1 className="ds-text-2xl-bold">
         Bem vindo de volta{userData ? ", "+userData.user.name : ''}!
       </h1>
-      <h2 className="dashboardSectionSubtitle">Organize seus estudos e veja os dados do seu desempenho</h2>
+      <h2 className="ds-text-subtitle">Organize seus estudos e veja os dados do seu desempenho</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
         <TopInfosCard
           title="Total de tarefas"

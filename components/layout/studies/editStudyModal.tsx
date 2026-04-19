@@ -46,7 +46,7 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
       open={isOpen}
       onOpenChange={handleOpenChange}
     >
-      <DialogContent className="dialogContentStyle">
+      <DialogContent className="ds-dialog-content">
         <DialogHeader>
           <DialogTitle>Editar estudo</DialogTitle>
           <DialogDescription>
@@ -58,21 +58,21 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
             handleSubmit(e, { name, type, link, description })
           }}
         >
-          {error && <p className="errorMsg">{error.message}</p>}
-          {isSuccess && <p className="successMsg">Estudo atualizado com sucesso</p>}
+          {error && <p className="ds-message-error">{error.message}</p>}
+          {isSuccess && <p className="ds-message-success">Estudo atualizado com sucesso</p>}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Nome</label>
-            <input className="inputCustom w-full"
+            <input className="ds-input w-full"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
             {errors.name && (
-              <p className="errorMsg">{errors.name}</p>
+              <p className="ds-message-error">{errors.name}</p>
             )}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Tipo</label>
-            <select className="inputCustom w-full"
+            <select className="ds-input w-full"
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
@@ -84,22 +84,22 @@ export const EditStudyModal = ({ isOpen, setIsOpen, study, refetch }: Props) => 
               ))}
             </select>
             {errors.type && (
-              <p className="errorMsg">{errors.type}</p>
+              <p className="ds-message-error">{errors.type}</p>
             )}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Link</label>
-            <input className="inputCustom w-full"
+            <input className="ds-input w-full"
               value={link}
               onChange={(e) => setLink(e.target.value)}
             />
             {errors.link && (
-              <p className="errorMsg">{errors.link}</p>
+              <p className="ds-message-error">{errors.link}</p>
             )}
           </div>
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium">Descrição</label>
-            <textarea className="inputCustom w-full resize-none h-24"
+            <textarea className="ds-input w-full resize-none h-24"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />

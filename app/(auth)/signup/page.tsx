@@ -33,13 +33,13 @@ export default function Page() {
       <form className="mt-2 space-y-4 w-full"
         onSubmit={(e) => handleSubmit(e, { name, username, email, password })}
       >
-        <div className="labelInputDivStyle">
+        <div className="ds-field-form-group">
           <label className="text-sm font-medium">
             Nome
           </label>
           <input
             type="text"
-            className="inputCustom text-base"
+            className="ds-input text-base"
             placeholder="Nome Completo"
             value={name}
             onChange={(e) => {
@@ -48,16 +48,16 @@ export default function Page() {
             }}
           />
           {errors.name && (
-            <p className="errorMsg">{errors.name}</p>
+            <p className="ds-message-error">{errors.name}</p>
           )}
         </div>
-        <div className="labelInputDivStyle">
+        <div className="ds-field-form-group">
           <label className="text-sm font-medium">
             Nome de usuário
           </label>
           <input
             type="text"
-            className="inputCustom text-base"
+            className="ds-input text-base"
             placeholder="Nome de usuário"
             value={username}
             onChange={(e) => {
@@ -66,15 +66,15 @@ export default function Page() {
             }}
           />
           {errors.username && (
-            <p className="errorMsg">{errors.username}</p>
+            <p className="ds-message-error">{errors.username}</p>
           )}
         </div>
-        <div className="labelInputDivStyle">
+        <div className="ds-field-form-group">
           <label className="text-sm font-medium">
             Email
           </label>
           <input type="email"
-            className="inputCustom text-base"
+            className="ds-input text-base"
             placeholder="seuemail@email.com"
             value={email}
             onChange={(e) => {
@@ -83,10 +83,10 @@ export default function Page() {
             }}
           />
           {errors.email && (
-            <p className="errorMsg">{errors.email}</p>
+            <p className="ds-message-error">{errors.email}</p>
           )}
         </div>
-        <div className="labelInputDivStyle">
+        <div className="ds-field-form-group">
           <label className="text-sm font-medium">
             Senha
           </label>
@@ -97,7 +97,7 @@ export default function Page() {
             }}
           />
           {errors.password && (
-            <p className="errorMsg">{errors.password}</p>
+            <p className="ds-message-error">{errors.password}</p>
           )}
         </div>
         {errors.submit && (

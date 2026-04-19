@@ -35,7 +35,7 @@ export const Faq = () => {
             <div className="flex justify-between items-center gap-5 p-3 w-full cursor-pointer"
               onClick={() => toggleQuestion(index)}
             >
-              <div className={`cardIconStyle border border-gray-20 mb-auto
+              <div className={`ds-card-icon border border-gray-20 mb-auto
                 ${openIndex === index
                   ? 'bg-main-40/10 group-hover:bg-main-40/20 text-main-30'
                   : 'text-gray-70'

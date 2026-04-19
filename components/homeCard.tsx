@@ -38,7 +38,7 @@ export const HomeCard = ({ data, Icon, variant }: Props) => {
         />
         <div className="relative flex items-center gap-5">
           <div
-            className={`cardIconStyle
+            className={`ds-card-icon
             ${variant === "primary"
                 ? "bg-main-40/10 group-hover:bg-main-40/20 text-main-30"
                 : "bg-secondary-20/10 group-hover:bg-secondary-20/20 text-secondary-20"
@@ -47,7 +47,7 @@ export const HomeCard = ({ data, Icon, variant }: Props) => {
             <Icon />
           </div>
         </div>
-        <p className="text-lg md:text-xl font-semibold">
+        <p className="ds-text-xl font-semibold">
           {data.title}
         </p>
         <p className="text-sm text-gray-70 dark:text-gray-60">

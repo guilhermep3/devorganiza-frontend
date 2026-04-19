@@ -53,7 +53,7 @@ export const StudyCard = ({ data }: props) => {
         )}
         {data.study.link && (
           <a href={data.study.link} target="_blank"
-            className="linkCustom"
+            className="ds-link"
           >
             {data.study.link.length > 100 ? data.study.link.slice(0, 100) + "..." : data.study.link}
           </a>
