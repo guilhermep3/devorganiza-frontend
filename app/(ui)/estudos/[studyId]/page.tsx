@@ -102,7 +102,7 @@ export default function Page() {
         handleAction={deleteStudy}
         title="Excluir estudo" description="Essa ação não poderá ser desfeita."
         loading={isStudyPending} isSuccess={isSuccessStudy}
-        error={errorStudy?.message} ds-message-success="Estudo excluído com sucesso"
+        error={errorStudy?.message} errorMsg="Estudo excluído com sucesso"
       />
       <EditTaskModal isOpen={isEditingTask} setIsOpen={setIsEditingTask}
         task={data?.tasks.find((i) => i.id === taskId)} refetch={refetch}
@@ -111,7 +111,7 @@ export default function Page() {
         handleAction={deleteTask}
         title="Excluir tarefa" description="Essa ação não poderá ser desfeita."
         loading={isTaskPending} isSuccess={isSuccessTask}
-        error={errorTask?.message} ds-message-success="Tarefa excluída com sucesso"
+        error={errorTask?.message} errorMsg="Tarefa excluída com sucesso"
       />
       <CreateTaskModal isOpen={isCreatingTask} setIsOpen={setIsCreatingTask}
         studyId={studyId!} refetch={refetch}
