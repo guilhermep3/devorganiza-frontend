@@ -73,7 +73,7 @@ export const Header = ({ noNav, noAnimate, noUser }: props) => {
           }
           {!noUser && (
 
-            <Link href={'/profile'}
+            <Link href={'/perfil'}
               className="relative inline-block w-10 h-10 bg-card border-2 border-gray-20 rounded-full overflow-hidden">
               {userData?.user && userData.user.profileImage ? (
                 <Image src={`${userData?.user.profileImage}`} alt="/" title={userData.user.username}

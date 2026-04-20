@@ -4,6 +4,7 @@ import { Plus, X } from "lucide-react";
 
 const MAX_COLS = 4;
 const MAX_ROWS = 10;
+const MIN_COL_WIDTH = 160;
 
 type Props = {
   content: TableContent;
@@ -67,9 +68,11 @@ export function TableBlock({ content, isActive, onFocus, onChange, onExitBottom 
   }
 
   return (
-    <div className="flex flex-col gap-2 w-full overflow-x-auto" onClick={onFocus}>
-      <div className="rounded-lg border border-gray-20 dark:border-gray-30 w-full">
-        <table className="w-full text-sm border-collapse">
+    <div className="flex flex-col gap-2" onClick={onFocus}>
+      <div className="w-full overflow-x-auto scroll-x rounded-lg border border-gray-20 dark:border-gray-30">
+        <table className="text-sm border-collapse w-full"
+          style={{ minWidth: content.columns.length * MIN_COL_WIDTH }}
+        >
           <thead>
             <tr className="bg-main-10 dark:bg-main-20/30">
               {content.columns.map((col, ci) => (

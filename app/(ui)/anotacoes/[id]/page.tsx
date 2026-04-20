@@ -201,7 +201,7 @@ export default function Page() {
 
         {/* Editor de blocos */}
         <div
-          className="flex flex-col min-h-[400px] cursor-text"
+          className="flex flex-col min-h-[400px] cursor-text w-[calc(100vw-48px)] md:w-full"
           onClick={(e) => {
             if (e.target === e.currentTarget) handleEditorPaddingClick();
           }}

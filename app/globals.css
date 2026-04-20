@@ -367,3 +367,21 @@ body {
     height: 40px;
   }
 }
+
+.scroll-x::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scroll-x::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-x::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-50); /* cinza */
+  border-radius: 999px;
+  cursor: grab;
+}
+
+.scroll-x::-webkit-scrollbar-thumb:hover {
+  background-color: var(--color-gray-60);
+}
