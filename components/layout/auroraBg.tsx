@@ -37,13 +37,13 @@ export function HeroAuroraBackground() {
             Transforme sua rotina de estudos em um sistema eficiente.
             Tenha mais clareza, consistência e evolução real na programação.
           </h2>
-          <motion.button
+          <motion.div
             initial={{ scale: 0.2 }}
             whileInView={{ scale: 1 }}
             transition={{ delay: 0.2, duration: 0.8, ease: "easeInOut", }}
           >
             <Button onClick={handleEntrar} size={3}>Entrar</Button>
-          </motion.button>
+          </motion.div>
         </div>
       </motion.div>
     </AuroraBackground>

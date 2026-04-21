@@ -4,14 +4,12 @@ import { Note } from "@/src/types/notes";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter,
-} from "@/components/ui/dialog";
 import { motion } from "motion/react";
 import { useNotes } from "@/src/api/note/useNotes";
 import { useCreateNote } from "@/src/api/note/useCreateNote";
 import { NoteCardSkeleton } from "@/components/note/noteCardSkeleton";
 import { NoteCard } from "@/components/note/noteCard";
+import { CreateNoteModal } from "@/components/note/createNoteModal";
 
 export default function Page() {
   const router = useRouter();
@@ -91,44 +89,11 @@ export default function Page() {
           <p className="text-gray-40">Nenhum dado encontrado</p>
         )}
       </section>
-
-      {/* Modal criar anotação */}
-      <Dialog open={isCreating}
-        onOpenChange={(open) => {
-          setIsCreating(open)
-        }}
-      >
-        <DialogContent className="ds-dialog-content">
-          <DialogHeader>
-            <DialogTitle>Nova anotação</DialogTitle>
-          </DialogHeader>
-          <form onSubmit={(e) => handleSubmit(e, { name: noteName })}
-            className="flex flex-col gap-4"
-          >
-            <div className="ds-field-form-group">
-              <label className="ds-text-sm font-medium text-gray-70 dark:text-gray-70">
-                Nome
-              </label>
-              <input
-                autoFocus
-                type="text"
-                value={noteName}
-                onChange={(e) => setNoteName(e.target.value)}
-                placeholder="Ex: Anotações de JavaScript"
-                className="ds-input"
-              />
-              {errors.name && <p className="ds-message-error">{errors.name}</p>}
-            </div>
-            <DialogFooter>
-              <Button submit
-                size={1}
-              >
-                {isPending ? "Criando..." : "Criar e abrir"}
-              </Button>
-            </DialogFooter>
-          </form>
-        </DialogContent>
-      </Dialog>
+      <CreateNoteModal
+        isCreating={isCreating} setIsCreating={setIsCreating}
+        noteName={noteName} setNoteName={setNoteName}
+        handleSubmit={handleSubmit} isPending={isPending} errors={errors}
+      />
     </div>
   );
 }

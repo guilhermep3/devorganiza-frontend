@@ -12,7 +12,7 @@ type Props = {
   onBackspaceEmpty: () => void;
 };
 
-export function TextBlock({
+export function TextBox({
   content,
   isActive,
   onFocus,

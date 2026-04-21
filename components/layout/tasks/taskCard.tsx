@@ -1,4 +1,5 @@
 "use client"
+import { SmalllTrashButton } from "@/components/smallTrashButton";
 import { Task } from "@/src/types/study";
 import { Pencil, Trash } from "lucide-react";
 
@@ -53,17 +54,14 @@ export const TaskCard = ({ task, setTaskId, setIsEditingTask, setIsDeletingTask 
           <button
             onClick={() => { setIsEditingTask(true); setTaskId(task.id); }}
             className="flex items-center justify-center w-7 h-7 rounded-md border border-border
-            text-foreground hover:bg-muted transition cursor-pointer"
+            text-foreground hover:bg-muted hover:border-main-30 hover:text-main-30 transition cursor-pointer"
           >
-            <Pencil size={13} />
+            <Pencil size={12} />
           </button>
-          <button
-            onClick={() => { setIsDeletingTask(true); setTaskId(task.id); }}
-            className="flex items-center justify-center w-7 h-7 rounded-md border border-border
-            text-red-600 hover:bg-red-50 hover:border-red-200 dark:hover:bg-red-950 dark:hover:border-red-800 transition cursor-pointer"
-          >
-            <Trash size={13} />
-          </button>
+          <SmalllTrashButton
+            handleClick={() => { setIsDeletingTask(true); setTaskId(task.id); }}
+            className="opacity-100! rounded-md!"
+          />
         </div>
       </div>
     </div>

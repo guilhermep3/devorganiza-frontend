@@ -1,8 +1,8 @@
 "use client";
 import { Box, BoxContent, ListContent, TableContent, TextContent } from "@/src/types/notes";
-import { TextBlock } from "./box/textBlock";
-import { ListBlock } from "./box/listBlock";
-import { TableBlock } from "./box/tableBlock";
+import { TextBox } from "./box/textBox";
+import { ListBox } from "./box/listBox";
+import { TableBox } from "./box/tableBox";
 import { motion } from "motion/react";
 import { SmalllTrashButton } from "../smallTrashButton";
 
@@ -16,7 +16,7 @@ type Props = {
   onDelete: () => void;
 };
 
-export function EditorBlock({
+export function EditorBox({
   box, isActive, onFocus, onChange, onAddBoxBelow, onBackspaceEmpty, onDelete,
 }: Props) {
 
@@ -55,7 +55,7 @@ export function EditorBlock({
         <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-0.5 h-4/5 rounded-full bg-main-30" />
       )}
       {box.type === "text" && (
-        <TextBlock
+        <TextBox
           content={box.content as TextContent}
           isActive={isActive}
           onFocus={onFocus}
@@ -66,7 +66,7 @@ export function EditorBlock({
         />
       )}
       {box.type === "list" && (
-        <ListBlock
+        <ListBox
           content={box.content as ListContent}
           isActive={isActive}
           onFocus={onFocus}
@@ -75,7 +75,7 @@ export function EditorBlock({
         />
       )}
       {box.type === "table" && (
-        <TableBlock
+        <TableBox
           content={box.content as TableContent}
           isActive={isActive}
           onFocus={onFocus}

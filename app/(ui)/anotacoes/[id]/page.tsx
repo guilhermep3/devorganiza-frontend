@@ -1,7 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Trash, Pencil } from "lucide-react";
+import { ArrowLeft, Trash2, Pencil } from "lucide-react";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { useNote } from "@/src/api/note/useNote";
 import { useUpdateNote } from "@/src/api/note/useUpdateNote";
@@ -13,7 +13,7 @@ import { DeleteModal } from "@/components/layout/deleteModal";
 import { Box, BoxContent } from "@/src/types/notes";
 import { AnimatePresence } from "motion/react";
 import { SaveStatus } from "@/components/note/saveStatus";
-import { EditorBlock } from "@/components/note/editorBlock";
+import { EditorBox } from "@/components/note/editorBox";
 
 type SaveStatusType = "idle" | "saving" | "saved" | "error";
 
@@ -176,30 +176,25 @@ export default function Page() {
               >
                 <ArrowLeft className="w-5 h-5 text-gray-70 transition" />
               </button>
-              anotações / {data?.note.name}
+              anotacoes / {data?.note.name}
             </h2>
           </div>
-
           <div className="flex items-center gap-2 shrink-0">
             <SaveStatus status={saveStatus} />
-            <ButtonCN
-              size="sm"
+            <ButtonCN size="sm"
               onClick={() => setIsEditingName(true)}
-              className="bg-main-30 hover:bg-main-30 hover:brightness-95"
+              className="bg-main-30 hover:bg-main-30 hover:brightness-95 text-white"
             >
               <Pencil size={16} />
             </ButtonCN>
-            <ButtonCN
-              size="sm"
+            <ButtonCN size="sm"
               variant="destructive"
               onClick={() => setIsDeletingNote(true)}
             >
-              <Trash size={16} />
+              <Trash2 size={16} />
             </ButtonCN>
           </div>
         </div>
-
-        {/* Editor de blocos */}
         <div
           className="flex flex-col min-h-[400px] cursor-text w-[calc(100vw-48px)] md:w-full"
           onClick={(e) => {
@@ -208,7 +203,7 @@ export default function Page() {
         >
           <AnimatePresence initial={false}>
             {boxes.map((box) => (
-              <EditorBlock
+              <EditorBox
                 key={box.id}
                 box={box}
                 isActive={activeBoxId === box.id}
@@ -220,14 +215,11 @@ export default function Page() {
               />
             ))}
           </AnimatePresence>
-
-          {/* Área clicável de padding abaixo dos blocos */}
           <div className="flex-1 min-h-40 cursor-text"
             onClick={handleEditorPaddingClick}
           />
         </div>
       </section>
-
       <DeleteModal
         isOpen={isDeletingNote}
         setIsOpen={setIsDeletingNote}

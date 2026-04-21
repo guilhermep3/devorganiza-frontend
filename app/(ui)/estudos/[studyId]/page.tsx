@@ -1,7 +1,7 @@
 "use client";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Pencil, Trash, Plus, ArrowLeft } from "lucide-react";
+import { Pencil, Trash2, Plus, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/button";
 import { Button as ButtonCN } from "@/components/ui/button";
 import { useStudy } from "@/src/api/study/useStudy";
@@ -31,7 +31,7 @@ export default function Page() {
   } = useDeleteStudy(studyId!, {
     onSuccess: () => {
       setIsDeletingStudy(false);
-      router.push("/studies");
+      router.push("/estudos");
     }
   });
   const {
@@ -51,22 +51,25 @@ export default function Page() {
             <h1 className="ds-text-2xl-bold text-start">{data?.study?.name ?? "Estudo"}</h1>
             <p className="text-sm text-gray-60 my-2">{data?.study.description}</p>
             <h2 className="ds-text-subtitle flex items-center gap-2 mt-4 text-sm">
-              <div onClick={() => router.push("/studies")}
+              <div onClick={() => router.push("/estudos")}
                 className="group inline-flex items-center justify-center p-1 rounded-full cursor-pointer
                 border border-gray-40 bg-white dark:bg-gray-10 transition hover:bg-gray-20
                 hover:border-gray-50 active:scale-95"
               >
                 <ArrowLeft className="w-5 h-5 text-gray-70 transition" />
               </div>
-              studies/{data?.study.name}
+              estudos / {data?.study.name}
             </h2>
           </div>
           <div className="flex gap-2">
-            <ButtonCN size={"sm"} onClick={() => setIsEditingStudy(true)} className="bg-main-30 hover:bg-main-30 hover:brightness-95">
-              <Pencil size={18} />
+            <ButtonCN size={"sm"}
+              onClick={() => setIsEditingStudy(true)}
+              className="bg-main-30 hover:bg-main-30 hover:brightness-95 text-white"
+            >
+              <Pencil size={16} />
             </ButtonCN>
             <ButtonCN size={"sm"} onClick={() => setIsDeletingStudy(true)} variant="destructive">
-              <Trash size={18} />
+              <Trash2 size={16} />
             </ButtonCN>
           </div>
         </div>

@@ -14,7 +14,7 @@ type Props = {
   onExitBottom: () => void;
 };
 
-export function TableBlock({ content, isActive, onFocus, onChange, onExitBottom }: Props) {
+export function TableBox({ content, isActive, onFocus, onChange, onExitBottom }: Props) {
   function updateCell(rowIndex: number, colIndex: number, value: string) {
     const newRows = content.rows.map((row, ri) =>
       ri === rowIndex ? row.map((cell, ci) => (ci === colIndex ? value : cell)) : row

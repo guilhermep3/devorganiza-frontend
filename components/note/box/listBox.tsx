@@ -10,7 +10,7 @@ type Props = {
   onExitBottom: () => void;
 };
 
-export function ListBlock({ content, isActive, onFocus, onChange, onExitBottom }: Props) {
+export function ListBox({ content, isActive, onFocus, onChange, onExitBottom }: Props) {
   const itemRefs = useRef<(HTMLInputElement | null)[]>([]);
 
   useEffect(() => {

@@ -86,7 +86,7 @@ export const StudyCard = ({ data }: props) => {
             <span className="text-xs text-muted-foreground">Concluídas</span>
           </div>
         </div>
-        <Button className="w-full text-sm py-1.5!" href={`/studies/${data.study.id}`}>
+        <Button className="w-full text-sm py-1.5!" href={`/estudos/${data.study.id}`}>
           Ver Estudo
         </Button>
       </div>
