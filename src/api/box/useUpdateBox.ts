@@ -35,9 +35,10 @@ export const useUpdateBox = (
       options?.onStatusChange?.("saved");
       options?.onSuccess?.(data.box);
     },
-    onError: () => {
+    onError: (error: Error) => {
+      alert(error.message);
       options?.onStatusChange?.("error");
-    },
+    }
   });
 
   // Debounced save — chama API apenas após 800ms sem novas alterações

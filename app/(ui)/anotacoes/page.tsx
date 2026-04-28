@@ -28,7 +28,6 @@ export default function Page() {
 
   return (
     <div className="ds-layout-container">
-      <div className="ds-message-error">Em desenvolvimento</div>
       <section className="flex flex-col gap-6">
         {/* Cabeçalho */}
         <div className="flex justify-between items-center">

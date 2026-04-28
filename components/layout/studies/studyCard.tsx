@@ -1,6 +1,5 @@
 import { Button } from "@/components/button";
 import { StudyTask } from "@/src/types/study";
-import { CheckCircle, Hourglass, List, ListCheck } from "lucide-react";
 
 type props = {
   data: StudyTask;
@@ -80,7 +79,7 @@ export const StudyCard = ({ data }: props) => {
             <span className="text-xs text-muted-foreground">Total</span>
           </div>
           <div className="bg-muted rounded-md p-2 flex flex-col items-center gap-0.5">
-            <span className="text-lg font-medium leading-none text-teal-600 dark:text-teal-400">
+            <span className="text-lg font-medium leading-none text-secondary-20">
               {completed}
             </span>
             <span className="text-xs text-muted-foreground">Concluídas</span>

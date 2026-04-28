@@ -22,6 +22,9 @@ export const useCreateBox = (noteId: string, options?: { onSuccess?: (box: Box) 
         mutation.reset();
       }, 2000);
     },
+    onError: (error: Error) => {
+      alert(error.message);
+    }
   });
 
   return mutation;
