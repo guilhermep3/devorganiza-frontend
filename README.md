@@ -1,46 +1,48 @@
+readme2.md
+
 # DevOrganiza
 
-<img width="1350" height="760" alt="Image" src="https://github.com/user-attachments/assets/c64811c7-cc49-4740-9e3e-0fd9dd0986fe" />
+<img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/a196c97f-1ff0-4552-91b9-c5b081178c18" />
 
-A DevOrganiza é um web-app Full-stack onde o usuário pode organizar seus estudos e tarefas, além de desbloquear quizzes relacionados aos conteúdos cadastrados para praticar o aprendizado.
-O objetivo da DevOrganiza é organizar e facilitar os estudos dos desenvolvedores, tornando mais visível as suas metas e encurtando o tempo de alcançá-las.
+A DevOrganiza é um web-app Full-stack para desenvolvedores organizarem seus estudos e tarefas, acompanhar seu desempenho e praticar com quizzes.
 
-Acesse aqui: <a href="https://devorganiza.vercel.app/" target="_blank">Link do projeto</a>
-
-## 📌 Visão Geral
-
-Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e TailwindCSS, com foco em experiência do usuário, organização de estado, consumo de APIs e visualização de dados.
+Acesse aqui: <a href="https://devorganiza.vercel.app/" target="_blank">Link DevOrganiza</a>
 
 
 ## 🎯 Objetivo do projeto
 
-- Demonstrar domínio em Next.js e TailwindCSS
-- Simular um ambiente próximo ao mundo real / produção
-- Consumir uma API REST organizada, escalável e validada
-- Aplicar boas práticas de organização de código e UI
-- Implementar autenticação e autorização com JWT
-- Trabalhar com estado global e formulários complexos
+- Organizar e facilitar os estudos dos Devs.
+- Praticar conhecimentos com quiz.
+- Analisar seu desempenho no dashboard.
+- Demonstrar domínio em Desenvolvimento Web com Next.js e Node.js.
+- Simular um ambiente próximo ao mundo real / produção.
+- Consumir uma API REST organizada, escalável e validada.
+- Trabalhar com estado global, requisições, formulários e types complexos.
 
 
 ## 🚀 Funcionalidades Principais
 
-- Cadastro e login de usuários
-- Upload de imagem de perfil (Cloudinary)
-- Autenticação com JWT armazenado em cookies HTTP-only
-- Organização de estudos por temas, com criação de tarefas vinculadas
-- Sistema de quizzes desbloqueáveis conforme os estudos cadastrados
-- Dashboard com visualização de desempenho através de gráficos
+- Cadastro e login de usuários.
+- Upload de imagem de perfil (Cloudinary).
+- Autenticação com JWT e Google OAuth.
+- Organização de estudos por temas, com criação de tarefas vinculadas.
+- Sistema de quizzes desbloqueáveis conforme os estudos cadastrados.
+- Anotações com texto livre, listas, e tabelas separada por blocos.
+- Dashboard com visualização de desempenho através de gráficos.
+- Controle de tema claro, escuro, e do sistema.
 
 
 ## 🏗️ Arquitetura
 
-- Aplicação desacoplada do backend
-- Consumo de API REST autenticada
-- Organização por componentes, páginas e hooks
-- Hooks customizados para chamadas HTTP
-- Estado global com Zustand
-- Validação de formulários com React Hook Form + Zod
-- Controle de tema e preferências do usuário
+- **/components**: Componentes
+- **/components/layout**: Componentes de sessões, de layout
+- **/api**: Hooks de acesso a api
+- **/context**: Contexto para dados da aplicação
+- **/data**: Dados da aplicação, como links de navegação, textos da home
+- **/schema**: Esquemas do Zod para validar dados
+- **/store**: Zustand para persistência de dados globais
+- **/types**: Tipagem de dados
+- **/utils**: Funções úteis
 
 
 ## 🧩 Tecnologias Utilizadas
@@ -49,7 +51,6 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 - **React**: Construção de interfaces baseadas em componentes
 - **TypeScript**: Superset do JavaScript com tipagem estática
 - **Tailwind**: Framework para estilização utilitária e responsiva
-- **clsx / tailwind-merge**: Composição e organização de classes
 - **Next Themes**: Dark e light mode.
 - **Lucide React**: Biblioteca de ícones SVG para React
 - **Motion**: Biblioteca para animações e transições fluidas
@@ -62,11 +63,12 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 
 ## 🧠 Regras de Negócio
 
-- Um quiz só é desbloqueado quando existe um estudo com o mesmo tema cadastrado pelo usuário
+- Um quiz só é desbloqueado quando existe um estudo com o mesmo nome cadastrado pelo usuário
 - O progresso do usuário é calculado com base nas tarefas concluídas
 - Tarefas podem ser marcadas como concluídas e atualizam o progresso em tempo real
 - Cada estudo pode conter múltiplas tarefas associadas
 - Links externos podem ser adicionados às tarefas como material de apoio
+
 
 
 ## ⚠️ Desafios Técnicos
@@ -74,19 +76,15 @@ Este repositório é a camada frontend da DevOrganiza, desenvolvida em Next.js e
 ### Sincronização de UI após mutações (Modal + Refetch)
 
 **Problema:**
-Ao criar uma tarefa, era necessário fechar o modal e atualizar os dados da interface.
+Fechar o modal e atualizar os dados da interface após uma ação.
 
 Inicialmente, isso foi feito utilizando `useEffect` com dependência em `isSuccess` da mutation.
-
-O problema era que essa abordagem gerava comportamentos inconsistentes, como:
-- O modal nem sempre fechava corretamente
-- O refetch nem sempre acontecia no momento esperado
-- Dependência indireta do estado da mutation, dificultando o controle
+Porém essa abordagem gerava erros, como o modal não fechar sempre e o refetch não acontecer.
 
 **Solução adotada:**  
 Centralizei o controle da ação diretamente no `onSuccess` do `useMutation`, tornando o fluxo mais previsível e desacoplado da UI.
 
-Também passei uma função externa (`onSuccess`) como parâmetro para o hook, permitindo maior reutilização e controle do comportamento após a mutation.
+Criei uma função externa (`onSuccess`) como parâmetro para o hook, 
 
 ```typescript
 export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () => void }) => {
@@ -103,12 +101,22 @@ export const useCreateTask = (taskId: string | null, options?: { onSuccess?: () 
       }, 2000);
     }
   })
+
+  // uso do hook:
+  useCreateTask(studyId, {
+    onSuccess: () => {
+      setIsOpen(false);
+      setTitle('');
+      setLink('');
+      refetch();
+    },
+  });
 ```
 
 ### Recomendar nomes dos Quizzes ao adicionar tarefa
 
 **Problema:**
-No modal de criação de estudo, era necessário que o nome do estudo fosse compatível com o do quiz, para evitar inconsistências e desbloquear o quiz.
+Mostrar os nomes dos quizzes no input de nome de estudo.
 
 **Solução adotada:**
 Utilizei a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com base nos dados retornados da API, implementando assim o autocomplete com os nomes dos quizzes.
@@ -120,55 +128,6 @@ Utilizei a tag nativa `datalist` do HTML para fornecer sugestões dinâmicas com
   ))}
 </datalist>
 ```
-
-### Autenticação Cross-Domain: Cookie vs JWT Bearer
-
-**Problema:**
-Durante a implementação da autenticação, foi adotado inicialmente o uso de cookies HTTP Only para armazenar o token JWT.
-No entanto, a aplicação possui frontend na Vercel e backend na Render, caracterizando um cenário cross-domain onde cookies são tratados como third-party cookies.
-
-Além disso, ocorreu uma mistura de abordagens conflitantes:
-
-- Cookie sendo criado no frontend via document.cookie (não HTTP Only)
-- Uso de credentials: "include" no fetch
-- Backend com middleware verificando token no authorization header
-- Backend configurado para setar cookies HTTP Only
-
-Isso gerava falhas ao salvar o cookie, erros de login com Google OAuth e Erros 401 (Unauthorized) mesmo após autenticação bem-sucedida.
-
-**Solução adotada:**
-Armazenei o token no localStorage e utilizei o JWT nas rotas via bearer token. Além de o backend parar de gerar cookies.
-
-```typescript
-export function getToken() {
-  if (typeof window === "undefined") return null;
-  return localStorage.getItem("token");
-};
-
-  let token = null;
-
-  if (typeof window !== "undefined") {
-    token = getToken();
-  }
-
-  const res = await fetch(`${API_URL}${path}`, {
-    // código...
-    headers: {
-      ...(token && { Authorization: `Bearer ${token}` }),
-      // código...
-    },
-  });
-
-// middleware do backend lê o token
-const token = req.headers.authorization?.split(' ')[1];
-```
-
-
-## 🧪 Qualidade & Testes
-
-- **Jest**: Framework de testes unitários.
-- **Testing Library**: Testes focados na experiência do usuário
-- **ESLint**: Padronização e análise de código.
 
 
 ## Como Executar o Projeto
