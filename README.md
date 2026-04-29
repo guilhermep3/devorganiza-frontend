@@ -1,6 +1,4 @@
-readme2.md
-
-# DevOrganiza
+# DevOrganiza - Frontend
 
 <img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/a196c97f-1ff0-4552-91b9-c5b081178c18" />
 
