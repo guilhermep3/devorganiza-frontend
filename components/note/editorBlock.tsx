@@ -1,23 +1,23 @@
 "use client";
-import { Box, BoxContent, ListContent, TableContent, TextContent } from "@/src/types/notes";
-import { TextBox } from "./box/textBox";
-import { ListBox } from "./box/listBox";
-import { TableBox } from "./box/tableBox";
+import { Block, BlockContent, ListContent, TableContent, TextContent } from "@/src/types/notes";
+import { TextBlock } from "./block/textBlock";
+import { ListBlock } from "./block/listBlock";
+import { TableBlock } from "./block/tableBlock";
 import { motion } from "motion/react";
 import { SmalllTrashButton } from "../smallTrashButton";
 
 type Props = {
-  box: Box;
+  block: Block;
   isActive: boolean;
   onFocus: () => void;
-  onChange: (content: BoxContent, newType?: Box["type"]) => void;
-  onAddBoxBelow: () => void;
+  onChange: (content: BlockContent, newType?: Block["type"]) => void;
+  onAddBlockBelow: () => void;
   onBackspaceEmpty: () => void;
   onDelete: () => void;
 };
 
-export function EditorBox({
-  box, isActive, onFocus, onChange, onAddBoxBelow, onBackspaceEmpty, onDelete,
+export function EditorBlock({
+  block, isActive, onFocus, onChange, onAddBlockBelow, onBackspaceEmpty, onDelete,
 }: Props) {
 
   function handleConvertToList() {
@@ -54,9 +54,9 @@ export function EditorBox({
       {isActive && (
         <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-0.5 h-4/5 rounded-full bg-main-30" />
       )}
-      {box.type === "text" && (
-        <TextBox
-          content={box.content as TextContent}
+      {block.type === "text" && (
+        <TextBlock
+          content={block.content as TextContent}
           isActive={isActive}
           onFocus={onFocus}
           onChange={(c) => onChange(c)}
@@ -65,22 +65,22 @@ export function EditorBox({
           onBackspaceEmpty={onBackspaceEmpty}
         />
       )}
-      {box.type === "list" && (
-        <ListBox
-          content={box.content as ListContent}
+      {block.type === "list" && (
+        <ListBlock
+          content={block.content as ListContent}
           isActive={isActive}
           onFocus={onFocus}
           onChange={(c) => onChange(c)}
-          onExitBottom={onAddBoxBelow}
+          onExitBottom={onAddBlockBelow}
         />
       )}
-      {box.type === "table" && (
-        <TableBox
-          content={box.content as TableContent}
+      {block.type === "table" && (
+        <TableBlock
+          content={block.content as TableContent}
           isActive={isActive}
           onFocus={onFocus}
           onChange={(c) => onChange(c)}
-          onExitBottom={onAddBoxBelow}
+          onExitBottom={onAddBlockBelow}
         />
       )}
     </motion.div>

@@ -1,29 +1,29 @@
 import { useMutation } from "@tanstack/react-query";
 import { useCallback, useRef } from "react";
 import { apiFetch } from "../apiFetch";
-import { Box, BoxContent, BoxType } from "@/src/types/notes";
+import { Block, BlockContent, BlockType } from "@/src/types/notes";
 
-type UpdateBoxPayload = {
-  type?: BoxType;
-  content?: BoxContent;
+type UpdateBlockPayload = {
+  type?: BlockType;
+  content?: BlockContent;
   position?: number;
 };
 
 type SaveStatus = "idle" | "saving" | "saved" | "error";
 
-export const useUpdateBox = (
+export const useUpdateBlock = (
   noteId: string,
   options?: {
     onStatusChange?: (status: SaveStatus) => void;
-    onSuccess?: (box: Box) => void;
+    onSuccess?: (block: Block) => void;
   }
 ) => {
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const pendingRef = useRef<{ boxId: string; payload: UpdateBoxPayload } | null>(null);
+  const pendingRef = useRef<{ blockId: string; payload: UpdateBlockPayload } | null>(null);
 
-  const mutation = useMutation<{ box: Box }, Error, { boxId: string; payload: UpdateBoxPayload }>({
-    mutationFn: async ({ boxId, payload }) => {
-      return apiFetch(`/notes/${noteId}/boxes/${boxId}`, {
+  const mutation = useMutation<{ block: Block }, Error, { blockId: string; payload: UpdateBlockPayload }>({
+    mutationFn: async ({ blockId, payload }) => {
+      return apiFetch(`/notes/${noteId}/blocks/${blockId}`, {
         method: "PUT",
         body: JSON.stringify(payload),
       });
@@ -33,7 +33,7 @@ export const useUpdateBox = (
     },
     onSuccess: (data) => {
       options?.onStatusChange?.("saved");
-      options?.onSuccess?.(data.box);
+      options?.onSuccess?.(data.block);
     },
     onError: (error: Error) => {
       alert(error.message);
@@ -43,8 +43,8 @@ export const useUpdateBox = (
 
   // Debounced save — chama API apenas após 800ms sem novas alterações
   const debouncedSave = useCallback(
-    (boxId: string, payload: UpdateBoxPayload) => {
-      pendingRef.current = { boxId, payload };
+    (blockId: string, payload: UpdateBlockPayload) => {
+      pendingRef.current = { blockId, payload };
       options?.onStatusChange?.("saving");
 
       if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -60,10 +60,10 @@ export const useUpdateBox = (
   );
 
   const saveImmediate = useCallback(
-    (boxId: string, payload: UpdateBoxPayload) => {
+    (blockId: string, payload: UpdateBlockPayload) => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
       pendingRef.current = null;
-      mutation.mutate({ boxId, payload });
+      mutation.mutate({ blockId, payload });
     },
     [mutation]
   );

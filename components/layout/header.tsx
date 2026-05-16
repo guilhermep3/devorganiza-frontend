@@ -19,7 +19,7 @@ type props = {
 export const Header = ({ noNav, noAnimate, noUser }: props) => {
   const [active, setActive] = useState(false);
   const asideCtx = useContext(AsideContext);
-  const haveMenu = ["dashboard", "studies", "quizzes", "profile"];
+  const haveMenu = ["dashboard", "anotacoes", "estudos", "perfil", "quizzes"];
   const pathname = usePathname();
   const { } = useStartAPI();
   const userQuey = !noUser ? useUser() : null;

@@ -6,14 +6,14 @@ import { Button as ButtonCN } from "@/components/ui/button";
 import { useNote } from "@/src/api/note/useNote";
 import { useUpdateNote } from "@/src/api/note/useUpdateNote";
 import { useDeleteNote } from "@/src/api/note/useDeleteNote";
-import { useCreateBox } from "@/src/api/box/useCreateBox";
-import { useUpdateBox } from "@/src/api/box/useUpdateBox";
-import { useDeleteBox } from "@/src/api/box/useDeleteBox";
+import { useCreateBlock } from "@/src/api/block/useCreateBlock";
+import { useUpdateBlock } from "@/src/api/block/useUpdateBlock";
+import { useDeleteBlock } from "@/src/api/block/useDeleteBlock";
 import { DeleteModal } from "@/components/layout/deleteModal";
-import { Box, BoxContent } from "@/src/types/notes";
+import { Block, BlockContent } from "@/src/types/notes";
 import { AnimatePresence } from "motion/react";
 import { SaveStatus } from "@/components/note/saveStatus";
-import { EditorBox } from "@/components/note/editorBox";
+import { EditorBlock } from "@/components/note/editorBlock";
 
 type SaveStatusType = "idle" | "saving" | "saved" | "error";
 
@@ -25,20 +25,21 @@ export default function Page() {
   const { data, isLoading, refetch } = useNote(noteId);
 
   // Estado local dos blocos (para edição otimista / responsiva)
-  const [boxes, setBoxes] = useState<Box[]>([]);
-  const [activeBoxId, setActiveBoxId] = useState<string | null>(null);
+  const [blocks, setBlocks] = useState<Block[]>([]);
+  const [activeBlockId, setActiveBlockId] = useState<string | null>(null);
   const [saveStatus, setSaveStatus] = useState<SaveStatusType>("idle");
   const [isEditingName, setIsEditingName] = useState(false);
   const [noteName, setNoteName] = useState("");
   const [isDeletingNote, setIsDeletingNote] = useState(false);
 
-  // Sincroniza boxes do servidor → estado local (apenas na carga inicial)
+  // Sincroniza blocks do servidor → estado local (apenas na carga inicial)
   useEffect(() => {
     if (data) {
-      setBoxes(data.boxes);
+      console.log("data", data)
+      setBlocks(data.blocks);
       setNoteName(data.note.name);
-      if (data.boxes.length > 0 && !activeBoxId) {
-        setActiveBoxId(data.boxes[0].id);
+      if (data.blocks.length > 0 && !activeBlockId) {
+        setActiveBlockId(data.blocks[0].id);
       }
     }
   }, [data]);
@@ -59,54 +60,54 @@ export default function Page() {
     onSuccess: () => { setIsDeletingNote(false); router.push("/anotacoes"); },
   });
 
-  const { mutate: createBox } = useCreateBox(noteId, {
-    onSuccess: (newBox) => {
-      setBoxes((prev) => [...prev, newBox]);
-      setActiveBoxId(newBox.id);
+  const { mutate: createBlock } = useCreateBlock(noteId, {
+    onSuccess: (newBlock) => {
+      setBlocks((prev) => [...prev, newBlock]);
+      setActiveBlockId(newBlock.id);
     },
   });
 
-  const { debouncedSave } = useUpdateBox(noteId, {
+  const { debouncedSave } = useUpdateBlock(noteId, {
     onStatusChange: setSaveStatus,
   });
 
-  const { mutate: deleteBox } = useDeleteBox(noteId, {
+  const { mutate: deleteBlock } = useDeleteBlock(noteId, {
     onSuccess: () => refetch(),
   });
 
   // ---- Handlers ----
 
-  function handleBoxChange(boxId: string, content: BoxContent, newType?: Box["type"]) {
-    setBoxes((prev) =>
+  function handleBlockChange(blockId: string, content: BlockContent, newType?: Block["type"]) {
+    setBlocks((prev) =>
       prev.map((b) =>
-        b.id === boxId
+        b.id === blockId
           ? { ...b, content, ...(newType ? { type: newType } : {}) }
           : b
       )
     );
-    const box = boxes.find((b) => b.id === boxId);
-    if (!box) return;
-    debouncedSave(boxId, { content, ...(newType ? { type: newType } : {}) });
+    const block = blocks.find((b) => b.id === blockId);
+    if (!block) return;
+    debouncedSave(blockId, { content, ...(newType ? { type: newType } : {}) });
   }
 
-  function handleAddBox(afterPosition: number) {
-    createBox({
+  function handleAddBlock(afterPosition: number) {
+    createBlock({
       type: "text",
       content: { text: "" },
       position: afterPosition + 1,
     });
   }
 
-  function handleDeleteBox(boxId: string) {
+  function handleDeleteBlock(blockId: string) {
     // Não permite deletar se for o único bloco
-    if (boxes.length <= 1) return;
-    setBoxes((prev) => prev.filter((b) => b.id !== boxId));
-    deleteBox(boxId);
+    if (blocks.length <= 1) return;
+    setBlocks((prev) => prev.filter((b) => b.id !== blockId));
+    deleteBlock(blockId);
 
     // Foca no bloco anterior
-    const index = boxes.findIndex((b) => b.id === boxId);
-    const prev = boxes[index - 1] ?? boxes[index + 1];
-    if (prev) setActiveBoxId(prev.id);
+    const index = blocks.findIndex((b) => b.id === blockId);
+    const prev = blocks[index - 1] ?? blocks[index + 1];
+    if (prev) setActiveBlockId(prev.id);
   }
 
   function handleNameSubmit(e: React.FormEvent) {
@@ -118,12 +119,12 @@ export default function Page() {
 
   // Clique no padding abaixo do último bloco → cria novo bloco text
   function handleEditorPaddingClick() {
-    const lastBox = boxes[boxes.length - 1];
-    if (lastBox?.type === "text" && (lastBox.content as any).text === "") {
-      setActiveBoxId(lastBox.id);
+    const lastBlock = blocks[blocks.length - 1];
+    if (lastBlock?.type === "text" && (lastBlock.content as any).text === "") {
+      setActiveBlockId(lastBlock.id);
       return;
     }
-    if (lastBox) handleAddBox(lastBox.position);
+    if (lastBlock) handleAddBlock(lastBlock.position);
   }
 
   if (isLoading) {
@@ -202,16 +203,16 @@ export default function Page() {
           }}
         >
           <AnimatePresence initial={false}>
-            {boxes.map((box) => (
-              <EditorBox
-                key={box.id}
-                box={box}
-                isActive={activeBoxId === box.id}
-                onFocus={() => setActiveBoxId(box.id)}
-                onChange={(content, newType) => handleBoxChange(box.id, content, newType)}
-                onAddBoxBelow={() => handleAddBox(box.position)}
-                onBackspaceEmpty={() => handleDeleteBox(box.id)}
-                onDelete={() => handleDeleteBox(box.id)}
+            {blocks.map((block) => (
+              <EditorBlock
+                key={block.id}
+                block={block}
+                isActive={activeBlockId === block.id}
+                onFocus={() => setActiveBlockId(block.id)}
+                onChange={(content, newType) => handleBlockChange(block.id, content, newType)}
+                onAddBlockBelow={() => handleAddBlock(block.position)}
+                onBackspaceEmpty={() => handleDeleteBlock(block.id)}
+                onDelete={() => handleDeleteBlock(block.id)}
               />
             ))}
           </AnimatePresence>

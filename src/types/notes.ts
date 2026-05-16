@@ -1,4 +1,4 @@
-export type BoxType = "text" | "list" | "table";
+export type BlockType = "text" | "list" | "table";
 
 export type TextContent = {
   text: string;
@@ -14,12 +14,12 @@ export type TableContent = {
   rows: string[][];
 };
 
-export type BoxContent = TextContent | ListContent | TableContent;
+export type BlockContent = TextContent | ListContent | TableContent;
 
-export type Box = {
+export type Block = {
   id: string;
-  type: BoxType;
-  content: BoxContent;
+  type: BlockType;
+  content: BlockContent;
   position: number;
   notesId: string;
   userId: string;
@@ -35,7 +35,7 @@ export type Note = {
   updatedAt: string;
 };
 
-export type NoteWithBoxes = {
+export type NoteWithBlocks = {
   note: Note;
-  boxes: Box[];
+  blocks: Block[];
 };

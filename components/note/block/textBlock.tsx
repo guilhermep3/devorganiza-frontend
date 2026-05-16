@@ -12,7 +12,7 @@ type Props = {
   onBackspaceEmpty: () => void;
 };
 
-export function TextBox({
+export function TextBlock({
   content,
   isActive,
   onFocus,
@@ -75,7 +75,7 @@ export function TextBox({
       return;
     }
 
-    // Backspace com campo vazio → sinaliza para deletar este box
+    // Backspace com campo vazio → sinaliza para deletar este block
     if (e.key === "Backspace" && value === "") {
       e.preventDefault();
       onBackspaceEmpty();
@@ -86,18 +86,50 @@ export function TextBox({
     onChange({ text: e.target.value });
   }
 
-  return (
-    <textarea
-      ref={ref}
-      value={content.text}
-      onFocus={onFocus}
-      onKeyDown={handleKeyDown}
-      onChange={handleChange}
-      placeholder='Digite algo... ("1. " para lista, "/table" + Enter para tabela)'
-      rows={1}
-      className="w-full resize-none bg-transparent outline-none ds-text-md text-gray-90
+  function renderFormattedText(text: string) {
+    const parts = text.split(/(\*\*.*?\*\*)/g);
+
+    return parts.map((part, index) => {
+      const match = part.match(/^\*\*(.*?)\*\*$/);
+
+      if (match) {
+        return <strong key={index}>{match[1]}</strong>;
+      }
+
+      return part;
+    });
+  }
+
+  if (isActive) {
+    return (
+      <textarea
+        ref={ref}
+        value={content.text}
+        onFocus={onFocus}
+        onKeyDown={handleKeyDown}
+        onChange={handleChange}
+        placeholder='Digite algo... ("1. " para lista, "/table" + Enter para tabela)'
+        rows={1}
+        className="w-full resize-none bg-transparent outline-none ds-text-md text-gray-90
         dark:text-gray-90 placeholder:text-gray-40 leading-relaxed overflow-hidden
         transition-colors duration-150"
-    />
+      />
+    );
+  }
+
+  return (
+    <div
+      onClick={onFocus}
+      className="w-full whitespace-pre-wrap ds-text-md text-gray-90
+      dark:text-gray-90 leading-relaxed cursor-text min-h-6"
+    >
+      {content.text
+        ? renderFormattedText(content.text)
+        : (
+          <span className="text-gray-40">
+            Digite algo...
+          </span>
+        )}
+    </div>
   );
 }
